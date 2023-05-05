@@ -1,7 +1,7 @@
 import NewestComment from "@/components/Comment/NewestComment";
 import BoxShowCase from "@/components/Home/BoxShowCase";
-import RecentSlide from "@/components/Home/RecentSlide";
-import SlideBanner from "@/components/Home/SlideBanner";
+// import RecentSlide from "@/components/Home/RecentSlide";
+// import SlideBanner from "@/components/Home/SlideBanner";
 import ShareNextAnime from "@/components/ShareNextAnime";
 import MainLayout from "@/layouts/MainLayout";
 import {
@@ -35,7 +35,7 @@ const Home: React.FC<HomeProps> = ({
 }) => {
   return (
     <MainLayout>
-      <SlideBanner tredingAnime={tredingAnime} />
+      {/* <SlideBanner tredingAnime={tredingAnime} /> */}
       {/* <div className="p-4">
         <RecentSlide recentAnime={recentAnime} />
       </div> */}

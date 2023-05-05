@@ -1,27 +1,27 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper";
-import { Anime } from "@/types/anime";
-import Banners from "./Banners";
+// import React from "react";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Navigation, Autoplay } from "swiper";
+// import { Anime } from "@/types/anime";
+// import Banners from "./Banners";
 
-interface SlideProps {
-  tredingAnime: Anime[];
-}
+// interface SlideProps {
+//   tredingAnime: Anime[];
+// }
 
-const SlideBanner: React.FC<SlideProps> = ({ tredingAnime }) => {
-  return (
-    <Swiper
-      autoplay={{ delay: 5000 }}
-      navigation={true}
-      modules={[Navigation, Autoplay]}
-    >
-      {tredingAnime?.map((anime) => (
-        <SwiperSlide key={anime?.id}>
-          <Banners anime={anime} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  );
-};
+// const SlideBanner: React.FC<SlideProps> = ({ tredingAnime }) => {
+//   return (
+//     <Swiper
+//       autoplay={{ delay: 5000 }}
+//       navigation={true}
+//       modules={[Navigation, Autoplay]}
+//     >
+//       {tredingAnime?.map((anime) => (
+//         <SwiperSlide key={anime?.id}>
+//           <Banners anime={anime} />
+//         </SwiperSlide>
+//       ))}
+//     </Swiper>
+//   );
+// };
 
-export default SlideBanner;
+// export default SlideBanner;

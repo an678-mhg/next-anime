@@ -23,7 +23,6 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "react-lazy-load-image-component": "^1.5.6",
-    "swiper": "^9.2.4",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   },
