@@ -36,9 +36,9 @@ const Home: React.FC<HomeProps> = ({
   return (
     <MainLayout>
       <SlideBanner tredingAnime={tredingAnime} />
-      <div className="p-4">
+      {/* <div className="p-4">
         <RecentSlide recentAnime={recentAnime} />
-      </div>
+      </div> */}
       <ShareNextAnime />
       <NewestComment />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 p-4">
