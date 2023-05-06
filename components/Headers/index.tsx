@@ -34,7 +34,7 @@ const Headers = () => {
       <div className="flex items-center space-x-4">
         <CiSearch size={30} className="cursor-pointer" />
         <Link
-          className="block px-4 py-2 text-sm rounded-md bg-[#cae962] font-semibold text-black"
+          className="block px-4 py-1.5 text-sm rounded-md bg-[#cae962] font-semibold text-black"
           href="/sign-in"
         >
           Sign In

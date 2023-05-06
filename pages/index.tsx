@@ -1,7 +1,5 @@
 import NewestComment from "@/components/Comment/NewestComment";
 import BoxShowCase from "@/components/Home/BoxShowCase";
-import RecentSlide from "@/components/Home/RecentSlide";
-import SlideBanner from "@/components/Home/SlideBanner";
 import ShareNextAnime from "@/components/ShareNextAnime";
 import MainLayout from "@/layouts/MainLayout";
 import {
@@ -14,6 +12,7 @@ import {
 import { Anime, RecentAnime } from "@/types/anime";
 import { convertQueryArrayParams } from "@/utils/contants";
 import { GetServerSideProps } from "next";
+import dynamic from "next/dynamic";
 import React from "react";
 
 interface HomeProps {
@@ -24,6 +23,13 @@ interface HomeProps {
   favouritesAnime: Anime[];
   completedAnime: Anime[];
 }
+
+const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
+  ssr: false,
+});
+const RecentSlide = dynamic(() => import("../components/Home/RecentSlide"), {
+  ssr: false,
+});
 
 const Home: React.FC<HomeProps> = ({
   recentAnime,

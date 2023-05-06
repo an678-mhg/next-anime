@@ -25,13 +25,17 @@ const Footer = () => {
           Searching anime order by alphabet name A to Z.
         </p>
       </div>
-      <div className="mt-5 grid md:grid-cols-4 grid-cols-1 md:space-y-0 space-y-4">
-        <p className="text-xs font-normal hover:text-[#CAE962]">
+      <div className="mt-5 flex items-center space-x-4">
+        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
           Terms of service
         </p>
-        <p className="text-xs font-normal hover:text-[#CAE962]">DMCA</p>
-        <p className="text-xs font-normal hover:text-[#CAE962]">Contact</p>
-        <p className="text-xs font-normal hover:text-[#CAE962]">
+        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
+          DMCA
+        </p>
+        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
+          Contact
+        </p>
+        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
           Zoro Proxy Sites
         </p>
       </div>
