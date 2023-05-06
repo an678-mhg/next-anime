@@ -1,7 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper";
-import { Anime } from "@/types/anime";
+import { Anime } from "@/src/types/anime";
 import Banners from "./Banners";
 
 interface SlideProps {

@@ -1,16 +1,12 @@
 import React from "react";
 import Logo from "./Headers/Logo";
 import ShareSocial from "./ShareSocial";
+import { setBackgroundImage } from "../utils/contants";
 
 const Footer = () => {
   return (
     <div
-      style={{
-        backgroundImage: `url(./footer.jpg)`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
+      style={setBackgroundImage("../footer.jpg")}
       className="px-4 py-10 footer relative mt-10"
     >
       <div className="items-center z-[999] border-b border-gray-600 inline-flex pb-5">

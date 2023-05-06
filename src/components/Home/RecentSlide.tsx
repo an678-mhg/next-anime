@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { RecentAnime } from "@/types/anime";
+import { RecentAnime } from "@/src/types/anime";
 import AnimeCard from "../Card/AnimeCard";
-import useInnerWidth from "@/hooks/useInnerWidth";
+import useInnerWidth from "@/src/hooks/useInnerWidth";
 import { useMemo } from "react";
 
 interface RecentSlideProps {
@@ -12,7 +12,7 @@ const RecentSlide: React.FC<RecentSlideProps> = ({ recentAnime }) => {
   const width = useInnerWidth();
 
   const slidesPerView = useMemo(() => {
-    return width >= 1280 ? 6 : width >= 1024 ? 5 : width >= 768 ? 4 : 3;
+    return width >= 1280 ? 8 : width >= 1024 ? 6 : width >= 768 ? 4 : 3;
   }, [width]);
 
   return (
@@ -24,16 +24,12 @@ const RecentSlide: React.FC<RecentSlideProps> = ({ recentAnime }) => {
         {recentAnime?.map((anime) => (
           <SwiperSlide key={anime?.id}>
             <AnimeCard
+              id={anime?.id}
               title={
                 anime?.title?.english || (anime?.title?.userPreferred as string)
               }
               type={anime?.type}
               image={anime?.image}
-              newEpisodes={{
-                episodeId: anime?.episodeId,
-                episodeTitle: anime?.episodeTitle,
-                episodeNumber: anime?.episodeNumber,
-              }}
             />
           </SwiperSlide>
         ))}

@@ -1,8 +1,9 @@
-import { Anime } from "@/types/anime";
+import { Anime } from "@/src/types/anime";
+import path from "@/src/utils/path";
+import Link from "next/link";
 import React from "react";
 import { AiFillClockCircle } from "react-icons/ai";
 import { BsFillCalendarDateFill, BsFillPlayCircleFill } from "react-icons/bs";
-import { GrStatusDisabledSmall } from "react-icons/gr";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface BoxShowCaseProps {
@@ -13,13 +14,14 @@ interface BoxShowCaseProps {
 const BoxShowCase: React.FC<BoxShowCaseProps> = ({ title, anime }) => {
   return (
     <div>
-      <h3 className="font-semibold text-lg text-[#CAE962] bg-[#4A4B51] p-4">
+      <h3 className="font-semibold text-[16px] text-[#CAE962] bg-[#4A4B51] p-3">
         {title}
       </h3>
       <div className="bg-[#414248]">
         {anime?.map((item) => (
-          <div
-            className="p-4 border border-gray-600 flex space-x-4"
+          <Link
+            href={path.anime(item?.id)}
+            className="p-3 border border-gray-600 flex space-x-4"
             key={item?.id}
           >
             <LazyLoadImage
@@ -52,7 +54,7 @@ const BoxShowCase: React.FC<BoxShowCaseProps> = ({ title, anime }) => {
                 )}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

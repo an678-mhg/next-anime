@@ -1,4 +1,4 @@
-import { Anime } from "@/types/anime";
+import { Anime } from "@/src/types/anime";
 import React from "react";
 import { BsFillPlayCircleFill, BsFillCalendarDateFill } from "react-icons/bs";
 import { AiFillClockCircle, AiOutlineRight } from "react-icons/ai";
@@ -6,6 +6,8 @@ import { GrStatusDisabledSmall } from "react-icons/gr";
 import Link from "next/link";
 import GenresItem from "../GenresItem";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import path from "@/src/utils/path";
+import { setBackgroundImage } from "@/src/utils/contants";
 
 interface BannersProps {
   anime: Anime;
@@ -14,13 +16,8 @@ interface BannersProps {
 const Banners: React.FC<BannersProps> = ({ anime }) => {
   return (
     <div
-      style={{
-        backgroundImage: `url(${anime?.cover})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
-      className="lg:aspect-[3/1.3] md:aspect-[3/2] aspect-[1/1] w-full banner"
+      style={setBackgroundImage(anime?.cover)}
+      className="lg:aspect-[3/1.5] md:aspect-[3/2] aspect-[1/1] w-full banner"
     >
       <div className="z-[999] absolute top-[50%] translate-y-[-50%] p-4 w-full left-[50%] translate-x-[-50%] flex items-center justify-between space-x-8">
         <div className="flex-1">
@@ -59,27 +56,27 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
             ))}
           </div>
           <div
-            className="text-[14px] font-normal mt-4 lg:line-clamp-5 md:line-clamp-4 line-clamp-3"
+            className="text-[14px] font-normal mt-4 lg:line-clamp-5 md:line-clamp-4 line-clamp-1"
             dangerouslySetInnerHTML={{ __html: anime?.description }}
           />
           <div className="space-x-4 flex items-center mt-5">
             <Link
               className="text-black bg-[#cae962] md:px-4 px-2 py-2 md:rounded-full rounded-md flex items-center space-x-2"
-              href="/abc"
+              href={path.watch(anime?.id)}
             >
               <BsFillPlayCircleFill className="md:text-sm text-lg" />
               <span className="font-semibold md:block hidden">Watch now</span>
             </Link>
             <Link
               className="text-white bg-gray-500 md:px-4 px-2 py-2 md:rounded-full rounded-md flex items-center md:space-x-2"
-              href="/abc"
+              href={path.anime(anime?.id)}
             >
               <span className="font-semibold md:block hidden">Detail</span>
               <AiOutlineRight className="md:text-sm text-lg" />
             </Link>
           </div>
         </div>
-        <div className="md:block hidden">
+        <div className="lg:block hidden">
           <LazyLoadImage
             effect="blur"
             className="rounded-md w-[250px]"

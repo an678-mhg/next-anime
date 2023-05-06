@@ -17,6 +17,7 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.4.0",
     "next": "13.4.0",
+    "nextjs-progressbar": "^0.0.16",
     "postcss": "8.4.23",
     "qs": "^6.11.1",
     "react": "18.2.0",

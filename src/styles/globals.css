@@ -20,10 +20,6 @@ img {
   object-fit: cover;
 }
 
-.banners {
-  position: relative;
-}
-
 .banner::after,
 .banner::before {
   content: "";
@@ -146,6 +142,5 @@ input:checked + .slider:before {
 }
 
 .is-sticky {
-  background-color: #111;
-  padding: 10px 16px;
+  background-color: #6b7280;
 }

@@ -1,19 +1,18 @@
-import NewestComment from "@/components/Comment/NewestComment";
-import BoxShowCase from "@/components/Home/BoxShowCase";
-import ShareNextAnime from "@/components/ShareNextAnime";
-import MainLayout from "@/layouts/MainLayout";
+import NewestComment from "@/src/components/Comment/NewestComment";
+import BoxShowCase from "@/src/components/Home/BoxShowCase";
+import ShareNextAnime from "@/src/components/ShareNextAnime";
+import MainLayout from "@/src/layouts/MainLayout";
 import {
   getMostPopular,
   getRecentAnime,
   getTopAiring,
   getTrendingAnime,
   searchAdvanced,
-} from "@/services/anime";
-import { Anime, RecentAnime } from "@/types/anime";
-import { convertQueryArrayParams } from "@/utils/contants";
+} from "@/src/services/anime";
+import { Anime, RecentAnime } from "@/src/types/anime";
+import { convertQueryArrayParams } from "@/src/utils/contants";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
-import React from "react";
 
 interface HomeProps {
   recentAnime: RecentAnime[];
@@ -27,6 +26,7 @@ interface HomeProps {
 const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
   ssr: false,
 });
+
 const RecentSlide = dynamic(() => import("../components/Home/RecentSlide"), {
   ssr: false,
 });

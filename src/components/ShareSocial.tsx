@@ -1,4 +1,4 @@
-import { providers } from "@/utils/contants";
+import { providers } from "@/src/utils/contants";
 import Link from "next/link";
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";

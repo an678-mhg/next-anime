@@ -1,13 +1,13 @@
-import Footer from "@/components/Footer";
-import Headers from "@/components/Headers";
-import { Layout } from "@/types/utils";
+import Footer from "@/src/components/Footer";
+import Headers from "@/src/components/Headers";
+import { Layout } from "@/src/types/utils";
 import React from "react";
 
 const MainLayout: React.FC<Layout> = ({ children }) => {
   return (
     <div>
       <Headers />
-      {children}
+      <div>{children}</div>
       <Footer />
     </div>
   );

@@ -3,13 +3,17 @@ import Logo from "./Logo";
 import { CiSearch } from "react-icons/ci";
 import Link from "next/link";
 
-const Headers = () => {
+interface HeadersProps {
+  backgroundColor?: string;
+}
+
+const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
   const headerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleFixedHeader = () => {
-      const header = headerRef.current as HTMLDivElement;
-      const sticky = header.offsetTop;
+      const header = headerRef?.current as HTMLDivElement;
+      const sticky = header && header?.offsetTop;
 
       if (header) {
         if (window.pageYOffset > sticky) {
@@ -27,8 +31,11 @@ const Headers = () => {
 
   return (
     <div
+      style={{
+        backgroundColor: backgroundColor && "transparent",
+      }}
       ref={headerRef}
-      className="p-4 flex items-center transition-all justify-between fixed top-0 w-full z-[999]"
+      className={`px-4 py-2 flex items-center transition-all justify-between fixed top-0 w-full z-[999]`}
     >
       <Logo />
       <div className="flex items-center space-x-4">

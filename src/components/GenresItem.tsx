@@ -8,7 +8,7 @@ interface GenresItemProps {
 const GenresItem: React.FC<GenresItemProps> = ({ genres }) => {
   return (
     <Link
-      className="text-xs font-semibold border border-white p-2 rounded-md"
+      className="text-xs font-semibold border border-white p-1 text-center rounded-full"
       href="/abc"
     >
       {genres}

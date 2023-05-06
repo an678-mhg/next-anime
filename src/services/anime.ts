@@ -1,7 +1,8 @@
-import { Anime, RecentAnime } from "@/types/anime";
-import { AnimeResponse, SearchAdvancedQuery } from "@/types/utils";
-import client from "@/utils/client";
-import qs from "qs";
+import { Anime, AnimeInfo, RecentAnime } from "@/src/types/anime";
+import { AnimeResponse, SearchAdvancedQuery } from "@/src/types/utils";
+import client from "@/src/utils/client";
+
+const default_provider = "gogoanime";
 
 export const getRecentAnime = async (limit: number = 5, page: number = 1) => {
   const response = await client.get<AnimeResponse<RecentAnime>>(
@@ -10,7 +11,7 @@ export const getRecentAnime = async (limit: number = 5, page: number = 1) => {
       params: {
         page: page,
         perPage: limit,
-        provider: "gogoanime",
+        provider: default_provider,
       },
     }
   );
@@ -23,7 +24,7 @@ export const getTrendingAnime = async (limit: number = 5, page: number = 1) => {
     params: {
       page,
       perPage: limit,
-      provider: "gogoanime",
+      provider: default_provider,
     },
   });
 
@@ -35,7 +36,7 @@ export const getTopAiring = async (limit: number = 5, page: number = 1) => {
     params: {
       page,
       perPage: limit,
-      provider: "gogoanime",
+      provider: default_provider,
     },
   });
 
@@ -47,7 +48,7 @@ export const getMostPopular = async (limit: number = 5, page: number = 1) => {
     params: {
       page,
       perPage: limit,
-      provider: "gogoanime",
+      provider: default_provider,
     },
   });
 
@@ -58,9 +59,19 @@ export const searchAdvanced = async (queries: SearchAdvancedQuery) => {
   const response = await client.get<AnimeResponse<Anime>>("/advanced-search", {
     params: {
       ...queries,
-      provider: "gogoanime",
+      provider: default_provider,
     },
   });
 
   return response.data.results;
+};
+
+export const getAnimeInfo = async (id: string) => {
+  const response = await client.get<AnimeInfo>(`/info/${id}`, {
+    params: {
+      provider: default_provider,
+    },
+  });
+
+  return response.data;
 };

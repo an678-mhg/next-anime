@@ -34,3 +34,12 @@ export const providers = [
 export const convertQueryArrayParams = (queries: string[]) => {
   return `[${queries?.map((item) => `"${item}"`) || []}]`;
 };
+
+export const setBackgroundImage = (imageUrl: string) => {
+  return {
+    backgroundImage: `url(${imageUrl})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  };
+};
