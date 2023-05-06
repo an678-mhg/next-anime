@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import NewestCommentItem from "./NewestCommentItem";
 
 const NewestComment = () => {
-  let showComment = true;
+  const [showComment, setShowComment] = useState(true);
 
   return (
     <div className="mt-5 flex overflow-hidden">
@@ -23,8 +23,8 @@ const NewestComment = () => {
               <label className="switch">
                 <input
                   type="checkbox"
-                  // checked={showComment}
-                  // onChange={() => setShowComment((prev) => !prev)}
+                  checked={showComment}
+                  onChange={() => setShowComment((prev) => !prev)}
                 />
                 <span className="slider round" />
               </label>

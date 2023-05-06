@@ -146,5 +146,6 @@ input:checked + .slider:before {
 }
 
 .is-sticky {
-  background-color: #202125e5;
+  background-color: #111;
+  padding: 14px 16px;
 }
