@@ -1,3 +1,5 @@
+import { Title } from "../types/utils";
+
 export const providers = [
   {
     icon: "/share-icon/facebook.svg",
@@ -42,4 +44,8 @@ export const setBackgroundImage = (imageUrl: string) => {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
   };
+};
+
+export const getAnimeTitle = (title: Title) => {
+  return title.english || title.native || title.romaji || title.userPreferred;
 };

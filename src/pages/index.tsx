@@ -102,7 +102,6 @@ export const getStaticProps: GetStaticProps = async () => {
       revalidate: 60,
     };
   } catch (error) {
-    console.log(error);
     return {
       notFound: true,
     };

@@ -7,8 +7,7 @@ import Link from "next/link";
 import GenresItem from "../GenresItem";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import path from "@/src/utils/path";
-import { setBackgroundImage } from "@/src/utils/contants";
-import useAnimeTitle from "@/src/hooks/useAnimeTitle";
+import { getAnimeTitle, setBackgroundImage } from "@/src/utils/contants";
 
 interface BannersProps {
   anime: Anime;
@@ -23,7 +22,7 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
       <div className="z-[999] absolute top-[50%] translate-y-[-50%] p-4 w-full left-[50%] translate-x-[-50%] flex items-center justify-between space-x-8">
         <div className="flex-1">
           <h3 className="md:text-4xl text:2xl font-semibold line-clamp-2">
-            {useAnimeTitle(anime?.title)}
+            {getAnimeTitle(anime?.title)}
           </h3>
           <div className="flex items-center space-x-4 mt-4">
             {anime?.type && (

@@ -1,5 +1,5 @@
-import useAnimeTitle from "@/src/hooks/useAnimeTitle";
 import { Anime } from "@/src/types/anime";
+import { getAnimeTitle } from "@/src/utils/contants";
 import path from "@/src/utils/path";
 import Link from "next/link";
 import React from "react";
@@ -32,7 +32,7 @@ const BoxShowCase: React.FC<BoxShowCaseProps> = ({ title, anime }) => {
             />
             <div className="text-sm flex-1">
               <h5 className="text-sm font-semibold line-clamp-1">
-                {useAnimeTitle(item?.title)}
+                {getAnimeTitle(item?.title)}
               </h5>
               <div className="flex items-center space-x-3 mt-2">
                 {item?.type && (

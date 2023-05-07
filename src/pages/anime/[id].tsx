@@ -1,12 +1,11 @@
 import AnimeCard from "@/src/components/Card/AnimeCard";
 import GenresItem from "@/src/components/GenresItem";
 import ShareSocial from "@/src/components/ShareSocial";
-import useAnimeTitle from "@/src/hooks/useAnimeTitle";
 import AnimeGridLayout from "@/src/layouts/AnimeGridLayout";
 import MainLayout from "@/src/layouts/MainLayout";
 import { getAnimeInfo } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
-import { setBackgroundImage } from "@/src/utils/contants";
+import { getAnimeTitle, setBackgroundImage } from "@/src/utils/contants";
 import path from "@/src/utils/path";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import Link from "next/link";
@@ -42,11 +41,11 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
                 <Link href={path.home}>Home</Link>
                 <BsDot />
                 <p className="text-[#aaaaaa] line-clamp-1">
-                  {useAnimeTitle(info?.title)}
+                  {getAnimeTitle(info?.title)}
                 </p>
               </h4>
               <h5 className="md:text-4xl text:2xl font-semibold mt-2 line-clamp-2">
-                {useAnimeTitle(info?.title)}
+                {getAnimeTitle(info?.title)}
               </h5>
               <div className="flex items-center space-x-3 mt-2">
                 {info?.type && (
