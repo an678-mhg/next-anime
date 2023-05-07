@@ -12,7 +12,7 @@ import path from "@/src/utils/path";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { AiFillClockCircle } from "react-icons/ai";
 import { BsFillCalendarDateFill, BsFillPlayCircleFill } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -34,9 +34,8 @@ const NetPlayer = dynamic(() => import("netplayer"), { ssr: false });
 const Watch: React.FC<WatchProps> = ({ info, streaming, episodeId }) => {
   const [selectType, setSelectType] = useState("Related");
 
-  const moreLikeThis = useMemo(() => {
-    return selectType === "Related" ? info?.relations : info?.recommendations;
-  }, [selectType]);
+  const moreLikeThis =
+    selectType === "Related" ? info?.relations : info?.recommendations;
 
   return (
     <div>
