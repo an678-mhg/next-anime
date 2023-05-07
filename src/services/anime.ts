@@ -1,8 +1,13 @@
-import { Anime, AnimeInfo, RecentAnime } from "@/src/types/anime";
+import {
+  Anime,
+  AnimeEpisodeStreaming,
+  AnimeInfo,
+  RecentAnime,
+} from "@/src/types/anime";
 import { AnimeResponse, SearchAdvancedQuery } from "@/src/types/utils";
 import client from "@/src/utils/client";
 
-const default_provider = "gogoanime";
+export const default_provider = "gogoanime";
 
 export const getRecentAnime = async (limit: number = 5, page: number = 1) => {
   const response = await client.get<AnimeResponse<RecentAnime>>(
@@ -66,12 +71,22 @@ export const searchAdvanced = async (queries: SearchAdvancedQuery) => {
   return response.data.results;
 };
 
-export const getAnimeInfo = async (id: string) => {
+export const getAnimeInfo = async (
+  id: string,
+  provider: string = default_provider
+) => {
   const response = await client.get<AnimeInfo>(`/info/${id}`, {
     params: {
-      provider: default_provider,
+      provider,
     },
   });
 
+  return response.data;
+};
+
+export const getAnimeEpisodeStreaming = async (episodeId: string) => {
+  const response = await client.get<AnimeEpisodeStreaming>(
+    `/watch/${episodeId}`
+  );
   return response.data;
 };

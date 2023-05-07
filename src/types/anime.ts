@@ -2,8 +2,10 @@ import {
   Character,
   EndDate,
   Episode,
+  Headers,
   Mappings,
   NextAiringEpisode,
+  Source,
   StartDate,
   Title,
   Trailer,
@@ -99,4 +101,10 @@ export interface Relation {
   type: string;
   cover: string;
   rating: number;
+}
+
+export interface AnimeEpisodeStreaming {
+  headers: Headers;
+  sources: Source[];
+  download: string;
 }
