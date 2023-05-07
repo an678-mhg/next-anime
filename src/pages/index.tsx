@@ -99,6 +99,7 @@ export const getStaticProps: GetStaticProps = async () => {
         favouritesAnime,
         completedAnime,
       },
+      revalidate: 60,
     };
   } catch (error) {
     console.log(error);

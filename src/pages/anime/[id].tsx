@@ -209,6 +209,7 @@ export const getStaticProps: GetStaticProps = async (
       props: {
         info,
       },
+      revalidate: 60,
     };
   } catch (error) {
     return {
