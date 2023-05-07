@@ -8,6 +8,7 @@ import GenresItem from "../GenresItem";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import path from "@/src/utils/path";
 import { setBackgroundImage } from "@/src/utils/contants";
+import useAnimeTitle from "@/src/hooks/useAnimeTitle";
 
 interface BannersProps {
   anime: Anime;
@@ -22,7 +23,7 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
       <div className="z-[999] absolute top-[50%] translate-y-[-50%] p-4 w-full left-[50%] translate-x-[-50%] flex items-center justify-between space-x-8">
         <div className="flex-1">
           <h3 className="md:text-4xl text:2xl font-semibold line-clamp-2">
-            {anime?.title?.english || anime?.title?.userPreferred}
+            {useAnimeTitle(anime?.title)}
           </h3>
           <div className="flex items-center space-x-4 mt-4">
             {anime?.type && (
@@ -56,22 +57,22 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
             ))}
           </div>
           <div
-            className="text-[14px] font-normal mt-4 lg:line-clamp-5 md:line-clamp-4 line-clamp-1"
+            className="text-[14px] font-normal mt-4 lg:line-clamp-5 md:line-clamp-4 line-clamp-2"
             dangerouslySetInnerHTML={{ __html: anime?.description }}
           />
           <div className="space-x-4 flex items-center mt-5">
             <Link
-              className="text-black bg-[#cae962] md:px-4 px-2 py-2 md:rounded-full rounded-md flex items-center space-x-2"
+              className="text-black bg-[#cae962] px-4 py-2 rounded-full flex items-center space-x-2"
               href={path.watch(anime?.id)}
             >
               <BsFillPlayCircleFill className="md:text-sm text-lg" />
-              <span className="font-semibold md:block hidden">Watch now</span>
+              <span className="font-semibold text-sm">Watch now</span>
             </Link>
             <Link
-              className="text-white bg-gray-500 md:px-4 px-2 py-2 md:rounded-full rounded-md flex items-center md:space-x-2"
+              className="text-white bg-gray-500 px-4 py-2 rounded-full flex items-center space-x-2"
               href={path.anime(anime?.id)}
             >
-              <span className="font-semibold md:block hidden">Detail</span>
+              <span className="font-semibold text-sm">Detail</span>
               <AiOutlineRight className="md:text-sm text-lg" />
             </Link>
           </div>

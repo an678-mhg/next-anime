@@ -1,16 +1,17 @@
 import AnimeCard from "@/src/components/Card/AnimeCard";
 import GenresItem from "@/src/components/GenresItem";
-import ShareNextAnime from "@/src/components/ShareNextAnime";
 import ShareSocial from "@/src/components/ShareSocial";
+import useAnimeTitle from "@/src/hooks/useAnimeTitle";
+import AnimeGridLayout from "@/src/layouts/AnimeGridLayout";
 import MainLayout from "@/src/layouts/MainLayout";
 import { getAnimeInfo } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
 import { setBackgroundImage } from "@/src/utils/contants";
 import path from "@/src/utils/path";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import Link from "next/link";
 import React from "react";
-import { AiFillClockCircle, AiOutlineRight } from "react-icons/ai";
+import { AiFillClockCircle, AiOutlinePlus } from "react-icons/ai";
 import {
   BsDot,
   BsFillCalendarDateFill,
@@ -27,7 +28,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
     <MainLayout>
       <div
         style={setBackgroundImage(info?.cover)}
-        className="w-full lg:aspect-[3/1.5] md:aspect-[3/2] aspect-[9/17] banner relative"
+        className="w-full h-screen relative banner"
       >
         <div className="absolute inset-0 z-[99] flex lg:flex-row flex-col">
           <div className="flex md:flex-row flex-col flex-1 lg:p-[70px] p-4 mt-[56px]">
@@ -40,12 +41,12 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
               <h4 className="flex items-center space-x-2 text-[12px] font-normal">
                 <Link href={path.home}>Home</Link>
                 <BsDot />
-                <p className="text-[#aaaaaa]">
-                  {info?.title?.english || info?.title?.userPreferred}
+                <p className="text-[#aaaaaa] line-clamp-1">
+                  {useAnimeTitle(info?.title)}
                 </p>
               </h4>
-              <h5 className="text-[40px] font-semibold mt-2">
-                {info?.title?.english || info?.title?.userPreferred}
+              <h5 className="md:text-4xl text:2xl font-semibold mt-2 line-clamp-2">
+                {useAnimeTitle(info?.title)}
               </h5>
               <div className="flex items-center space-x-3 mt-2">
                 {info?.type && (
@@ -69,23 +70,19 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
               </div>
               <div className="space-x-4 flex items-center mt-5">
                 <Link
-                  className="text-black bg-[#cae962] md:px-4 px-2 py-2 md:rounded-full rounded-md flex items-center space-x-2"
+                  className="text-black bg-[#cae962] px-4 py-2 rounded-full flex items-center space-x-2"
                   href={path.watch(info?.id)}
                 >
                   <BsFillPlayCircleFill className="md:text-sm text-lg" />
-                  <span className="font-semibold md:block hidden">
-                    Watch now
-                  </span>
+                  <span className="font-semibold text-sm">Watch now</span>
                 </Link>
-                <button className="text-white bg-gray-500 md:px-4 px-2 py-2 md:rounded-full rounded-md flex items-center md:space-x-2">
-                  <span className="font-semibold md:block hidden">
-                    Add to List
-                  </span>
-                  <AiOutlineRight className="md:text-sm text-lg" />
+                <button className="text-white bg-gray-500 px-4 py-2 rounded-full flex items-center space-x-2">
+                  <span className="text-sm font-semibold">Add to List</span>
+                  <AiOutlinePlus className="md:text-sm text-lg" />
                 </button>
               </div>
               <div
-                className="text-[14px] font-normal mt-4 line-clamp-5"
+                className="text-[14px] font-normal mt-4 md:line-clamp-5 line-clamp-2"
                 dangerouslySetInnerHTML={{ __html: info?.description }}
               />
               <div className="items-center space-x-5 mt-5 flex">
@@ -95,11 +92,14 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
                   </h4>
                   <p>to your friends</p>
                 </div>
-                <ShareSocial link="abc" title="Next Anime" />
+                <ShareSocial
+                  link={process.env.NEXT_PUBLIC_NEXT_ANIME_URL as string}
+                  title="Next Anime"
+                />
               </div>
             </div>
           </div>
-          <div className="w-[342px] xl:flex bg-[rgba(255,255,255,.1)] px-5 hidden items-center">
+          <div className="w-[342px] lg:flex hidden bg-[rgba(255,255,255,.1)] px-5 items-center">
             <div className="w-full">
               <div className="space-y-3 border-b border-gray-200 w-full pb-5">
                 <div className="flex text-sm space-x-2">
@@ -154,48 +154,45 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
       </div>
 
       {info?.relations?.length > 0 && (
-        <div className="p-4 mt-5">
-          <h3 className="font-semibold text-xl text-[#cae962]">
-            Relations for anime
-          </h3>
-          <div className="grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 grid-cols-3 gap-5 mt-5">
-            {info?.relations?.map((item) => (
-              <AnimeCard
-                key={item?.id}
-                id={item?.id.toString()}
-                image={item?.image}
-                title={item?.title?.english || item?.title?.userPreferred}
-                type={item?.type}
-              />
-            ))}
-          </div>
-        </div>
+        <AnimeGridLayout title="Relations for anime" className="p-4 mt-5">
+          {info?.relations?.map((item) => (
+            <AnimeCard
+              key={item?.id}
+              id={item?.id.toString()}
+              image={item?.image}
+              title={item?.title}
+              type={item?.type}
+            />
+          ))}
+        </AnimeGridLayout>
       )}
 
       {info?.recommendations?.length > 0 && (
-        <div className="p-4">
-          <h3 className="font-semibold text-xl text-[#cae962]">
-            Recommended for you
-          </h3>
-          <div className="grid xl:grid-cols-8 lg:grid-cols-6 md:grid-cols-4 grid-cols-3 gap-5 mt-5">
-            {info?.recommendations?.map((item) => (
-              <AnimeCard
-                key={item?.id}
-                id={item?.id.toString()}
-                image={item?.image}
-                title={item?.title?.english || item?.title?.userPreferred}
-                type={item?.type}
-              />
-            ))}
-          </div>
-        </div>
+        <AnimeGridLayout title="Recommended for you" className="p-4 mt-5">
+          {info?.recommendations?.map((item) => (
+            <AnimeCard
+              key={item?.id}
+              id={item?.id.toString()}
+              image={item?.image}
+              title={item?.title}
+              type={item?.type}
+            />
+          ))}
+        </AnimeGridLayout>
       )}
     </MainLayout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (
+  context: GetStaticPropsContext
 ) => {
   try {
     const id = context.params?.id as string;

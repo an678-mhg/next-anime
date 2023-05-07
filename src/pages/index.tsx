@@ -11,8 +11,10 @@ import {
 } from "@/src/services/anime";
 import { Anime, RecentAnime } from "@/src/types/anime";
 import { convertQueryArrayParams } from "@/src/utils/contants";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import dynamic from "next/dynamic";
+import AnimeCard from "../components/Card/AnimeCard";
+import AnimeGridLayout from "../layouts/AnimeGridLayout";
 
 interface HomeProps {
   recentAnime: RecentAnime[];
@@ -27,10 +29,6 @@ const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
   ssr: false,
 });
 
-const RecentSlide = dynamic(() => import("../components/Home/RecentSlide"), {
-  ssr: false,
-});
-
 const Home: React.FC<HomeProps> = ({
   recentAnime,
   tredingAnime,
@@ -42,9 +40,17 @@ const Home: React.FC<HomeProps> = ({
   return (
     <MainLayout>
       <SlideBanner tredingAnime={tredingAnime} />
-      <div className="p-4">
-        <RecentSlide recentAnime={recentAnime} />
-      </div>
+      <AnimeGridLayout title="Recent Anime Episodes" className="p-4">
+        {recentAnime?.map((item) => (
+          <AnimeCard
+            key={item?.id}
+            id={item?.id.toString()}
+            image={item?.image}
+            title={item?.title}
+            type={item?.type}
+          />
+        ))}
+      </AnimeGridLayout>
       <ShareNextAnime />
       <NewestComment />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 p-4">
@@ -57,7 +63,7 @@ const Home: React.FC<HomeProps> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     const [
       recentAnime,
@@ -67,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       favouritesAnime,
       completedAnime,
     ] = await Promise.all([
-      getRecentAnime(20),
+      getRecentAnime(16),
       getTrendingAnime(20),
       getTopAiring(5),
       getMostPopular(5),

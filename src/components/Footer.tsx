@@ -12,7 +12,10 @@ const Footer = () => {
       <div className="items-center z-[999] border-b border-gray-600 inline-flex pb-5">
         <Logo />
         <div className="h-[40px] mx-10 w-[1px] bg-gray-600" />
-        <ShareSocial link="abc" title="Next Anime" />
+        <ShareSocial
+          link={process.env.NEXT_PUBLIC_NEXT_ANIME_URL as string}
+          title="Next Anime"
+        />
       </div>
       <div className="flex items-center mt-5">
         <p className="font-semibold">A-Z</p>

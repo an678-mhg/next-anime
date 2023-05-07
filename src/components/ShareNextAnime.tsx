@@ -17,7 +17,10 @@ const ShareNextAnime = () => {
         <h4 className="text-[#CAE962] font-semibold">Share Next Anime</h4>
         <p>to your friends</p>
       </div>
-      <ShareSocial link="abc" title="Next Anime" />
+      <ShareSocial
+        link={process.env.NEXT_PUBLIC_NEXT_ANIME_URL as string}
+        title="Next Anime"
+      />
     </div>
   );
 };
