@@ -74,6 +74,7 @@ const Watch: React.FC<WatchProps> = ({ info, streaming, episodeId }) => {
             <div className="flex space-x-4 w-full overflow-x-scroll mt-5">
               {info?.episodes?.map((item) => (
                 <Link
+                  key={item.id}
                   href={path.watch(info?.id, item?.id)}
                   className={`${
                     episodeId === item.id
