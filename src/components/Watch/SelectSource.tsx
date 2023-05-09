@@ -1,6 +1,6 @@
 import path from "@/src/utils/path";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const provider = [
   { value: "gogoanime", label: "Gogo" },
@@ -22,7 +22,10 @@ const SelectSource: React.FC<SelectSourceProps> = ({ idAnime }) => {
     <div className="flex items-center space-x-3 justify-end">
       <h4 className="text-sm font-semibold">Source:</h4>
       <select
-        onChange={(e) => setSelectProvider(e.target.value)}
+        onChange={(e) => {
+          router?.push(path?.watch(idAnime, e.target?.value));
+          setSelectProvider(e.target.value);
+        }}
         value={selectProvider}
         className="bg-[#333] outline-none font-semibold text-white p-2 text-sm w-[200px] rounded-md"
       >

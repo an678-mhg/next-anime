@@ -9,12 +9,14 @@ interface QualitySettingsProps {
   >;
   source: Source[];
   currentSource: number;
+  handleChangeSource: (index: number) => void;
 }
 
 const QualitySettings: React.FC<QualitySettingsProps> = ({
   setSettingsType,
   source,
   currentSource,
+  handleChangeSource,
 }) => {
   return (
     <div className="w-full overflow-y-auto">
@@ -28,6 +30,7 @@ const QualitySettings: React.FC<QualitySettingsProps> = ({
       <div>
         {source?.map((item, index) => (
           <div
+            onClick={() => handleChangeSource(index)}
             className="p-2 text-sm font-semibold space-x-3 flex items-center cursor-pointer"
             key={item?.url}
           >

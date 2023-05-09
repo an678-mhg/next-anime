@@ -12,6 +12,7 @@ import useInnerWidth from "@/src/hooks/useInnerWidth";
 import MainSettings from "./Settings/MainSettings";
 import PlaySpeedSettings from "./Settings/PlaySpeedSettings";
 import QualitySettings from "./Settings/QualitySettings";
+import { Subtitle } from "@/src/types/utils";
 
 export interface Source {
   url: string;
@@ -23,6 +24,7 @@ interface PlayerProps {
   className: string;
   poster: string;
   color: string;
+  subtitle?: Subtitle[];
 }
 
 export const playSpeedOptions = [
@@ -61,6 +63,7 @@ const Player: React.FC<PlayerProps> = ({
   source,
   poster,
   color,
+  subtitle = [],
 }) => {
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const seekRef = useRef<HTMLDivElement | null>(null);
@@ -158,11 +161,30 @@ const Player: React.FC<PlayerProps> = ({
   };
 
   const handleChangePlaySpeed = (index: number, value: number) => {
-    console.log(value);
     setCurrePlaySpeed(index);
     if (playerRef !== null && playerRef?.current !== null) {
-      playerRef.current.defaultPlaybackRate = value;
+      playerRef.current.playbackRate = value;
     }
+    setShowSettings(false);
+    setSettingsType("main");
+  };
+
+  const handleChangeSource = (index: number) => {
+    setCurrentSource(index);
+    const tmpCurrentTime = currentTime;
+    setLoading(true);
+
+    playerRef?.current?.addEventListener("loadedmetadata", () => {
+      setLoading(false);
+      setCurrentTime(tmpCurrentTime);
+      if (playerRef !== null && playerRef?.current !== null) {
+        playerRef.current.currentTime = tmpCurrentTime;
+        playerRef.current.play();
+      }
+    });
+
+    setShowSettings(false);
+    setSettingsType("main");
   };
 
   const handleVideoPicture = () => {
@@ -176,7 +198,7 @@ const Player: React.FC<PlayerProps> = ({
   useEffect(() => {
     let timeout: any;
 
-    if (!play || !showControl || width >= 1024) {
+    if (!play || !showControl || width >= 1024 || showSettings || loading) {
       return;
     }
 
@@ -187,7 +209,13 @@ const Player: React.FC<PlayerProps> = ({
     return () => {
       timeout && clearTimeout(timeout);
     };
-  }, [showControl, play]);
+  }, [showControl, play, showSettings, loading]);
+
+  useEffect(() => {
+    if (loading) {
+      setShowControl(true);
+    }
+  }, [loading]);
 
   // handle seek time in pc with mouse event
   useEffect(() => {
@@ -253,11 +281,22 @@ const Player: React.FC<PlayerProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (subtitle.length > 0) {
+      const track = document.createElement("track");
+      track.src = subtitle?.[0]?.url;
+      track.label = subtitle?.[0]?.lang;
+      track.default = true;
+
+      playerRef?.current?.appendChild(track);
+    }
+  }, []);
+
   return (
     <div
       ref={videoContainerRef}
-      // onMouseOver={() => setShowControl(true)}
-      // onMouseLeave={() => setShowControl(false)}
+      onMouseOver={() => setShowControl(true)}
+      onMouseLeave={() => setShowControl(false)}
       onClick={() => setShowControl(true)}
       className="w-full h-full relative"
     >
@@ -301,6 +340,7 @@ const Player: React.FC<PlayerProps> = ({
                 />
               ) : (
                 <QualitySettings
+                  handleChangeSource={handleChangeSource}
                   currentSource={currentSource}
                   setSettingsType={setSettingsType}
                   source={source}

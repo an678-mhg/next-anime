@@ -6,7 +6,6 @@ import SelectSource from "@/src/components/Watch/SelectSource";
 import {
   default_provider,
   getAnimeEpisodeStreaming,
-  // getAnimeEpisodeStreaming,
   getAnimeInfo,
 } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
@@ -27,10 +26,10 @@ const Player = dynamic(() => import("../../components/Player"), {
 });
 
 const Watch: React.FC<WatchProps> = ({ info }) => {
-  const [episode, setEpisode] = useState<Episode | null>();
+  const [episode, setEpisode] = useState<Episode | null>(info?.episodes?.[0]);
   const router = useRouter();
 
-  const { data, isLoading, isError, isFetching } = useQuery([episode], () => {
+  const { data, isError, isFetching } = useQuery([episode], () => {
     if (!episode) return null;
     return getAnimeEpisodeStreaming(
       episode?.id,
@@ -45,7 +44,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
   return (
     <div>
       <div className="pb-5">
-        <div className="bg-black w-full :aspect-[3/1] aspect-video flex items-center justify-center">
+        <div className="bg-black w-full lg:aspect-[3/1] aspect-video flex items-center justify-center">
           {!episode && (
             <h5 className="text-sm font-semibold">Please select the episode</h5>
           )}
@@ -54,18 +53,22 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
               Failed to data source episode
             </h5>
           )}
-          {isLoading && (
+          {isFetching && (
             <h5 className="text-sm font-semibold">Loading episode data...</h5>
           )}
           {!isFetching && episode && data && (
             <Player
               source={data?.sources?.map((item) => ({
                 label: item?.quality,
-                url: item?.url,
+                url: getStreamAnimeWithProxy(item?.url),
               }))}
               className="w-full h-full"
               poster={episode?.image as string}
               color="#CAE962"
+              subtitle={data?.subtitles?.map((item) => ({
+                lang: item.lang,
+                url: `/api/subtitles?url=${encodeURIComponent(item?.url)}`,
+              }))}
             />
           )}
         </div>

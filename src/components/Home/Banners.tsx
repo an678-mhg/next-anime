@@ -17,11 +17,11 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
   return (
     <div
       style={setBackgroundImage(anime?.cover)}
-      className="lg:aspect-[3/1.5] md:aspect-[3/2] aspect-[1/1] w-full banner"
+      className="lg:aspect-[3/1.4] md:aspect-[3/2] aspect-[1/0.8] w-full banner"
     >
-      <div className="z-[999] absolute top-[50%] translate-y-[-50%] p-4 w-full left-[50%] translate-x-[-50%] flex items-center justify-between space-x-8">
+      <div className="z-[999] absolute md:top-[50%] md:translate-y-[-50%] bottom-0 md:bottom-auto p-4 w-full left-[50%] translate-x-[-50%] flex items-center justify-between space-x-8">
         <div className="flex-1">
-          <h3 className="md:text-4xl text:2xl font-semibold line-clamp-2">
+          <h3 className="md:text-4xl text:2xl font-semibold lg:line-clamp-2 line-clamp-1">
             {getAnimeTitle(anime?.title)}
           </h3>
           <div className="flex items-center space-x-4 mt-4">

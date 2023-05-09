@@ -30,17 +30,6 @@ img {
   bottom: 0;
 }
 
-.banner::after {
-  background: linear-gradient(
-    90deg,
-    #202125,
-    rgba(32, 33, 37, 0.6) 40%,
-    rgba(32, 33, 37, 0) 60%,
-    rgba(32, 33, 37, 0) 80%,
-    #202125
-  );
-}
-
 .banner::before {
   background: linear-gradient(0deg, #202125, rgba(32, 33, 37, 0) 50%, #202125);
 }

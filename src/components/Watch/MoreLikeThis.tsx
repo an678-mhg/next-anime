@@ -11,19 +11,19 @@ const MoreLikeThis: React.FC<MoreLikeThisProps> = ({
   recommendations,
   relations,
 }) => {
-  const [selectType, setSelectType] = useState("Related");
-  const moreLikeThis = selectType === "Related" ? relations : recommendations;
+  const [selectType, setSelectType] = useState("related");
+  const moreLikeThis = selectType === "related" ? relations : recommendations;
 
   return (
     <div className="md:w-[402px] w-full mt-5">
       <div className="space-x-4">
-        {["Related", "Recommendations"].map((item) => (
+        {["related", "recommendations"].map((item) => (
           <button
             className={`${
               selectType === item
                 ? "bg-[#cae962] text-black"
                 : "bg-[#333] text-white"
-            } rounded-md px-4 py-2 text-sm font-semibold outline-none`}
+            } rounded-md px-4 py-2 capitalize text-sm font-semibold outline-none`}
             key={item}
             onClick={() => setSelectType(item)}
           >
@@ -32,6 +32,11 @@ const MoreLikeThis: React.FC<MoreLikeThisProps> = ({
         ))}
       </div>
       <div className="mt-5 space-y-5">
+        {moreLikeThis.length === 0 && (
+          <h6 className="text-sm font-semibold text-gray-500">
+            No {selectType} found!
+          </h6>
+        )}
         {moreLikeThis?.map((item) => (
           <ShowCaseItem
             key={item.id}
