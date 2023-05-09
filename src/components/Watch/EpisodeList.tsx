@@ -15,6 +15,11 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
 }) => {
   return (
     <div className="flex space-x-4 w-full overflow-x-auto mt-5">
+      {episodes?.length === 0 && (
+        <h6 className="text-sm font-semibold w-full text-center">
+          No episodes found
+        </h6>
+      )}
       {episodes?.map((item) => (
         <button
           key={item.id}

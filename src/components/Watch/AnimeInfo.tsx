@@ -2,9 +2,10 @@ import React from "react";
 import TitlePrimary from "../TitlePrimary";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getAnimeTitle } from "@/src/utils/contants";
-import { Title } from "@/src/types/utils";
+import { NextAiringEpisode, Title } from "@/src/types/utils";
 import { BsFillCalendarDateFill, BsFillPlayCircleFill } from "react-icons/bs";
 import { AiFillClockCircle } from "react-icons/ai";
+import dayjs from "dayjs";
 
 interface AnimeInfoProps {
   image: string;
@@ -13,6 +14,7 @@ interface AnimeInfoProps {
   duration: number;
   releaseDate: number;
   description: string;
+  nextAiringEpisode: NextAiringEpisode;
 }
 
 const AnimeInfo: React.FC<AnimeInfoProps> = ({
@@ -22,6 +24,7 @@ const AnimeInfo: React.FC<AnimeInfoProps> = ({
   title,
   type,
   description,
+  nextAiringEpisode,
 }) => {
   return (
     <div className="mt-5">
@@ -58,6 +61,12 @@ const AnimeInfo: React.FC<AnimeInfoProps> = ({
             className="text-[14px] font-normal mt-4"
             dangerouslySetInnerHTML={{ __html: description }}
           />
+          {nextAiringEpisode?.airingTime && nextAiringEpisode?.episode && (
+            <p className="mt-5 font-semibold text-sm">
+              Watch episode {nextAiringEpisode?.episode} on the day{" "}
+              {dayjs(nextAiringEpisode?.airingTime * 1000).format("DD/MM/YYYY")}
+            </p>
+          )}
         </div>
       </div>
     </div>

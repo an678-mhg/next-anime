@@ -1,12 +1,17 @@
+import path from "@/src/utils/path";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const provider = [
   { value: "gogoanime", label: "Gogo" },
   { value: "zoro", label: "Zoro" },
 ];
 
-const SelectSource = () => {
+interface SelectSourceProps {
+  idAnime: string;
+}
+
+const SelectSource: React.FC<SelectSourceProps> = ({ idAnime }) => {
   const router = useRouter();
 
   const [selectProvider, setSelectProvider] = useState(

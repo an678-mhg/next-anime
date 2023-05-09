@@ -112,3 +112,8 @@ export interface Source {
   isM3U8: boolean;
   quality: string;
 }
+
+export interface Subtitle {
+  url: string;
+  lang: string;
+}

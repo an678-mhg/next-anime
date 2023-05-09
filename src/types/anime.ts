@@ -7,6 +7,7 @@ import {
   NextAiringEpisode,
   Source,
   StartDate,
+  Subtitle,
   Title,
   Trailer,
 } from "./utils";
@@ -107,4 +108,5 @@ export interface AnimeEpisodeStreaming {
   headers: Headers;
   sources: Source[];
   download: string;
+  subtitles?: Subtitle[];
 }

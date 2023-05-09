@@ -70,7 +70,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
               <div className="space-x-4 flex items-center mt-5">
                 <Link
                   className="text-black bg-[#cae962] px-4 py-2 rounded-full flex items-center space-x-2"
-                  href={path.watch(info?.id, info?.episodes?.[0]?.id)}
+                  href={path.watch(info?.id)}
                 >
                   <BsFillPlayCircleFill className="md:text-sm text-lg" />
                   <span className="font-semibold text-sm">Watch now</span>

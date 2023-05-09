@@ -73,9 +73,9 @@ export const getStaticProps: GetStaticProps = async () => {
       favouritesAnime,
       completedAnime,
     ] = await Promise.all([
-      getRecentAnime(18),
+      getRecentAnime(8),
       getTrendingAnime(20),
-      getTopAiring(20),
+      getTopAiring(5),
       getMostPopular(5),
       searchAdvanced({
         sort: convertQueryArrayParams(["START_DATE_DESC"]),

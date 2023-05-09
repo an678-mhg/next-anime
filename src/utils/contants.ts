@@ -67,3 +67,7 @@ export const formatVideoTime = (seconds: number) => {
     return "0:00";
   }
 };
+
+export const getStreamAnimeWithProxy = (url: string) => {
+  return `https://proxy.vnxservers.com/${url}`;
+};

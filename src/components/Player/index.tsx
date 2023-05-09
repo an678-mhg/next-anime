@@ -1,0 +1,378 @@
+import ReactHlsPlayer from "react-hls-player";
+import React, { useRef, useState, useEffect } from "react";
+import { BsFillSkipEndFill, BsPauseFill, BsPlayFill } from "react-icons/bs";
+import { HiVolumeUp } from "react-icons/hi";
+import { AiFillSetting } from "react-icons/ai";
+import { CgMiniPlayer } from "react-icons/cg";
+import { BiFullscreen, BiExitFullscreen } from "react-icons/bi";
+import { formatVideoTime } from "@/src/utils/contants";
+import { FaVolumeMute } from "react-icons/fa";
+import { CircularProgress } from "react-cssfx-loading";
+import useInnerWidth from "@/src/hooks/useInnerWidth";
+import MainSettings from "./Settings/MainSettings";
+import PlaySpeedSettings from "./Settings/PlaySpeedSettings";
+import QualitySettings from "./Settings/QualitySettings";
+
+export interface Source {
+  url: string;
+  label: string;
+}
+
+interface PlayerProps {
+  source: Source[];
+  className: string;
+  poster: string;
+  color: string;
+}
+
+export const playSpeedOptions = [
+  {
+    label: "0.25x",
+    value: 0.25,
+  },
+  {
+    label: "0.5x",
+    value: 0.5,
+  },
+  {
+    label: "0.75x",
+    value: 0.7,
+  },
+  {
+    label: "1x",
+    value: 1,
+  },
+  {
+    label: "1.25x",
+    value: 1.25,
+  },
+  {
+    label: "1.5x",
+    value: 1.5,
+  },
+  {
+    label: "2x",
+    value: 2,
+  },
+];
+
+const Player: React.FC<PlayerProps> = ({
+  className,
+  source,
+  poster,
+  color,
+}) => {
+  const playerRef = useRef<HTMLVideoElement | null>(null);
+  const seekRef = useRef<HTMLDivElement | null>(null);
+  const videoContainerRef = useRef<HTMLDivElement | null>(null);
+  const width = useInnerWidth();
+
+  const [currentSource, setCurrentSource] = useState(0);
+  const [currentPlaySpeed, setCurrePlaySpeed] = useState(3);
+  const [showControl, setShowControl] = useState(true);
+  const [play, setPlay] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [fullScreen, setFullScreen] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [settingsType, setSettingsType] = useState<
+    "main" | "playspeed" | "quality"
+  >("main");
+
+  const handlePlayPause = () => {
+    const player = playerRef.current;
+    if (!player) return;
+
+    if (play) {
+      setPlay(false);
+      player?.pause();
+    } else {
+      setPlay(true);
+      player?.play();
+    }
+  };
+
+  const handleFullScreen = () => {
+    if (!videoContainerRef?.current) return;
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      videoContainerRef?.current?.requestFullscreen();
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    const player = playerRef.current;
+    if (!player) return;
+
+    setCurrentTime(player?.currentTime);
+  };
+
+  const handleSeekTime = (e: any) => {
+    const clientX = e?.clientX || e?.touches?.[0]?.clientX || 0;
+    const left = seekRef.current?.getBoundingClientRect().left as number;
+    const width = seekRef.current?.getBoundingClientRect().width as number;
+    const percent = (clientX - left) / width;
+
+    document.body.style.userSelect = "none";
+
+    if (clientX <= left) {
+      if (playerRef !== null && playerRef?.current !== null) {
+        playerRef.current.currentTime = 0;
+      }
+      setCurrentTime(0);
+      return;
+    }
+
+    if (clientX >= width + left) {
+      if (playerRef !== null && playerRef?.current !== null) {
+        playerRef.current.currentTime = playerRef?.current?.duration;
+        setCurrentTime(playerRef?.current?.duration);
+      }
+      return;
+    }
+
+    if (playerRef !== null && playerRef?.current !== null) {
+      playerRef.current.currentTime = percent * playerRef.current?.duration;
+    }
+
+    if (playerRef !== null && playerRef?.current !== null) {
+      setCurrentTime(percent * playerRef?.current?.duration);
+    }
+  };
+
+  const handleToggleMuted = () => {
+    if (muted) {
+      setMuted(false);
+      if (playerRef !== null && playerRef?.current !== null) {
+        playerRef.current.muted = false;
+      }
+    } else {
+      setMuted(true);
+      if (playerRef !== null && playerRef?.current !== null) {
+        playerRef.current.muted = true;
+      }
+    }
+  };
+
+  const handleChangePlaySpeed = (index: number, value: number) => {
+    console.log(value);
+    setCurrePlaySpeed(index);
+    if (playerRef !== null && playerRef?.current !== null) {
+      playerRef.current.defaultPlaybackRate = value;
+    }
+  };
+
+  const handleVideoPicture = () => {
+    if (document.pictureInPictureElement) {
+      document.exitPictureInPicture();
+    } else {
+      playerRef?.current?.requestPictureInPicture();
+    }
+  };
+
+  useEffect(() => {
+    let timeout: any;
+
+    if (!play || !showControl || width >= 1024) {
+      return;
+    }
+
+    timeout = setTimeout(() => {
+      setShowControl(false);
+    }, 6000);
+
+    return () => {
+      timeout && clearTimeout(timeout);
+    };
+  }, [showControl, play]);
+
+  // handle seek time in pc with mouse event
+  useEffect(() => {
+    const handleMouseDown = () => {
+      document.addEventListener("mousemove", handleSeekTime);
+    };
+
+    seekRef?.current?.addEventListener("mousedown", handleMouseDown);
+
+    return () => {
+      seekRef?.current?.removeEventListener("mousedown", handleMouseDown);
+    };
+  }, [seekRef?.current]);
+
+  // remove mouse move when mouse up
+  useEffect(() => {
+    const handleMouseUp = () => {
+      document.body.style.userSelect = "auto";
+      document.removeEventListener("mousemove", handleSeekTime);
+    };
+
+    document?.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document?.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [seekRef?.current]);
+
+  useEffect(() => {
+    const handleFullScreenChange = () => {
+      setFullScreen((prev) => !prev);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullScreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullScreenChange);
+    };
+  }, []);
+
+  // handle seek time in mobile with touch event
+  useEffect(() => {
+    const handleTouchStart = () => {
+      document.addEventListener("touchmove", handleSeekTime);
+    };
+
+    seekRef?.current?.addEventListener("touchstart", handleTouchStart);
+
+    return () => {
+      seekRef?.current?.removeEventListener("touchstart", handleTouchStart);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleTouchEnd = () => {
+      document.removeEventListener("touchmove", handleSeekTime);
+    };
+
+    seekRef?.current?.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      seekRef?.current?.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={videoContainerRef}
+      // onMouseOver={() => setShowControl(true)}
+      // onMouseLeave={() => setShowControl(false)}
+      onClick={() => setShowControl(true)}
+      className="w-full h-full relative"
+    >
+      <ReactHlsPlayer
+        src={source?.[currentSource]?.url}
+        playerRef={playerRef}
+        className={`${className}`}
+        poster={poster}
+        onPlay={() => setPlay(true)}
+        onPause={() => setPlay(false)}
+        onTimeUpdate={handleTimeUpdate}
+        onCanPlay={() => setLoading(false)}
+        onWaiting={() => setLoading(true)}
+        onLoad={() => setLoading(true)}
+      />
+      <div
+        style={{ display: showControl ? "flex" : "none" }}
+        className="absolute inset-0 opacity-animation py-2 transition-colors bg-[rgba(0,0,0,0.6)] items-end"
+      >
+        {/* Menu select play speed, quanlity, subtitle */}
+        {showSettings && (
+          <div
+            onClick={() => setShowSettings(false)}
+            className="md:absolute fixed flex items-end bottom-0 right-0 md:bg-transparent bg-[rgba(0,0,0,0.6)] left-0 md:left-auto top-0 md:top-auto md:bottom-[40px] z-10 md:w-[300px]"
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#111] p-1 w-full"
+            >
+              {settingsType === "main" ? (
+                <MainSettings
+                  currentQuality={source?.[currentSource]?.label}
+                  currentSpeed={playSpeedOptions?.[currentPlaySpeed]?.label}
+                  setSettingsType={setSettingsType}
+                />
+              ) : settingsType === "playspeed" ? (
+                <PlaySpeedSettings
+                  handleChangePlaySpeed={handleChangePlaySpeed}
+                  currentPlaySpeed={currentPlaySpeed}
+                  setSettingsType={setSettingsType}
+                />
+              ) : (
+                <QualitySettings
+                  currentSource={currentSource}
+                  setSettingsType={setSettingsType}
+                  source={source}
+                />
+              )}
+            </div>
+          </div>
+        )}
+        <div className="w-full">
+          {/* Seek time */}
+          <div
+            ref={seekRef}
+            onClick={handleSeekTime}
+            className="py-2 w-full relative cursor-pointer"
+          >
+            <div className="w-full h-[3px] bg-gray-400 relative">
+              <div
+                style={{
+                  width: `${
+                    (currentTime * 100) /
+                    (playerRef?.current?.duration as number)
+                  }%`,
+                  backgroundColor: color,
+                }}
+                className="absolute top-0 bottom-0 bg-red-500"
+              />
+            </div>
+          </div>
+          {/* Main control */}
+          <div className="flex items-center justify-between px-2">
+            <div className="flex items-center space-x-3">
+              {!loading ? (
+                <div onClick={handlePlayPause} className="cursor-pointer">
+                  {play ? <BsPauseFill size={30} /> : <BsPlayFill size={30} />}
+                </div>
+              ) : (
+                <CircularProgress color="#fff" width={25} height={25} />
+              )}
+              <BsFillSkipEndFill className="cursor-pointer" size={30} />
+              <div onClick={handleToggleMuted} className="cursor-pointer">
+                {muted ? <FaVolumeMute size={25} /> : <HiVolumeUp size={25} />}
+              </div>
+              <div className="text-xs font-semibold">
+                {formatVideoTime(currentTime)} /{" "}
+                {formatVideoTime(playerRef?.current?.duration as number)}
+              </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <AiFillSetting
+                onClick={() => setShowSettings(!showSettings)}
+                className="cursor-pointer"
+                size={25}
+              />
+
+              <CgMiniPlayer
+                onClick={handleVideoPicture}
+                className="cursor-pointer"
+                size={25}
+              />
+              <div onClick={handleFullScreen} className="cursor-pointer">
+                {fullScreen ? (
+                  <BiExitFullscreen size={25} />
+                ) : (
+                  <BiFullscreen size={25} />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Player;

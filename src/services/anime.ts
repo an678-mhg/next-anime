@@ -84,9 +84,17 @@ export const getAnimeInfo = async (
   return response.data;
 };
 
-export const getAnimeEpisodeStreaming = async (episodeId: string) => {
+export const getAnimeEpisodeStreaming = async (
+  episodeId: string,
+  provider: string = "gogoanime"
+) => {
   const response = await client.get<AnimeEpisodeStreaming>(
-    `/watch/${episodeId}`
+    `/watch/${episodeId}`,
+    {
+      params: {
+        provider,
+      },
+    }
   );
   return response.data;
 };

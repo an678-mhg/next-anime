@@ -11,8 +11,10 @@ import {
 } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
 import { Episode } from "@/src/types/utils";
+import { getStreamAnimeWithProxy } from "@/src/utils/contants";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 
@@ -20,16 +22,20 @@ interface WatchProps {
   info: AnimeInfo;
 }
 
-const Player = dynamic(() => import("../../components/Watch/Player"), {
+const Player = dynamic(() => import("../../components/Player"), {
   ssr: false,
 });
 
 const Watch: React.FC<WatchProps> = ({ info }) => {
   const [episode, setEpisode] = useState<Episode | null>();
+  const router = useRouter();
 
-  const { data, isLoading, isError } = useQuery([episode], () => {
+  const { data, isLoading, isError, isFetching } = useQuery([episode], () => {
     if (!episode) return null;
-    return getAnimeEpisodeStreaming(episode?.id);
+    return getAnimeEpisodeStreaming(
+      episode?.id,
+      (router?.query?.provider as string) || "gogoanime"
+    );
   });
 
   const handleSelectEpisode = (episode: Episode) => {
@@ -39,7 +45,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
   return (
     <div>
       <div className="pb-5">
-        <div className="bg-black w-full md:aspect-[3/1] aspect-video flex items-center justify-center">
+        <div className="bg-black w-full :aspect-[3/1] aspect-video flex items-center justify-center">
           {!episode && (
             <h5 className="text-sm font-semibold">Please select the episode</h5>
           )}
@@ -51,7 +57,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
           {isLoading && (
             <h5 className="text-sm font-semibold">Loading episode data...</h5>
           )}
-          {episode && data && (
+          {!isFetching && episode && data && (
             <Player
               source={data?.sources?.map((item) => ({
                 label: item?.quality,
@@ -65,7 +71,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
         </div>
         <div className="w-[1200px] max-w-[calc(100%-32px)] mx-auto md:flex">
           <div className="md:w-[calc(100%-402px)] w-full md:p-5 md:mt-0 mt-5">
-            <SelectSource />
+            <SelectSource idAnime={info?.id} />
             <EpisodeList
               animeId={info?.id}
               episodeId={episode?.id as string}
@@ -79,6 +85,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
               releaseDate={info?.releaseDate}
               title={info?.title}
               type={info?.type}
+              nextAiringEpisode={info?.nextAiringEpisode}
             />
           </div>
           <MoreLikeThis
