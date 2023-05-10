@@ -11,7 +11,7 @@ import {
 } from "@/src/services/anime";
 import { Anime, RecentAnime } from "@/src/types/anime";
 import { convertQueryArrayParams } from "@/src/utils/contants";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import AnimeCard from "../components/Card/AnimeCard";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
@@ -63,7 +63,7 @@ const Home: React.FC<HomeProps> = ({
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const [
       recentAnime,
@@ -99,7 +99,6 @@ export const getStaticProps: GetStaticProps = async () => {
         favouritesAnime,
         completedAnime,
       },
-      revalidate: 60,
     };
   } catch (error) {
     return {
