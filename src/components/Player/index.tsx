@@ -38,7 +38,7 @@ export const playSpeedOptions = [
   },
   {
     label: "0.75x",
-    value: 0.7,
+    value: 0.75,
   },
   {
     label: "1x",
@@ -139,9 +139,6 @@ const Player: React.FC<PlayerProps> = ({
 
     if (playerRef !== null && playerRef?.current !== null) {
       playerRef.current.currentTime = percent * playerRef.current?.duration;
-    }
-
-    if (playerRef !== null && playerRef?.current !== null) {
       setCurrentTime(percent * playerRef?.current?.duration);
     }
   };
@@ -295,7 +292,13 @@ const Player: React.FC<PlayerProps> = ({
   return (
     <div
       ref={videoContainerRef}
-      onMouseOver={() => setShowControl(true)}
+      onMouseOver={() => {
+        if (fullScreen) {
+          return;
+        }
+
+        setShowControl(true);
+      }}
       onMouseLeave={() => setShowControl(false)}
       onClick={() => setShowControl(true)}
       className="w-full h-full relative"
@@ -312,7 +315,14 @@ const Player: React.FC<PlayerProps> = ({
         onWaiting={() => setLoading(true)}
         onLoad={() => setLoading(true)}
       />
+      {/* Loading */}
+      {loading && (
+        <div className="absolute z-[100] top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%]">
+          <CircularProgress color="#fff" />
+        </div>
+      )}
       <div
+        onClick={() => setShowSettings(false)}
         style={{ display: showControl ? "flex" : "none" }}
         className="absolute inset-0 opacity-animation py-2 transition-colors bg-[rgba(0,0,0,0.6)] items-end"
       >
@@ -349,7 +359,7 @@ const Player: React.FC<PlayerProps> = ({
             </div>
           </div>
         )}
-        <div className="w-full">
+        <div onClick={(e) => e.stopPropagation()} className="w-full">
           {/* Seek time */}
           <div
             ref={seekRef}
@@ -383,8 +393,9 @@ const Player: React.FC<PlayerProps> = ({
               <div onClick={handleToggleMuted} className="cursor-pointer">
                 {muted ? <FaVolumeMute size={25} /> : <HiVolumeUp size={25} />}
               </div>
-              <div className="text-xs font-semibold">
-                {formatVideoTime(currentTime)} /{" "}
+              <div className="text-sm font-semibold">
+                {formatVideoTime(currentTime)}
+                {" / "}
                 {formatVideoTime(playerRef?.current?.duration as number)}
               </div>
             </div>

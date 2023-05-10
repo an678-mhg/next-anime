@@ -7,6 +7,7 @@ const Logo = () => {
   return (
     <Link href={path.home} className="flex items-center space-x-3">
       <SiNextdotjs size={40} />
+      <span className="text-xl text-[#CAE962] font-semibold">Anime</span>
     </Link>
   );
 };

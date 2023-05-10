@@ -98,3 +98,10 @@ export const getAnimeEpisodeStreaming = async (
   );
   return response.data;
 };
+
+export const searchAnime = async (query: string, page: number = 1) => {
+  const response = await client.get<AnimeResponse<Anime>>(`/${query}`, {
+    params: page,
+  });
+  return response.data;
+};

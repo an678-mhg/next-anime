@@ -6,6 +6,8 @@ const path = {
     return `/anime/${id}`;
   },
   home: "/",
+  search: "/search",
+  results: (query: string) => `/results?q=${query}`,
 };
 
 export default path;

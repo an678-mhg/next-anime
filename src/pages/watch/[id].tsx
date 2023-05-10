@@ -14,7 +14,7 @@ import { getStreamAnimeWithProxy } from "@/src/utils/contants";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 interface WatchProps {
@@ -41,10 +41,14 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
     setEpisode(episode);
   };
 
+  useEffect(() => {
+    setEpisode(info?.episodes?.[0]);
+  }, [router?.query?.provider]);
+
   return (
     <div>
       <div className="pb-5">
-        <div className="bg-black w-full lg:aspect-[3/1] aspect-video flex items-center justify-center">
+        <div className="bg-black w-full lg:aspect-[3/1] z-[9999] aspect-video flex items-center justify-center">
           {!episode && (
             <h5 className="text-sm font-semibold">Please select the episode</h5>
           )}
@@ -60,7 +64,10 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
             <Player
               source={data?.sources?.map((item) => ({
                 label: item?.quality,
-                url: getStreamAnimeWithProxy(item?.url),
+                url:
+                  router?.query?.provider === "gogoanime"
+                    ? item?.url
+                    : getStreamAnimeWithProxy(item?.url),
               }))}
               className="w-full h-full"
               poster={episode?.image as string}

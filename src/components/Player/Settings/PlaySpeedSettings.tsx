@@ -35,7 +35,7 @@ const PlaySpeedSettings: React.FC<PlaySpeedSettingsProps> = ({
             <div className="w-[20px] h-[20px]">
               {currentPlaySpeed === index && <BsCheckLg size={20} />}
             </div>
-            <p>{item?.value}</p>
+            <p>{item?.label}</p>
           </div>
         ))}
       </div>

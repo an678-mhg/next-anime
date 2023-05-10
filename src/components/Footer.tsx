@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div
       style={setBackgroundImage("../footer.jpg")}
-      className="px-4 py-10 footer relative mt-10"
+      className="px-4 py-10 footer relative"
     >
       <div className="items-center z-[999] border-b border-gray-600 inline-flex pb-5">
         <Logo />

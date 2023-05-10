@@ -23,7 +23,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
         <AnimeBannerDetail info={info} />
       </div>
 
-      <div className="md:hidden block">
+      <div className="md:hidden block md:mt-0 mt-8">
         <AnimeInfoDetail info={info} />
       </div>
 
@@ -42,7 +42,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
       )}
 
       {info?.recommendations?.length > 0 && (
-        <AnimeGridLayout title="Recommended for you" className="p-4 mt-5">
+        <AnimeGridLayout title="Recommended for you" className="p-4">
           {info?.recommendations?.map((item) => (
             <AnimeCard
               key={item?.id}

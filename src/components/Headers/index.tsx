@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import Logo from "./Logo";
 import { CiSearch } from "react-icons/ci";
 import Link from "next/link";
+import path from "@/src/utils/path";
 
 interface HeadersProps {
   backgroundColor?: string;
@@ -39,7 +40,9 @@ const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
     >
       <Logo />
       <div className="flex items-center space-x-4">
-        <CiSearch size={30} className="cursor-pointer" />
+        <Link href={path.search}>
+          <CiSearch size={30} className="cursor-pointer" />
+        </Link>
         {/* <Link
           className="block px-4 py-1.5 text-sm rounded-md bg-[#cae962] font-semibold text-black"
           href="/sign-in"

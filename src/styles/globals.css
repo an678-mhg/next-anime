@@ -30,6 +30,17 @@ img {
   bottom: 0;
 }
 
+.banner::after {
+  background: linear-gradient(
+    90deg,
+    #202125,
+    rgba(32, 33, 37, 0.6) 40%,
+    rgba(32, 33, 37, 0) 60%,
+    rgba(32, 33, 37, 0) 80%,
+    #202125
+  );
+}
+
 .banner::before {
   background: linear-gradient(0deg, #202125, rgba(32, 33, 37, 0) 50%, #202125);
 }
@@ -104,11 +115,11 @@ img {
 }
 
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: #cae962;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px #cae962;
 }
 
 input:checked + .slider:before {
