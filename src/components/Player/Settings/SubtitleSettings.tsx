@@ -1,41 +1,43 @@
+import { Subtitle } from "@/src/types/utils";
 import React from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
-import { playSpeedOptions } from "../index";
 
-interface PlaySpeedSettingsProps {
+interface SubtitleSettingsProps {
   setSettingsType: React.Dispatch<
     React.SetStateAction<"main" | "playspeed" | "quality" | "subtitle">
   >;
-  currentPlaySpeed: number;
-  handleChangePlaySpeed: (index: number, value: number) => void;
+  subtitle: Subtitle[];
+  currentSubtitle: number;
+  handleChangeSubtitle: (index: number) => void;
 }
 
-const PlaySpeedSettings: React.FC<PlaySpeedSettingsProps> = ({
+const SubtitleSettings: React.FC<SubtitleSettingsProps> = ({
+  currentSubtitle,
+  handleChangeSubtitle,
   setSettingsType,
-  currentPlaySpeed,
-  handleChangePlaySpeed,
+  subtitle,
 }) => {
   return (
-    <div className="w-full">
+    <div className="w-full overflow-y-auto">
       <div
         onClick={() => setSettingsType("main")}
         className="flex items-center space-x-3 p-2 cursor-pointer"
       >
         <AiOutlineLeft size={20} />
-        <p className="text-sm font-semibold">Play speed</p>
+        <p className="text-sm font-semibold">Subtitle</p>
       </div>
       <div>
-        {playSpeedOptions?.map((item, index) => (
+        {subtitle?.map((item, index) => (
           <div
+            onClick={() => handleChangeSubtitle(index)}
             className="p-2 text-sm font-semibold space-x-3 flex items-center cursor-pointer"
-            key={item?.value}
-            onClick={() => handleChangePlaySpeed(index, item?.value)}
+            key={item?.url}
           >
             <div className="w-[20px] h-[20px]">
-              {currentPlaySpeed === index && <BsCheckLg size={20} />}
+              {currentSubtitle === index && <BsCheckLg size={20} />}
             </div>
-            <p>{item?.label}</p>
+            <p>{item?.lang}</p>
           </div>
         ))}
       </div>
@@ -43,4 +45,4 @@ const PlaySpeedSettings: React.FC<PlaySpeedSettingsProps> = ({
   );
 };
 
-export default PlaySpeedSettings;
+export default SubtitleSettings;

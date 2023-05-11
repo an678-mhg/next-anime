@@ -60,7 +60,7 @@ export const getMostPopular = async (limit: number = 5, page: number = 1) => {
   return response.data.results;
 };
 
-export const searchAdvanced = async (queries: SearchAdvancedQuery) => {
+export const searchAdvanced = async (queries?: SearchAdvancedQuery) => {
   const response = await client.get<AnimeResponse<Anime>>("/advanced-search", {
     params: {
       ...queries,
@@ -68,7 +68,7 @@ export const searchAdvanced = async (queries: SearchAdvancedQuery) => {
     },
   });
 
-  return response.data.results;
+  return response.data;
 };
 
 export const getAnimeInfo = async (

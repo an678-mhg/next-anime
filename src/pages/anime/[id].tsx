@@ -1,6 +1,6 @@
 import AnimeBannerDetail from "@/src/components/Anime/AnimeBannerDetail";
 import AnimeInfoDetail from "@/src/components/Anime/AnimeInfoDetail";
-import AnimeCard from "@/src/components/Card/AnimeCard";
+import AnimeCard from "@/src/components/Anime/AnimeCard";
 import AnimeGridLayout from "@/src/layouts/AnimeGridLayout";
 import MainLayout from "@/src/layouts/MainLayout";
 import { getAnimeInfo } from "@/src/services/anime";
@@ -31,6 +31,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
         <AnimeGridLayout title="Relations for anime" className="p-4 mt-5">
           {info?.relations?.map((item) => (
             <AnimeCard
+              color={item?.color}
               key={item?.id}
               id={item?.id.toString()}
               image={item?.image}
@@ -45,6 +46,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
         <AnimeGridLayout title="Recommended for you" className="p-4">
           {info?.recommendations?.map((item) => (
             <AnimeCard
+              color={"#fff"}
               key={item?.id}
               id={item?.id.toString()}
               image={item?.image}

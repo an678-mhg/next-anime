@@ -21,7 +21,10 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
     >
       <div className="z-[999] absolute top-[50%] translate-y-[-50%] p-4 w-full left-[50%] translate-x-[-50%] flex items-center justify-between space-x-8">
         <div className="flex-1">
-          <h3 className="md:text-4xl text:2xl font-semibold lg:line-clamp-2 line-clamp-1">
+          <h3
+            style={{ color: anime?.color }}
+            className="md:text-4xl text:2xl font-semibold lg:line-clamp-2 line-clamp-1"
+          >
             {getAnimeTitle(anime?.title)}
           </h3>
           <div className="flex items-center space-x-4 md:mt-4 mt-3">
@@ -61,7 +64,7 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
           />
           <div className="space-x-4 flex items-center mt-5">
             <Link
-              className="text-black bg-[#cae962] px-4 py-2 rounded-full flex items-center space-x-2"
+              className="bg-[#ef4444] px-4 py-2 rounded-full flex items-center space-x-2"
               href={path.watch(anime?.id)}
             >
               <BsFillPlayCircleFill className="md:text-sm text-lg" />

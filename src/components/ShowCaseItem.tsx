@@ -15,6 +15,7 @@ interface ShowCaseItemProps {
   duration?: number;
   releaseDate?: number;
   border?: boolean;
+  color: string;
 }
 
 const ShowCaseItem: React.FC<ShowCaseItemProps> = ({
@@ -25,20 +26,21 @@ const ShowCaseItem: React.FC<ShowCaseItemProps> = ({
   title,
   type,
   border = true,
+  color,
 }) => {
   return (
     <Link
       href={path.anime(id)}
-      className={`${border && "border border-gray-600 p-3"} flex space-x-4`}
+      className={`${border && "p-3"} flex space-x-4`}
       key={id}
     >
       <LazyLoadImage
         effect="blur"
-        className="rounded-md w-[60px] aspect-[9/16]"
+        className="rounded-md w-[80px] aspect-[9/16]"
         src={image}
       />
       <div className="text-sm flex-1">
-        <h5 className="text-sm font-semibold line-clamp-1">
+        <h5 style={{ color }} className="text-sm font-semibold line-clamp-1">
           {getAnimeTitle(title)}
         </h5>
         <div className="flex items-center space-x-3 mt-2">

@@ -14,19 +14,14 @@ interface SelectSourceProps {
 const SelectSource: React.FC<SelectSourceProps> = ({ idAnime }) => {
   const router = useRouter();
 
-  const [selectProvider, setSelectProvider] = useState(
-    (router?.query?.provider as string) || provider?.[0].value
-  );
-
   return (
     <div className="flex items-center space-x-3 justify-end">
       <h4 className="text-sm font-semibold">Source:</h4>
       <select
         onChange={(e) => {
           router?.push(path?.watch(idAnime, e.target?.value));
-          setSelectProvider(e.target.value);
         }}
-        value={selectProvider}
+        value={router?.query?.provider}
         className="bg-[#333] outline-none font-semibold text-white p-2 text-sm w-[200px] rounded-md"
       >
         {provider?.map((item) => (

@@ -24,10 +24,8 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
         <button
           key={item.id}
           className={`${
-            episodeId === item.id
-              ? "bg-[#cae962] text-black"
-              : "bg-[#333] text-white"
-          } px-4 py-2 text-center cursor-pointer rounded-md text-sm font-semibold`}
+            episodeId === item.id ? "bg-[#ef4444]" : "bg-[#333]"
+          } px-4 py-2 text-center cursor-pointer text-white rounded-md text-sm font-semibold`}
           onClick={() => handleSelectEpisode(item)}
         >
           {item.number}

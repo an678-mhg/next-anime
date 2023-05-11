@@ -44,7 +44,7 @@ const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
           <CiSearch size={30} className="cursor-pointer" />
         </Link>
         {/* <Link
-          className="block px-4 py-1.5 text-sm rounded-md bg-[#cae962] font-semibold text-black"
+          className="block px-4 py-1.5 text-sm rounded-md bg-[#ef4444] font-semibold text-black"
           href="/sign-in"
         >
           Sign In

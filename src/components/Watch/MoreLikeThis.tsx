@@ -20,9 +20,7 @@ const MoreLikeThis: React.FC<MoreLikeThisProps> = ({
         {["related", "recommendations"].map((item) => (
           <button
             className={`${
-              selectType === item
-                ? "bg-[#cae962] text-black"
-                : "bg-[#333] text-white"
+              selectType === item ? "bg-[#ef4444]" : "bg-[#333]"
             } rounded-md px-4 py-2 capitalize text-sm font-semibold outline-none`}
             key={item}
             onClick={() => setSelectType(item)}
@@ -39,6 +37,8 @@ const MoreLikeThis: React.FC<MoreLikeThisProps> = ({
         )}
         {moreLikeThis?.map((item) => (
           <ShowCaseItem
+            // @ts-ignore
+            color={item?.color || "#fff"}
             key={item.id}
             id={item?.id.toString()}
             image={item?.image}

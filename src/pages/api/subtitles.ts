@@ -10,7 +10,11 @@ const handler: NextApiHandler = async (req, res) => {
     if (!url || typeof url !== "string")
       return res.status(400).send("Invalid request");
 
-    const response = await axios.get(encodeURI(url));
+    const response = await axios.get(encodeURI(url), {
+      headers: {
+        referer: "https://zoro.to/",
+      },
+    });
 
     const { subtitle } = convert(response.data, ".vtt");
 

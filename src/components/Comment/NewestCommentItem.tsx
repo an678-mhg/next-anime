@@ -24,7 +24,7 @@ const NewestCommentItem = () => {
           missing
         </p>
       </div>
-      <div className="text-xs flex items-center font-semibold text-[#CAE962] space-x-2">
+      <div className="text-xs flex items-center font-semibold text-[#ef4444] space-x-2">
         <FcDocument />
         <span>One Piece</span>
       </div>

@@ -9,13 +9,14 @@ interface BoxShowCaseProps {
 
 const BoxShowCase: React.FC<BoxShowCaseProps> = ({ title, anime }) => {
   return (
-    <div>
-      <h3 className="font-semibold text-[16px] text-[#CAE962] bg-[#4A4B51] p-3">
+    <div className="rounded-md overflow-hidden">
+      <h3 className="font-semibold text-[16px] text-[#ef4444] bg-[#222] p-3">
         {title}
       </h3>
-      <div className="bg-[#414248]">
+      <div className="bg-[#222]">
         {anime?.map((item) => (
           <ShowCaseItem
+            color={item?.color}
             key={item.id}
             duration={item?.duration}
             id={item?.id}

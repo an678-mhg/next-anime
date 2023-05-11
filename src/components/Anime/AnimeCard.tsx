@@ -10,24 +10,22 @@ interface AnimeCardProps {
   type: string;
   image: string;
   id: string;
+  color: string;
 }
 
-const AnimeCard: React.FC<AnimeCardProps> = ({ image, title, type, id }) => {
+const AnimeCard: React.FC<AnimeCardProps> = ({ image, title, id, color }) => {
   return (
     <Link href={path.anime(id)}>
-      <div className="rounded-md overflow-hidden relative">
+      <div>
         <LazyLoadImage
           width="100%"
           src={image}
           effect="blur"
-          className="aspect-[124/185]"
+          className="aspect-[124/185] rounded-sm"
         />
-        <div className="bg-[#2A2C31] p-2 mt-[-6px]">
-          <h3 className="text-sm font-semibold line-clamp-1">
-            {getAnimeTitle(title)}
-          </h3>
-          <p className="text-sm text-gray-500">{type}</p>
-        </div>
+        <h3 style={{ color: color }} className="font-semibold line-clamp-2">
+          {getAnimeTitle(title)}
+        </h3>
       </div>
     </Link>
   );

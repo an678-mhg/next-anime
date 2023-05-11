@@ -13,7 +13,7 @@ import { Anime, RecentAnime } from "@/src/types/anime";
 import { convertQueryArrayParams } from "@/src/utils/contants";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
-import AnimeCard from "../components/Card/AnimeCard";
+import AnimeCard from "../components/Anime/AnimeCard";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 
 interface HomeProps {
@@ -43,6 +43,7 @@ const Home: React.FC<HomeProps> = ({
       <AnimeGridLayout title="Recent Anime Episodes" className="p-4">
         {recentAnime?.map((item) => (
           <AnimeCard
+            color={item?.color}
             key={item?.id}
             id={item?.id.toString()}
             image={item?.image}
@@ -96,8 +97,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
         tredingAnime,
         topAiringAnime,
         mostPopularAnime,
-        favouritesAnime,
-        completedAnime,
+        favouritesAnime: favouritesAnime.results,
+        completedAnime: completedAnime.results,
       },
     };
   } catch (error) {

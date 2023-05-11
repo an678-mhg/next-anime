@@ -1,14 +1,10 @@
 import React from "react";
 import Logo from "./Headers/Logo";
 import ShareSocial from "./ShareSocial";
-import { setBackgroundImage } from "../utils/contants";
 
 const Footer = () => {
   return (
-    <div
-      style={setBackgroundImage("../footer.jpg")}
-      className="px-4 py-10 footer relative"
-    >
+    <div className="px-4 py-10 footer relative bg-[#111]">
       <div className="items-center z-[999] border-b border-gray-600 inline-flex pb-5">
         <Logo />
         <div className="h-[40px] mx-10 w-[1px] bg-gray-600" />
@@ -25,16 +21,16 @@ const Footer = () => {
         </p>
       </div>
       <div className="mt-5 flex items-center space-x-4">
-        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
+        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
           Terms of service
         </p>
-        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
+        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
           DMCA
         </p>
-        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
+        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
           Contact
         </p>
-        <p className="text-xs font-normal hover:text-[#CAE962] cursor-pointer">
+        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
           Zoro Proxy Sites
         </p>
       </div>

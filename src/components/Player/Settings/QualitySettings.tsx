@@ -5,7 +5,7 @@ import { BsCheckLg } from "react-icons/bs";
 
 interface QualitySettingsProps {
   setSettingsType: React.Dispatch<
-    React.SetStateAction<"main" | "playspeed" | "quality">
+    React.SetStateAction<"main" | "playspeed" | "quality" | "subtitle">
   >;
   source: Source[];
   currentSource: number;

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100;200;300;400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,9 +11,9 @@
 }
 
 body {
-  background-color: #202125;
+  background-color: #000;
   color: #fff;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Fira Sans", sans-serif;
 }
 
 img {
@@ -33,16 +33,16 @@ img {
 .banner::after {
   background: linear-gradient(
     90deg,
-    #202125,
+    #000,
     rgba(32, 33, 37, 0.6) 40%,
     rgba(32, 33, 37, 0) 60%,
     rgba(32, 33, 37, 0) 80%,
-    #202125
+    #000
   );
 }
 
 .banner::before {
-  background: linear-gradient(0deg, #202125, rgba(32, 33, 37, 0) 50%, #202125);
+  background: linear-gradient(0deg, #000, rgba(32, 33, 37, 0) 50%, #000);
 }
 
 .swiper-button-next,
@@ -115,11 +115,11 @@ img {
 }
 
 input:checked + .slider {
-  background-color: #cae962;
+  background-color: #ef4444;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #cae962;
+  box-shadow: 0 0 1px #ef4444;
 }
 
 input:checked + .slider:before {
@@ -138,7 +138,8 @@ input:checked + .slider:before {
 }
 
 .is-sticky {
-  background-color: #6b7280;
+  background-color: #111;
+  padding: 10px 16px;
 }
 
 .opacity-animation {

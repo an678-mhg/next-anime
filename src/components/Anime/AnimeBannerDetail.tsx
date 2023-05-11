@@ -36,7 +36,10 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
               {getAnimeTitle(info?.title)}
             </p>
           </h4>
-          <h5 className="lg:text-4xl text:2xl font-semibold mt-2 line-clamp-2">
+          <h5
+            style={{ color: info.color }}
+            className="lg:text-4xl text:2xl font-semibold mt-2 line-clamp-2"
+          >
             {getAnimeTitle(info?.title)}
           </h5>
           <div className="flex items-center space-x-3 mt-2">
@@ -61,7 +64,7 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
           </div>
           <div className="space-x-4 flex items-center mt-5">
             <Link
-              className="text-black bg-[#cae962] text-center px-4 py-2 rounded-full flex items-center space-x-2"
+              className="bg-[#ef4444] text-center px-4 py-2 rounded-full flex items-center space-x-2"
               href={path.watch(info?.id)}
             >
               <BsFillPlayCircleFill className="md:text-sm text-lg" />
@@ -77,8 +80,8 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
             dangerouslySetInnerHTML={{ __html: info?.description }}
           />
           <div className="items-center space-x-5 mt-5 flex">
-            <div className="text-sm border-l-[2px] border-[#CAE962] pl-4">
-              <h4 className="text-[#CAE962] font-semibold">Share Next Anime</h4>
+            <div className="text-sm border-l-[2px] border-[#ef4444] pl-4">
+              <h4 className="text-[#ef4444] font-semibold">Share Next Anime</h4>
               <p>to your friends</p>
             </div>
             <ShareSocial

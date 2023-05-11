@@ -28,17 +28,12 @@ export interface SearchAdvancedQuery {
   type?: "ANIME" | "MANGA";
   page?: number;
   perPage?: number;
-  season?: "WINTER" | "SPRING" | "SUMMER" | "FALL";
-  format?: "TV" | "TV_SHORT" | "OVA" | "ONA" | "MOVIE" | "SPECIAL" | "MUSIC";
+  season?: string;
+  format?: string;
   sort?: string;
   genres?: string;
   year?: number;
-  status?:
-    | "RELEASING"
-    | "NOT_YET_RELEASED"
-    | "FINISHED"
-    | "CANCELLED"
-    | "HIATUS";
+  status?: string;
 }
 
 export interface StartDate {
@@ -116,4 +111,9 @@ export interface Source {
 export interface Subtitle {
   url: string;
   lang: string;
+}
+
+export interface Filter {
+  label: string;
+  value: string;
 }

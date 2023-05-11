@@ -1,5 +1,5 @@
 import ReactHlsPlayer from "react-hls-player";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import { BsFillSkipEndFill, BsPauseFill, BsPlayFill } from "react-icons/bs";
 import { HiVolumeUp } from "react-icons/hi";
 import { AiFillSetting } from "react-icons/ai";
@@ -8,11 +8,11 @@ import { BiFullscreen, BiExitFullscreen } from "react-icons/bi";
 import { formatVideoTime } from "@/src/utils/contants";
 import { FaVolumeMute } from "react-icons/fa";
 import { CircularProgress } from "react-cssfx-loading";
-import useInnerWidth from "@/src/hooks/useInnerWidth";
 import MainSettings from "./Settings/MainSettings";
 import PlaySpeedSettings from "./Settings/PlaySpeedSettings";
 import QualitySettings from "./Settings/QualitySettings";
 import { Subtitle } from "@/src/types/utils";
+import SubtitleSettings from "./Settings/SubtitleSettings";
 
 export interface Source {
   url: string;
@@ -25,6 +25,7 @@ interface PlayerProps {
   poster: string;
   color: string;
   subtitle?: Subtitle[];
+  handleNext?: () => boolean;
 }
 
 export const playSpeedOptions = [
@@ -64,11 +65,12 @@ const Player: React.FC<PlayerProps> = ({
   poster,
   color,
   subtitle = [],
+  handleNext,
 }) => {
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const seekRef = useRef<HTMLDivElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
-  const width = useInnerWidth();
+  const timeoutSeekRef = useRef<any>(null);
 
   const [currentSource, setCurrentSource] = useState(0);
   const [currentPlaySpeed, setCurrePlaySpeed] = useState(3);
@@ -80,8 +82,11 @@ const Player: React.FC<PlayerProps> = ({
   const [loading, setLoading] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [settingsType, setSettingsType] = useState<
-    "main" | "playspeed" | "quality"
+    "main" | "playspeed" | "quality" | "subtitle"
   >("main");
+  const [currentSubtitle, setCurrentSubtitle] = useState(0);
+  const [volume, setVolume] = useState(100);
+  const [seeking, setSeeking] = useState(false);
 
   const handlePlayPause = () => {
     const player = playerRef.current;
@@ -107,6 +112,10 @@ const Player: React.FC<PlayerProps> = ({
   };
 
   const handleTimeUpdate = () => {
+    if (seeking) {
+      return;
+    }
+
     const player = playerRef.current;
     if (!player) return;
 
@@ -121,25 +130,34 @@ const Player: React.FC<PlayerProps> = ({
 
     document.body.style.userSelect = "none";
 
-    if (clientX <= left) {
-      if (playerRef !== null && playerRef?.current !== null) {
-        playerRef.current.currentTime = 0;
-      }
-      setCurrentTime(0);
-      return;
+    if (timeoutSeekRef?.current) {
+      clearTimeout(timeoutSeekRef?.current);
     }
 
-    if (clientX >= width + left) {
-      if (playerRef !== null && playerRef?.current !== null) {
-        playerRef.current.currentTime = playerRef?.current?.duration;
-        setCurrentTime(playerRef?.current?.duration);
+    timeoutSeekRef.current = setTimeout(() => {
+      if (clientX <= left) {
+        if (playerRef !== null && playerRef?.current !== null) {
+          playerRef.current.currentTime = 0;
+        }
+        return;
       }
-      return;
-    }
+
+      if (clientX >= width + left) {
+        if (playerRef !== null && playerRef?.current !== null) {
+          playerRef.current.currentTime = playerRef?.current?.duration;
+        }
+        return;
+      }
+
+      if (playerRef !== null && playerRef?.current !== null) {
+        playerRef.current.currentTime = percent * playerRef.current?.duration;
+      }
+
+      setSeeking(false);
+    }, 500);
 
     if (playerRef !== null && playerRef?.current !== null) {
-      playerRef.current.currentTime = percent * playerRef.current?.duration;
-      setCurrentTime(percent * playerRef?.current?.duration);
+      setCurrentTime(percent * (playerRef?.current.duration as number));
     }
   };
 
@@ -148,11 +166,13 @@ const Player: React.FC<PlayerProps> = ({
       setMuted(false);
       if (playerRef !== null && playerRef?.current !== null) {
         playerRef.current.muted = false;
+        setVolume(100);
       }
     } else {
       setMuted(true);
       if (playerRef !== null && playerRef?.current !== null) {
         playerRef.current.muted = true;
+        setVolume(0);
       }
     }
   };
@@ -184,6 +204,12 @@ const Player: React.FC<PlayerProps> = ({
     setSettingsType("main");
   };
 
+  const handleChangeSubtitle = (index: number) => {
+    setCurrentSubtitle(index);
+    setShowSettings(false);
+    setSettingsType("main");
+  };
+
   const handleVideoPicture = () => {
     if (document.pictureInPictureElement) {
       document.exitPictureInPicture();
@@ -192,10 +218,20 @@ const Player: React.FC<PlayerProps> = ({
     }
   };
 
+  const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(e.target.value));
+  };
+
+  useEffect(() => {
+    if (playerRef !== null && playerRef?.current !== null) {
+      playerRef.current.volume = volume / 100;
+    }
+  }, [volume]);
+
   useEffect(() => {
     let timeout: any;
 
-    if (!play || !showControl || width >= 1024 || showSettings || loading) {
+    if (!play || !showControl || showSettings || seeking) {
       return;
     }
 
@@ -206,7 +242,7 @@ const Player: React.FC<PlayerProps> = ({
     return () => {
       timeout && clearTimeout(timeout);
     };
-  }, [showControl, play, showSettings, loading]);
+  }, [showControl, play, showSettings, seeking]);
 
   useEffect(() => {
     if (loading) {
@@ -217,6 +253,7 @@ const Player: React.FC<PlayerProps> = ({
   // handle seek time in pc with mouse event
   useEffect(() => {
     const handleMouseDown = () => {
+      setSeeking(true);
       document.addEventListener("mousemove", handleSeekTime);
     };
 
@@ -225,7 +262,7 @@ const Player: React.FC<PlayerProps> = ({
     return () => {
       seekRef?.current?.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [seekRef?.current]);
+  }, []);
 
   // remove mouse move when mouse up
   useEffect(() => {
@@ -239,7 +276,7 @@ const Player: React.FC<PlayerProps> = ({
     return () => {
       document?.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [seekRef?.current]);
+  }, []);
 
   useEffect(() => {
     const handleFullScreenChange = () => {
@@ -256,6 +293,7 @@ const Player: React.FC<PlayerProps> = ({
   // handle seek time in mobile with touch event
   useEffect(() => {
     const handleTouchStart = () => {
+      setSeeking(true);
       document.addEventListener("touchmove", handleSeekTime);
     };
 
@@ -268,6 +306,7 @@ const Player: React.FC<PlayerProps> = ({
 
   useEffect(() => {
     const handleTouchEnd = () => {
+      document.body.style.userSelect = "auto";
       document.removeEventListener("touchmove", handleSeekTime);
     };
 
@@ -280,26 +319,38 @@ const Player: React.FC<PlayerProps> = ({
 
   useEffect(() => {
     if (subtitle.length > 0) {
+      const oldTrack = playerRef?.current?.querySelector("track");
+
+      if (oldTrack) {
+        oldTrack.remove();
+      }
+
       const track = document.createElement("track");
-      track.src = subtitle?.[0]?.url;
-      track.label = subtitle?.[0]?.lang;
+      track.src = subtitle?.[currentSubtitle]?.url;
+      track.label = subtitle?.[currentSubtitle]?.lang;
       track.default = true;
 
       playerRef?.current?.appendChild(track);
     }
-  }, []);
+  }, [currentSubtitle, currentSource]);
 
   return (
     <div
       ref={videoContainerRef}
-      onMouseOver={() => {
+      onMouseMove={() => {
         if (fullScreen) {
           return;
         }
 
         setShowControl(true);
       }}
-      onMouseLeave={() => setShowControl(false)}
+      onMouseLeave={() => {
+        if (seeking) {
+          return;
+        }
+
+        setShowControl(false);
+      }}
       onClick={() => setShowControl(true)}
       className="w-full h-full relative"
     >
@@ -341,6 +392,9 @@ const Player: React.FC<PlayerProps> = ({
                   currentQuality={source?.[currentSource]?.label}
                   currentSpeed={playSpeedOptions?.[currentPlaySpeed]?.label}
                   setSettingsType={setSettingsType}
+                  currentSubtitle={subtitle?.[currentSubtitle]?.lang}
+                  haveSubtitle={subtitle?.length > 0}
+                  haveQuality={source?.length > 0}
                 />
               ) : settingsType === "playspeed" ? (
                 <PlaySpeedSettings
@@ -348,12 +402,19 @@ const Player: React.FC<PlayerProps> = ({
                   currentPlaySpeed={currentPlaySpeed}
                   setSettingsType={setSettingsType}
                 />
-              ) : (
+              ) : settingsType === "quality" ? (
                 <QualitySettings
                   handleChangeSource={handleChangeSource}
                   currentSource={currentSource}
                   setSettingsType={setSettingsType}
                   source={source}
+                />
+              ) : (
+                <SubtitleSettings
+                  currentSubtitle={currentSubtitle}
+                  setSettingsType={setSettingsType}
+                  handleChangeSubtitle={handleChangeSubtitle}
+                  subtitle={subtitle}
                 />
               )}
             </div>
@@ -380,7 +441,10 @@ const Player: React.FC<PlayerProps> = ({
             </div>
           </div>
           {/* Main control */}
-          <div className="flex items-center justify-between px-2">
+          <div
+            onMouseDown={(e) => e.stopPropagation()}
+            className="flex items-center justify-between px-2"
+          >
             <div className="flex items-center space-x-3">
               {!loading ? (
                 <div onClick={handlePlayPause} className="cursor-pointer">
@@ -389,11 +453,29 @@ const Player: React.FC<PlayerProps> = ({
               ) : (
                 <CircularProgress color="#fff" width={25} height={25} />
               )}
-              <BsFillSkipEndFill className="cursor-pointer" size={30} />
-              <div onClick={handleToggleMuted} className="cursor-pointer">
-                {muted ? <FaVolumeMute size={25} /> : <HiVolumeUp size={25} />}
+              {handleNext && (
+                <BsFillSkipEndFill
+                  onClick={handleNext}
+                  className="cursor-pointer"
+                  size={30}
+                />
+              )}
+              <div className="flex items-center space-x-3">
+                <div onClick={handleToggleMuted} className="cursor-pointer">
+                  {muted ? (
+                    <FaVolumeMute size={25} />
+                  ) : (
+                    <HiVolumeUp size={25} />
+                  )}
+                </div>
+                <input
+                  value={volume}
+                  onChange={handleVolumeChange}
+                  className="md:block hidden w-[100px] h-[4px]"
+                  type="range"
+                />
               </div>
-              <div className="text-sm font-semibold">
+              <div className="text-sm font-semibold text-justify">
                 {formatVideoTime(currentTime)}
                 {" / "}
                 {formatVideoTime(playerRef?.current?.duration as number)}
@@ -405,7 +487,6 @@ const Player: React.FC<PlayerProps> = ({
                 className="cursor-pointer"
                 size={25}
               />
-
               <CgMiniPlayer
                 onClick={handleVideoPicture}
                 className="cursor-pointer"
