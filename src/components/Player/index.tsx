@@ -139,6 +139,7 @@ const Player: React.FC<PlayerProps> = ({
         if (playerRef !== null && playerRef?.current !== null) {
           playerRef.current.currentTime = 0;
         }
+        setSeeking(false);
         return;
       }
 
@@ -146,6 +147,7 @@ const Player: React.FC<PlayerProps> = ({
         if (playerRef !== null && playerRef?.current !== null) {
           playerRef.current.currentTime = playerRef?.current?.duration;
         }
+        setSeeking(false);
         return;
       }
 
