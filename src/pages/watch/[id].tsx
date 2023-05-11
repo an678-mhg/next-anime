@@ -95,7 +95,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
           )}
         </div>
         <div className="md:flex">
-          <div className="md:w-[calc(100%-402px)] w-full md:p-4 md:mt-0 mt-5">
+          <div className="md:w-[calc(100%-402px)] w-full p-4 md:mt-0 mt-5">
             <SelectSource idAnime={info?.id} />
             <EpisodeList
               animeId={info?.id}
