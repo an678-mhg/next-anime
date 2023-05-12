@@ -28,11 +28,8 @@ You can refer to [https://github.com/consumet/api.consumet.org](https://github.c
 
 ## Screenshots, Preview
 
-![Screenshot 1](https://res.cloudinary.com/annnn/image/upload/v1683903060/localhost_3000__kqavnm.png)
-![Screenshot 2](https://res.cloudinary.com/annnn/image/upload/v1683903066/localhost_3000__1_kjxyf2.png)
-![Screenshot 3](https://res.cloudinary.com/annnn/image/upload/v1683903053/localhost_3000__3_ahhzkz.png)
-![Screenshot 4](https://res.cloudinary.com/annnn/image/upload/v1683903029/localhost_3000__2_sxk4pr.png)
-![Screenshot 5](https://res.cloudinary.com/annnn/image/upload/v1683903024/localhost_3000__4_uea2iw.png)
+![Screenshot 1](https://res.cloudinary.com/annnn/image/upload/v1683903029/localhost_3000__2_sxk4pr.png)
+![Screenshot 2](https://res.cloudinary.com/annnn/image/upload/v1683903024/localhost_3000__4_uea2iw.png)
 
 ## Summary
 
