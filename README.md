@@ -8,10 +8,10 @@
 
 Official website: [https://next-anime-app.vercel.app/](https://next-anime-app.vercel.app/)
 
-## Movie sources
+## Anime sources
 
 From Consumet API  
-You can refer to [here](https://github.com/consumet/api.consumet.org)
+You can refer to [https://github.com/consumet/api.consumet.org](https://github.com/consumet/api.consumet.org)
 
 ## Main technology used
 
