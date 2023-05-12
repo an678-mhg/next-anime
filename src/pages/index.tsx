@@ -1,4 +1,3 @@
-import NewestComment from "@/src/components/Comment/NewestComment";
 import BoxShowCase from "@/src/components/Home/BoxShowCase";
 import ShareNextAnime from "@/src/components/ShareNextAnime";
 import MainLayout from "@/src/layouts/MainLayout";
@@ -32,6 +31,10 @@ interface HomeProps {
 const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
   ssr: false,
 });
+const NewestComment = dynamic(
+  () => import("../components/Comment/NewestComment"),
+  { ssr: false }
+);
 
 const Home: React.FC<HomeProps> = ({
   recentAnime,
