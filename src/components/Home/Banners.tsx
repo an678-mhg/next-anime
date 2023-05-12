@@ -64,7 +64,7 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
           />
           <div className="space-x-4 flex items-center mt-5">
             <Link
-              className="bg-[#ef4444] px-4 py-2 rounded-full flex items-center space-x-2"
+              className="bg-primary px-4 py-2 rounded-full flex items-center space-x-2"
               href={path.watch(anime?.id)}
             >
               <BsFillPlayCircleFill className="md:text-sm text-lg" />

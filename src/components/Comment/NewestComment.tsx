@@ -15,7 +15,7 @@ const NewestComment = () => {
       <div className="flex-1 p-4 flex items-center">
         <div className="w-full">
           <div className="flex items-center justify-between">
-            <div className="text-[#ef4444] border border-[#ef4444] px-4 py-2 rounded-full text-xs font-semibold">
+            <div className="text-primary border border-primary px-4 py-2 rounded-full text-xs font-semibold">
               Newest Comment
             </div>
             <div className="space-x-4 flex items-center justify-center">

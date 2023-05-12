@@ -15,6 +15,7 @@ import {
   statusFilter,
 } from "../utils/filter";
 import { convertQueryArrayParams } from "../utils/contants";
+import AnimeCardSkeleton from "../components/Skeleton/AnimeCardSkeleton";
 
 export interface Queries {
   query: string;
@@ -83,6 +84,13 @@ const Search = () => {
       <div className="p-4 mt-[56px] min-h-screen">
         <h4 className="md:text-4xl text-2xl font-semibold">Search Anime</h4>
         <SelectFilter queries={queries} setQueries={setQueries} />
+        {isLoading && (
+          <AnimeGridLayout className="mt-5">
+            {Array.from(Array(20).keys()).map((item) => (
+              <AnimeCardSkeleton key={item} />
+            ))}
+          </AnimeGridLayout>
+        )}
         <AnimeGridLayout className="mt-5">
           {data &&
             data?.pages

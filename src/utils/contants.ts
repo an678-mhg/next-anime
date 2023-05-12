@@ -71,3 +71,5 @@ export const formatVideoTime = (seconds: number) => {
 export const getStreamAnimeWithProxy = (url: string) => {
   return `https://m3u8-proxy-cors-zeta.vercel.app/cors?url=${url}`;
 };
+
+export const BASE_URL = "https://next-anime-app.vercel.app";

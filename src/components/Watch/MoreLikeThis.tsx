@@ -15,12 +15,12 @@ const MoreLikeThis: React.FC<MoreLikeThisProps> = ({
   const moreLikeThis = selectType === "related" ? relations : recommendations;
 
   return (
-    <div className="md:w-[402px] w-full mt-5">
+    <div className="md:w-[402px] w-full mt-4 md:px-0 px-4">
       <div className="space-x-4">
         {["related", "recommendations"].map((item) => (
           <button
             className={`${
-              selectType === item ? "bg-[#ef4444]" : "bg-[#333]"
+              selectType === item ? "bg-primary" : "bg-[#333]"
             } rounded-md px-4 py-2 capitalize text-sm font-semibold outline-none`}
             key={item}
             onClick={() => setSelectType(item)}

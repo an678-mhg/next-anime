@@ -21,17 +21,17 @@ const Footer = () => {
         </p>
       </div>
       <div className="mt-5 flex items-center space-x-4">
-        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
+        <p className="text-xs font-normal hover:text-primary cursor-pointer">
           Terms of service
         </p>
-        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
+        <p className="text-xs font-normal hover:text-primary cursor-pointer">
           DMCA
         </p>
-        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
+        <p className="text-xs font-normal hover:text-primary cursor-pointer">
           Contact
         </p>
-        <p className="text-xs font-normal hover:text-[#ef4444] cursor-pointer">
-          Zoro Proxy Sites
+        <p className="text-xs font-normal hover:text-primary cursor-pointer">
+          Proxy Sites
         </p>
       </div>
       <div className="mt-5 text-xs text-gray-500">

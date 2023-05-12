@@ -1,13 +1,14 @@
 import path from "@/src/utils/path";
 import Link from "next/link";
 import React from "react";
-import { SiNextdotjs } from "react-icons/si";
+import { TbBrandNextjs } from "react-icons/tb";
 
 const Logo = () => {
   return (
-    <Link href={path.home} className="flex items-center space-x-3">
-      <SiNextdotjs size={40} />
-      <span className="text-xl text-[#ef4444] font-semibold">Anime</span>
+    <Link href={path.home}>
+      <h3 className="text-2xl text-primary font-semibold flex items-center">
+        <TbBrandNextjs size={35} /> Anime
+      </h3>
     </Link>
   );
 };

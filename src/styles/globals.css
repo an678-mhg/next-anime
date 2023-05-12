@@ -74,7 +74,7 @@ img {
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  background-color: #cae962 !important;
+  background-color: #ff4500 !important;
 }
 
 .switch {
@@ -138,8 +138,7 @@ input:checked + .slider:before {
 }
 
 .is-sticky {
-  background-color: #111;
-  padding: 10px 16px;
+  background-color: #333;
 }
 
 .opacity-animation {
@@ -152,5 +151,18 @@ input:checked + .slider:before {
   }
   from {
     opacity: 0;
+  }
+}
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
   }
 }

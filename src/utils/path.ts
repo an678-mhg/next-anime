@@ -8,6 +8,7 @@ const path = {
   home: "/",
   search: "/search",
   results: (query: string) => `/results?q=${query}`,
+  signIn: "/sign-in",
 };
 
 export default path;

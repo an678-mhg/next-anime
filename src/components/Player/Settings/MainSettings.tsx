@@ -26,28 +26,30 @@ const MainSettings: React.FC<MainSettingsProps> = ({
     <div className="w-full">
       <div
         onClick={() => setSettingsType("playspeed")}
-        className="flex items-center justify-between cursor-pointer p-2"
+        className="flex items-center justify-between cursor-pointer p-2 space-x-3"
       >
         <div className="flex items-center space-x-3">
           <SiSpeedtest size={20} />
           <p className="text-sm font-semibold">Play speed</p>
         </div>
         <div className="flex items-center space-x-3">
-          <p className="text-sm font-semibold">{currentSpeed}</p>
+          <p className="text-sm font-semibold line-clamp-1">{currentSpeed}</p>
           <AiOutlineRight size={20} />
         </div>
       </div>
       {haveQuality && (
         <div
           onClick={() => setSettingsType("quality")}
-          className="flex items-center justify-between cursor-pointer p-2"
+          className="flex items-center justify-between cursor-pointer p-2 space-x-3"
         >
           <div className="flex items-center space-x-3">
             <MdOutlineHighQuality size={20} />
             <p className="text-sm font-semibold">Quality</p>
           </div>
           <div className="flex items-center space-x-3">
-            <p className="text-sm font-semibold">{currentQuality}</p>
+            <p className="text-sm font-semibold line-clamp-1">
+              {currentQuality}
+            </p>
             <AiOutlineRight size={20} />
           </div>
         </div>
@@ -55,14 +57,16 @@ const MainSettings: React.FC<MainSettingsProps> = ({
       {haveSubtitle && (
         <div
           onClick={() => setSettingsType("subtitle")}
-          className="flex items-center justify-between cursor-pointer p-2"
+          className="flex items-center justify-between cursor-pointer p-2 space-x-3"
         >
           <div className="flex items-center space-x-3">
             <MdOutlineSubtitles size={20} />
             <p className="text-sm font-semibold">Subtitle</p>
           </div>
           <div className="flex items-center space-x-3">
-            <p className="text-sm font-semibold">{currentSubtitle}</p>
+            <p className="text-sm font-semibold line-clamp-1">
+              {currentSubtitle}
+            </p>
             <AiOutlineRight size={20} />
           </div>
         </div>

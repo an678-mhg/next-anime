@@ -10,7 +10,7 @@ interface BoxShowCaseProps {
 const BoxShowCase: React.FC<BoxShowCaseProps> = ({ title, anime }) => {
   return (
     <div className="rounded-md overflow-hidden">
-      <h3 className="font-semibold text-[16px] text-[#ef4444] bg-[#222] p-3">
+      <h3 className="font-semibold text-[16px] text-primary bg-[#222] p-3">
         {title}
       </h3>
       <div className="bg-[#222]">

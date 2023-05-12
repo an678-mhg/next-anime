@@ -5,7 +5,7 @@ interface TitlePrimaryProps {
 }
 
 const TitlePrimary: React.FC<TitlePrimaryProps> = ({ title }) => {
-  return <h3 className="font-semibold text-xl text-[#ef4444]">{title}</h3>;
+  return <h3 className="font-semibold text-xl text-primary">{title}</h3>;
 };
 
 export default TitlePrimary;

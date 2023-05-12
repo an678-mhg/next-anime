@@ -64,7 +64,7 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
           </div>
           <div className="space-x-4 flex items-center mt-5">
             <Link
-              className="bg-[#ef4444] text-center px-4 py-2 rounded-full flex items-center space-x-2"
+              className="bg-primary text-center px-4 py-2 rounded-full flex items-center space-x-2"
               href={path.watch(info?.id)}
             >
               <BsFillPlayCircleFill className="md:text-sm text-lg" />
@@ -80,8 +80,8 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
             dangerouslySetInnerHTML={{ __html: info?.description }}
           />
           <div className="items-center space-x-5 mt-5 flex">
-            <div className="text-sm border-l-[2px] border-[#ef4444] pl-4">
-              <h4 className="text-[#ef4444] font-semibold">Share Next Anime</h4>
+            <div className="text-sm border-l-[2px] border-primary pl-4">
+              <h4 className="text-primary font-semibold">Share Next Anime</h4>
               <p>to your friends</p>
             </div>
             <ShareSocial

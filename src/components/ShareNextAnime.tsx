@@ -14,7 +14,7 @@ const ShareNextAnime = () => {
         />
       </div>
       <div className="text-sm ">
-        <h4 className="text-[#ef4444] font-semibold">Share Next Anime</h4>
+        <h4 className="text-primary font-semibold">Share Next Anime</h4>
         <p>to your friends</p>
       </div>
       <ShareSocial
