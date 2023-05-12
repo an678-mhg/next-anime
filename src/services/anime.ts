@@ -105,3 +105,8 @@ export const searchAnime = async (query: string, page: number = 1) => {
   });
   return response.data;
 };
+
+export const getRandomAnime = async () => {
+  const response = await client.get<AnimeInfo>("/random-anime");
+  return response.data;
+};

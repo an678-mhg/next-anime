@@ -4,17 +4,20 @@ import ShareNextAnime from "@/src/components/ShareNextAnime";
 import MainLayout from "@/src/layouts/MainLayout";
 import {
   getMostPopular,
+  getRandomAnime,
   getRecentAnime,
   getTopAiring,
   getTrendingAnime,
   searchAdvanced,
 } from "@/src/services/anime";
-import { Anime, RecentAnime } from "@/src/types/anime";
+import { Anime, AnimeInfo, RecentAnime } from "@/src/types/anime";
 import { convertQueryArrayParams } from "@/src/utils/contants";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import AnimeCard from "../components/Anime/AnimeCard";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
+import Meta from "../components/Meta";
+import RandomAnime from "../components/Anime/RandomAnime";
 
 interface HomeProps {
   recentAnime: RecentAnime[];
@@ -23,6 +26,7 @@ interface HomeProps {
   mostPopularAnime: Anime[];
   favouritesAnime: Anime[];
   completedAnime: Anime[];
+  randomAnime: AnimeInfo;
 }
 
 const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
@@ -36,9 +40,15 @@ const Home: React.FC<HomeProps> = ({
   completedAnime,
   favouritesAnime,
   mostPopularAnime,
+  randomAnime,
 }) => {
   return (
     <MainLayout>
+      <Meta
+        title="Next Anime"
+        image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
+        description="Next Anime is a free anime watch website built using Consumet API"
+      />
       <SlideBanner tredingAnime={tredingAnime} />
       <AnimeGridLayout title="Recent Anime Episodes" className="p-4">
         {recentAnime?.map((item) => (
@@ -53,6 +63,7 @@ const Home: React.FC<HomeProps> = ({
         ))}
       </AnimeGridLayout>
       <ShareNextAnime />
+      <RandomAnime anime={randomAnime} />
       <NewestComment />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 p-4">
         <BoxShowCase title="Top Airing" anime={topAiringAnime} />
@@ -73,6 +84,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       mostPopularAnime,
       favouritesAnime,
       completedAnime,
+      randomAnime,
     ] = await Promise.all([
       getRecentAnime(8),
       getTrendingAnime(20),
@@ -89,6 +101,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         perPage: 5,
         sort: convertQueryArrayParams(["SCORE_DESC"]),
       }),
+      getRandomAnime(),
     ]);
 
     return {
@@ -99,6 +112,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         mostPopularAnime,
         favouritesAnime: favouritesAnime.results,
         completedAnime: completedAnime.results,
+        randomAnime,
       },
     };
   } catch (error) {

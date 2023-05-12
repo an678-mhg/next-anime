@@ -4,7 +4,7 @@ import ShareSocial from "./ShareSocial";
 
 const Footer = () => {
   return (
-    <div className="px-4 py-10 footer relative bg-[#111]">
+    <div className="px-4 py-10 footer relative bg-[#111] mt-5">
       <div className="items-center z-[999] border-b border-gray-600 inline-flex pb-5">
         <Logo />
         <div className="h-[40px] mx-10 w-[1px] bg-gray-600" />

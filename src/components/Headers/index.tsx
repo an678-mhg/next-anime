@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Logo from "./Logo";
 import { CiSearch } from "react-icons/ci";
 import Link from "next/link";
 import path from "@/src/utils/path";
 import { useSession } from "next-auth/react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import Menu from "./Menu";
 
 interface HeadersProps {
   backgroundColor?: string;
@@ -13,6 +14,7 @@ interface HeadersProps {
 const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const { data } = useSession();
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     const handleFixedHeader = () => {
@@ -33,6 +35,13 @@ const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
     return () => window.removeEventListener("scroll", handleFixedHeader);
   }, []);
 
+  useEffect(() => {
+    document.addEventListener("click", () => setShowMenu(false));
+
+    return () =>
+      document.removeEventListener("click", () => setShowMenu(false));
+  }, []);
+
   return (
     <div
       style={{
@@ -47,12 +56,19 @@ const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
           <CiSearch size={30} className="cursor-pointer" />
         </Link>
         {data?.user ? (
-          <div className="flex items-center justify-center">
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMenu((prev) => !prev);
+            }}
+            className="flex items-center justify-center relative"
+          >
             <LazyLoadImage
               className="w-7 h-7 rounded-full cursor-pointer"
               src={data?.user?.image!}
               effect="blur"
             />
+            {showMenu && <Menu />}
           </div>
         ) : (
           <Link

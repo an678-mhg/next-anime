@@ -1,44 +1,45 @@
-import React, { useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React, { useMemo, useState } from "react";
 import NewestCommentItem from "./NewestCommentItem";
+import { Swiper, SwiperSlide } from "swiper/react";
+import useInnerWidth from "@/src/hooks/useInnerWidth";
+import TitlePrimary from "../TitlePrimary";
 
 const NewestComment = () => {
   const [showComment, setShowComment] = useState(true);
+  const width = useInnerWidth();
+
+  const slidesPerView = useMemo(() => {
+    return width >= 1200 ? 6.5 : width >= 1024 ? 4.5 : width >= 768 ? 2.5 : 1.5;
+  }, [width]);
 
   return (
-    <div className="mt-5 flex overflow-hidden">
-      {showComment && (
-        <div className="xl:block hidden">
-          <LazyLoadImage width={400} effect="blur" src="/zoro.png" />
-        </div>
-      )}
-      <div className="flex-1 p-4 flex items-center">
-        <div className="w-full">
-          <div className="flex items-center justify-between">
-            <div className="text-primary border border-primary px-4 py-2 rounded-full text-xs font-semibold">
-              Newest Comment
-            </div>
-            <div className="space-x-4 flex items-center justify-center">
-              <label className="text-sm">Show</label>
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={showComment}
-                  onChange={() => setShowComment((prev) => !prev)}
-                />
-                <span className="slider round" />
-              </label>
-            </div>
+    <div className="w-full p-4 flex items-center mt-5">
+      <div className="w-full">
+        <div className="flex items-center justify-between">
+          <TitlePrimary title="Newest Comment" />
+          <div className="space-x-4 flex items-center justify-center">
+            <label className="text-sm">Show</label>
+            <label className="switch">
+              <input
+                type="checkbox"
+                checked={showComment}
+                onChange={() => setShowComment((prev) => !prev)}
+              />
+              <span className="slider round" />
+            </label>
           </div>
-          {showComment && (
-            <div className="md:grid-cols-4 grid-cols-2 grid mt-8 gap-4">
-              <NewestCommentItem />
-              <NewestCommentItem />
-              <NewestCommentItem />
-              <NewestCommentItem />
-            </div>
-          )}
         </div>
+        {showComment && (
+          <div className="mt-5">
+            <Swiper spaceBetween={20} slidesPerView={slidesPerView}>
+              {Array.from(Array(20).keys()).map((item) => (
+                <SwiperSlide key={item}>
+                  <NewestCommentItem />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        )}
       </div>
     </div>
   );

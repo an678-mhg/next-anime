@@ -1,4 +1,5 @@
 import Footer from "@/src/components/Footer";
+import Meta from "@/src/components/Meta";
 import AnimeInfoComp from "@/src/components/Watch/AnimeInfo";
 import EpisodeInfo from "@/src/components/Watch/EpisodeInfo";
 import EpisodeList from "@/src/components/Watch/EpisodeList";
@@ -11,7 +12,7 @@ import {
 } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
 import { Episode } from "@/src/types/utils";
-import { getStreamAnimeWithProxy } from "@/src/utils/contants";
+import { getAnimeTitle, getStreamAnimeWithProxy } from "@/src/utils/contants";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
@@ -61,6 +62,11 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
 
   return (
     <div>
+      <Meta
+        title={`Next Anime - ${getAnimeTitle(info?.title)} - Watch`}
+        image={info?.cover}
+        description="Next Anime is a free anime watch website built using Consumet API"
+      />
       <div className="pb-5">
         <div className="bg-[#111] w-full lg:aspect-[3/1] z-[9999] aspect-video flex items-center justify-center">
           {!episode && (
@@ -103,7 +109,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
               episodes={info?.episodes}
               handleSelectEpisode={handleSelectEpisode}
             />
-            <EpisodeInfo episode={episode} />
+            {episode && <EpisodeInfo episode={episode} />}
             <AnimeInfoComp
               description={info?.description}
               duration={info?.duration}

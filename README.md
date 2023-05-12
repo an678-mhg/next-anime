@@ -1,38 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center" style="font-size: 60px">Next Anime</h1>
 
-## Getting Started
+<p align="center"><strong>Next Anime is a free anime watch website built using Consumet API</strong></p>
 
-First, run the development server:
+<div align="center">
+ <img src="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png" />
+</div>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Live demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Official website: [https://next-anime-app.vercel.app/](https://next-anime-app.vercel.app/)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Movie sources
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+From Consumet API  
+You can refer to [here](https://github.com/consumet/api.consumet.org)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Main technology used
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Nextjs, React, Typescript, Tailwind
+- Prisma
+- MongoDB
+- Swiper (slider)
+- Next-Auth
+- react-infinite-scroll-component (Infinite loading)
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- Updating...
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Screenshots, Preview
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Screenshot 1](https://res.cloudinary.com/annnn/image/upload/v1683903060/localhost_3000__kqavnm.png)
+![Screenshot 2](https://res.cloudinary.com/annnn/image/upload/v1683903066/localhost_3000__1_kjxyf2.png)
+![Screenshot 3](https://res.cloudinary.com/annnn/image/upload/v1683903053/localhost_3000__3_ahhzkz.png)
+![Screenshot 4](https://res.cloudinary.com/annnn/image/upload/v1683903029/localhost_3000__2_sxk4pr.png)
+![Screenshot 5](https://res.cloudinary.com/annnn/image/upload/v1683903024/localhost_3000__4_uea2iw.png)
 
-## Deploy on Vercel
+## Summary
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 👉 If you like this project, give it a star ✨ and share 👨🏻‍💻 it to your friends 👈

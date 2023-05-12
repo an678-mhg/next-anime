@@ -5,9 +5,10 @@ import AnimeGridLayout from "@/src/layouts/AnimeGridLayout";
 import MainLayout from "@/src/layouts/MainLayout";
 import { getAnimeInfo } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
-import { setBackgroundImage } from "@/src/utils/contants";
+import { getAnimeTitle, setBackgroundImage } from "@/src/utils/contants";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import React from "react";
+import Meta from "@/src/components/Meta";
 
 interface AnimeProps {
   info: AnimeInfo;
@@ -16,6 +17,11 @@ interface AnimeProps {
 const Anime: React.FC<AnimeProps> = ({ info }) => {
   return (
     <MainLayout>
+      <Meta
+        title={`Next Anime - ${getAnimeTitle(info?.title)} - Detail`}
+        image={info?.image}
+        description="Next Anime is a free anime watch website built using Consumet API"
+      />
       <div
         style={setBackgroundImage(info?.cover)}
         className="w-full h-screen relative banner"

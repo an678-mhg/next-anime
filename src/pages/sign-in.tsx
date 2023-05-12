@@ -7,6 +7,7 @@ import { signIn } from "next-auth/react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
+import Meta from "../components/Meta";
 
 const signInMethods = [
   {
@@ -22,7 +23,7 @@ const signInMethods = [
   {
     icons: BsDiscord,
     content: "Sign in with Discord",
-    provider: "google",
+    provider: "discord",
     color: "#5865F2",
   },
 ];
@@ -30,6 +31,11 @@ const signInMethods = [
 const SignIn = () => {
   return (
     <div className="h-screen">
+      <Meta
+        title="Next Anime - Sign In"
+        image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
+        description="Next Anime is a free anime watch website built using Consumet API"
+      />
       <div className="p-4 flex items-center justify-between">
         <Logo />
         <h4 className="flex items-center space-x-2">

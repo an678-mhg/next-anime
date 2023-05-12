@@ -16,6 +16,7 @@ import {
 } from "../utils/filter";
 import { convertQueryArrayParams } from "../utils/contants";
 import AnimeCardSkeleton from "../components/Skeleton/AnimeCardSkeleton";
+import Meta from "../components/Meta";
 
 export interface Queries {
   query: string;
@@ -81,9 +82,18 @@ const Search = () => {
 
   return (
     <MainLayout>
+      <Meta
+        title="Next Anime - Search"
+        image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
+        description="Next Anime is a free anime watch website built using Consumet API"
+      />
       <div className="p-4 mt-[56px] min-h-screen">
         <h4 className="md:text-4xl text-2xl font-semibold">Search Anime</h4>
         <SelectFilter queries={queries} setQueries={setQueries} />
+        {data?.pages?.length === 0 ||
+          (data?.pages[0]?.results?.length === 0 && (
+            <h6 className="mt-5 font-semibold text-center">No results</h6>
+          ))}
         {isLoading && (
           <AnimeGridLayout className="mt-5">
             {Array.from(Array(20).keys()).map((item) => (

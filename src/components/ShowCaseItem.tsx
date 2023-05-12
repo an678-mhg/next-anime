@@ -36,7 +36,7 @@ const ShowCaseItem: React.FC<ShowCaseItemProps> = ({
     >
       <LazyLoadImage
         effect="blur"
-        className="rounded-md w-[80px] aspect-[9/16]"
+        className="rounded-sm w-[60px] aspect-[124/185]"
         src={image}
       />
       <div className="text-sm flex-1">
@@ -54,12 +54,6 @@ const ShowCaseItem: React.FC<ShowCaseItemProps> = ({
             <p className="flex items-center space-x-2 text-sm">
               <AiFillClockCircle />
               <span className="text-xs">{duration}m</span>
-            </p>
-          )}
-          {releaseDate && (
-            <p className="flex items-center space-x-2 text-sm">
-              <BsFillCalendarDateFill />
-              <span className="text-xs">{releaseDate}</span>
             </p>
           )}
         </div>

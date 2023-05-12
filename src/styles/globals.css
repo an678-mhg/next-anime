@@ -155,12 +155,12 @@ input:checked + .slider:before {
 }
 
 .skeleton {
-  animation: skeleton-loading 1s linear infinite alternate;
+  animation: skeleton 1s linear infinite alternate;
 }
 
-@keyframes skeleton-loading {
+@keyframes skeleton {
   0% {
-    background-color: hsl(200, 20%, 80%);
+    background-color: hsl(200, 20%, 70%);
   }
   100% {
     background-color: hsl(200, 20%, 95%);

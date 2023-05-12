@@ -23,7 +23,6 @@
     "next": "13.4.0",
     "nextjs-progressbar": "^0.0.16",
     "postcss": "8.4.23",
-    "qs": "^6.11.1",
     "react": "18.2.0",
     "react-cssfx-loading": "^2.1.0",
     "react-dom": "18.2.0",
