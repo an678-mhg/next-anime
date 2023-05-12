@@ -1,5 +1,4 @@
 import "react-lazy-load-image-component/src/effects/blur.css";
-import "swiper/css";
 import "@/src/styles/globals.css";
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
