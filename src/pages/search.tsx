@@ -8,15 +8,10 @@ import { Anime } from "../types/anime";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import { InView } from "react-intersection-observer";
 import { CircularProgress } from "react-cssfx-loading";
-import {
-  formatFilter,
-  seasonFilter,
-  sortFilter,
-  statusFilter,
-} from "../utils/filter";
 import { convertQueryArrayParams } from "../utils/contants";
 import AnimeCardSkeleton from "../components/Skeleton/AnimeCardSkeleton";
 import Meta from "../components/Meta";
+import useStateQueriesParams from "../hooks/useStateQueriesParams";
 
 export interface Queries {
   query: string;
@@ -37,48 +32,57 @@ const Search = () => {
     genres: [],
   });
 
+  // // @ts-ignore
+  // useStateQueriesParams(queries);
+
   const { format, genres, query, season, sort, status } = queries;
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(
-      [`search-${JSON.stringify(queries)}`],
-      (page) => {
-        const queries: any = {};
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isError,
+  } = useInfiniteQuery(
+    [`search-${JSON.stringify(queries)}`],
+    (page) => {
+      const queries: any = {};
 
-        if (format) {
-          queries.format = format;
-        }
-
-        if (query) {
-          queries.query = query;
-        }
-
-        if (season) {
-          queries.season = season;
-        }
-
-        if (status) {
-          queries.status = status;
-        }
-
-        if (genres.length > 0) {
-          queries.genres = convertQueryArrayParams(genres);
-        }
-
-        if (sort) {
-          queries.sort = convertQueryArrayParams([sort]);
-        }
-
-        return searchAdvanced({
-          page: page.pageParam || 1,
-          ...queries,
-        });
-      },
-      {
-        getNextPageParam: (lastPage) =>
-          lastPage.hasNextPage ? (lastPage.currentPage as number) + 1 : null,
+      if (format) {
+        queries.format = format;
       }
-    );
+
+      if (query) {
+        queries.query = query;
+      }
+
+      if (season) {
+        queries.season = season;
+      }
+
+      if (status) {
+        queries.status = status;
+      }
+
+      if (genres.length > 0) {
+        queries.genres = convertQueryArrayParams(genres);
+      }
+
+      if (sort) {
+        queries.sort = convertQueryArrayParams([sort]);
+      }
+
+      return searchAdvanced({
+        page: page.pageParam || 1,
+        ...queries,
+      });
+    },
+    {
+      getNextPageParam: (lastPage) =>
+        lastPage.hasNextPage ? (lastPage.currentPage as number) + 1 : null,
+    }
+  );
 
   return (
     <MainLayout>
@@ -90,6 +94,11 @@ const Search = () => {
       <div className="p-4 mt-[56px] min-h-screen">
         <h4 className="md:text-4xl text-2xl font-semibold">Search Anime</h4>
         <SelectFilter queries={queries} setQueries={setQueries} />
+        {isError && (
+          <h6 className="mt-5 font-semibold text-center">
+            Something went wrong
+          </h6>
+        )}
         {data?.pages?.length === 0 ||
           (data?.pages[0]?.results?.length === 0 && (
             <h6 className="mt-5 font-semibold text-center">No results</h6>
@@ -132,7 +141,7 @@ const Search = () => {
           {({ ref }) => (
             <div
               ref={ref}
-              className="my-4 flex w-full items-center justify-center"
+              className="mt-8 flex w-full items-center justify-center"
             >
               {isFetchingNextPage && <CircularProgress color="#fff" />}
             </div>

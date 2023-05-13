@@ -9,6 +9,7 @@ import { getAnimeTitle, setBackgroundImage } from "@/src/utils/contants";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import React from "react";
 import Meta from "@/src/components/Meta";
+import CharactersList from "@/src/components/Characters/CharactersList";
 
 interface AnimeProps {
   info: AnimeInfo;
@@ -33,13 +34,17 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
         <AnimeInfoDetail info={info} />
       </div>
 
+      {info?.characters?.length > 0 && (
+        <CharactersList characters={info?.characters} />
+      )}
+
       {info?.relations?.length > 0 && (
         <AnimeGridLayout title="Relations for anime" className="p-4 mt-5">
           {info?.relations?.map((item) => (
             <AnimeCard
               color={item?.color}
               key={item?.id}
-              id={item?.id.toString()}
+              id={item?.id?.toString()}
               image={item?.image}
               title={item?.title}
               type={item?.type}
@@ -54,7 +59,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
             <AnimeCard
               color={"#fff"}
               key={item?.id}
-              id={item?.id.toString()}
+              id={item?.id?.toString()}
               image={item?.image}
               title={item?.title}
               type={item?.type}
@@ -86,6 +91,8 @@ export const getStaticProps: GetStaticProps = async (
     }
 
     const info = await getAnimeInfo(id);
+
+    console.log(info.id);
 
     return {
       props: {

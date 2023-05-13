@@ -94,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       getTopAiring(5),
       getMostPopular(5),
       searchAdvanced({
-        sort: convertQueryArrayParams(["START_DATE_DESC"]),
+        sort: convertQueryArrayParams(["FAVOURITES_DESC"]),
         type: "ANIME",
         perPage: 5,
       }),

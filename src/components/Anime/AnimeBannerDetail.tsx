@@ -81,12 +81,12 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
           />
           <div className="items-center space-x-5 mt-5 flex">
             <div className="text-sm border-l-[2px] border-primary pl-4">
-              <h4 className="text-primary font-semibold">Share Next Anime</h4>
+              <h4 className="text-primary font-semibold">Share</h4>
               <p>to your friends</p>
             </div>
             <ShareSocial
-              link={process.env.NEXT_PUBLIC_NEXT_ANIME_URL as string}
-              title="Next Anime"
+              link={`${process.env.NEXT_PUBLIC_NEXT_ANIME_URL}/anime/${info.id}`}
+              title={`Next Anime - ${getAnimeTitle(info?.title)} - Detail`}
             />
           </div>
         </div>

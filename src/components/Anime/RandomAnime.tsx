@@ -21,7 +21,7 @@ const RandomAnime: React.FC<RandomAnimeProps> = ({ anime }) => {
         className="h-[300px] w-full mt-5 relative rounded-md"
       >
         <div className="absolute inset-0 bg-[#0000006a]"></div>
-        <div className="absolute inset-0 p-4 z-[9]">
+        <div className="absolute z-[9] p-4 top-[50%] translate-y-[-50%]">
           <h4 className="font-semibold line-clamp-2">
             {getAnimeTitle(anime?.title)}
           </h4>

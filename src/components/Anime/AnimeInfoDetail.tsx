@@ -9,7 +9,7 @@ interface AnimeInfoDetailProps {
 
 const AnimeInfoDetail: React.FC<AnimeInfoDetailProps> = ({ info }) => {
   return (
-    <div className="md:w-[342px] w-full h-full flex md:bg-[rgba(255,255,255,.1)] px-5 items-center">
+    <div className="md:w-[342px] w-full h-full flex md:bg-[#0000003a] px-5 items-center">
       <div className="w-full">
         <div className="space-y-3 border-b border-gray-200 w-full pb-5">
           <div className="flex text-sm space-x-2">
