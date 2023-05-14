@@ -31,6 +31,7 @@ interface HomeProps {
 const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
   ssr: false,
 });
+
 const NewestComment = dynamic(
   () => import("../components/Comment/NewestComment"),
   { ssr: false }

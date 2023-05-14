@@ -5,7 +5,11 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import NextNProgress from "nextjs-progressbar";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Toaster } from "react-hot-toast";
+import dynamic from "next/dynamic";
+
+const Toast = dynamic(() => import("../components/Toast"), {
+  ssr: false,
+});
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -20,7 +24,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <SessionProvider session={session}>
         <NextNProgress color="#FF4500" options={{ showSpinner: false }} />
         <Component {...pageProps} />
-        <Toaster />
+        <Toast />
       </SessionProvider>
     </QueryClientProvider>
   );
