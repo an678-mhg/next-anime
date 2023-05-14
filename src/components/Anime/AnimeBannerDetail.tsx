@@ -1,9 +1,10 @@
 import { getAnimeTitle } from "@/src/utils/contants";
 import path from "@/src/utils/path";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillClockCircle, AiOutlinePlus } from "react-icons/ai";
 import {
+  BsCheck2,
   BsDot,
   BsFillCalendarDateFill,
   BsFillPlayCircleFill,
@@ -12,12 +13,79 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import ShareSocial from "../ShareSocial";
 import { AnimeInfo } from "@/src/types/anime";
 import AnimeInfoDetail from "./AnimeInfoDetail";
+import { checkAnimeInList, createList } from "@/src/services/list";
+import { useMutation } from "react-query";
+import { toast } from "react-hot-toast";
+import { CircularProgress } from "react-cssfx-loading";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface AnimeBannerDetailProps {
   info: AnimeInfo;
 }
 
 const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
+  const [isInTheList, setIsInTheList] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [checkAnimeLoading, setCheckAnimeLoading] = useState(false);
+
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const { mutateAsync, isLoading } = useMutation(createList, {
+    onSuccess: (response) => {
+      toast.success(`${response.status} anime in list success`);
+      setIsInTheList(() => (response.status === "Add" ? true : false));
+    },
+    onError: () => {
+      toast.error("Add anime in list failed");
+      setIsInTheList((prev) => !prev);
+    },
+  });
+
+  useEffect(() => {
+    if (!session?.user) {
+      return;
+    }
+
+    setCheckAnimeLoading(true);
+
+    checkAnimeInList(info?.id)
+      .then((data) => {
+        if (data) {
+          setIsInTheList(true);
+        }
+      })
+      .catch(() => setIsError(true))
+      .finally(() => setCheckAnimeLoading(false));
+  }, [session?.user]);
+
+  const handleClick = () => {
+    if (!session?.user) {
+      return router?.push(
+        `${path.signIn}?redirect=${encodeURIComponent(router?.asPath)}`
+      );
+    }
+
+    if (isError) {
+      return toast.error("Something went wrong f5 and try again");
+    }
+
+    if (isInTheList) {
+      if (!window.confirm("You want to remove this anime from the list")) {
+        return;
+      }
+    }
+
+    mutateAsync({
+      animeColor: info?.color || "#fff",
+      animeId: info?.id,
+      animeImage: info?.image,
+      animeTitle: getAnimeTitle(info?.title),
+      animeType: info?.type,
+    });
+  };
+
   return (
     <div className="absolute inset-0 z-[99] flex md:flex-row flex-col">
       <div className="flex lg:flex-row flex-col flex-1 lg:p-[70px] p-4 mt-[56px]">
@@ -70,9 +138,29 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
               <BsFillPlayCircleFill className="md:text-sm text-lg" />
               <span className="font-semibold text-sm">Watch now</span>
             </Link>
-            <button className="text-white text-center bg-gray-500 px-4 py-2 rounded-full flex items-center space-x-2">
-              <span className="text-sm font-semibold">Add to List</span>
-              <AiOutlinePlus className="md:text-sm text-lg" />
+            <button
+              disabled={isLoading || checkAnimeLoading}
+              onClick={handleClick}
+              className={`text-white text-center ${
+                isInTheList ? "bg-green-500" : "bg-gray-500"
+              } px-4 py-2 rounded-full flex items-center space-x-2 ${
+                (isLoading || checkAnimeLoading) && "opacity-80"
+              }`}
+            >
+              <span className="text-sm font-semibold">
+                {isLoading || checkAnimeLoading
+                  ? "Loading"
+                  : isInTheList
+                  ? "Exist in List"
+                  : "Add in List"}
+              </span>
+              {isLoading || checkAnimeLoading ? (
+                <CircularProgress color="#fff" width={20} height={20} />
+              ) : isInTheList ? (
+                <BsCheck2 className="md:text-sm text-lg" />
+              ) : (
+                <AiOutlinePlus className="md:text-sm text-lg" />
+              )}
             </button>
           </div>
           <div

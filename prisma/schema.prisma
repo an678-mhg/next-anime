@@ -45,6 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  List          List[]
 }
 
 model VerificationToken {
@@ -54,4 +55,15 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model List {
+  id         String @id @default(cuid()) @map("_id")
+  animeId    String
+  user       User   @relation(fields: [userId], references: [id])
+  userId     String
+  animeImage String
+  animeType  String
+  animeColor String
+  animeTitle String
 }

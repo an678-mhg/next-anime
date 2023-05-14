@@ -142,6 +142,10 @@ export const genresFilter: Filter[] = [
     value: "Drama",
   },
   {
+    label: "Ecchi",
+    value: "Ecchi",
+  },
+  {
     label: "Fantasy",
     value: "Fantasy",
   },

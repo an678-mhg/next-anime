@@ -6,7 +6,7 @@ import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface AnimeCardProps {
-  title: Title;
+  title: string;
   type: string;
   image: string;
   id: string;
@@ -24,7 +24,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ image, title, id, color }) => {
           className="aspect-[124/185] rounded-sm"
         />
         <h3 style={{ color: color }} className="font-semibold line-clamp-2">
-          {getAnimeTitle(title)}
+          {title}
         </h3>
       </div>
     </Link>

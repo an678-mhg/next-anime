@@ -15,7 +15,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
         effect="blur"
       />
       <div className="flex-1 bg-[#222] hover:bg-[#333] h-full transition-colors p-4 flex flex-col justify-between">
-        <h4 className="font-normal">{character?.name?.full}</h4>
+        <h4 className="font-semibold">{character?.name?.full}</h4>
         <p className="font-normal text-sm">{character?.role}</p>
       </div>
     </div>

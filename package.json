@@ -27,6 +27,7 @@
     "react-cssfx-loading": "^2.1.0",
     "react-dom": "18.2.0",
     "react-hls-player": "^3.0.7",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^4.8.0",
     "react-intersection-observer": "^9.4.3",
     "react-lazy-load-image-component": "^1.5.6",

@@ -9,6 +9,7 @@ const path = {
   search: "/search",
   results: (query: string) => `/results?q=${query}`,
   signIn: "/sign-in",
+  list: "/list",
 };
 
 export default path;

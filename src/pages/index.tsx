@@ -10,7 +10,7 @@ import {
   searchAdvanced,
 } from "@/src/services/anime";
 import { Anime, AnimeInfo, RecentAnime } from "@/src/types/anime";
-import { convertQueryArrayParams } from "@/src/utils/contants";
+import { convertQueryArrayParams, getAnimeTitle } from "@/src/utils/contants";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import AnimeCard from "../components/Anime/AnimeCard";
@@ -60,7 +60,7 @@ const Home: React.FC<HomeProps> = ({
             key={item?.id}
             id={item?.id.toString()}
             image={item?.image}
-            title={item?.title}
+            title={getAnimeTitle(item?.title)}
             type={item?.type}
           />
         ))}

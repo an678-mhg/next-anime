@@ -91,7 +91,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
               }))}
               className="w-full h-full"
               poster={episode?.image as string}
-              color="#CAE962"
+              color="#FF0000"
               subtitle={data?.subtitles?.map((item) => ({
                 lang: item.lang,
                 url: `/api/subtitles?url=${encodeURIComponent(item?.url)}`,

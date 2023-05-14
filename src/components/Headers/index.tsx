@@ -68,7 +68,12 @@ const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
               src={data?.user?.image!}
               effect="blur"
             />
-            {showMenu && <Menu />}
+            {showMenu && (
+              <Menu
+                email={data?.user?.email as string}
+                name={data?.user?.name as string}
+              />
+            )}
           </div>
         ) : (
           <Link

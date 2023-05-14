@@ -8,7 +8,7 @@ import { Anime } from "../types/anime";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import { InView } from "react-intersection-observer";
 import { CircularProgress } from "react-cssfx-loading";
-import { convertQueryArrayParams } from "../utils/contants";
+import { convertQueryArrayParams, getAnimeTitle } from "../utils/contants";
 import AnimeCardSkeleton from "../components/Skeleton/AnimeCardSkeleton";
 import Meta from "../components/Meta";
 import useStateQueriesParams from "../hooks/useStateQueriesParams";
@@ -123,7 +123,7 @@ const Search = () => {
                   color={item.color}
                   id={item.id}
                   image={item.image}
-                  title={item.title}
+                  title={getAnimeTitle(item.title)}
                   type={item.type}
                   key={item.id}
                 />

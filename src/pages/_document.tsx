@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="shortcut icon" href="/luffy.gif" type="image/x-icon" />
+        <link rel="shortcut icon" href="/logo-svg.svg" type="image/x-icon" />
         <meta name="referrer" content="no-referrer" />
       </Head>
       <body>

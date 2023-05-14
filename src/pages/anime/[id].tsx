@@ -46,7 +46,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
               key={item?.id}
               id={item?.id?.toString()}
               image={item?.image}
-              title={item?.title}
+              title={getAnimeTitle(item?.title)}
               type={item?.type}
             />
           ))}
@@ -61,7 +61,7 @@ const Anime: React.FC<AnimeProps> = ({ info }) => {
               key={item?.id}
               id={item?.id?.toString()}
               image={item?.image}
-              title={item?.title}
+              title={getAnimeTitle(item?.title)}
               type={item?.type}
             />
           ))}

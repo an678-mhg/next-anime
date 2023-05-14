@@ -1,13 +1,14 @@
 import React from "react";
 import Logo from "../components/Headers/Logo";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { BsDiscord, BsGithub } from "react-icons/bs";
+import { BsGithub } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import Meta from "../components/Meta";
+import { toast } from "react-hot-toast";
 
 const signInMethods = [
   {
@@ -19,12 +20,6 @@ const signInMethods = [
     icons: FcGoogle,
     content: "Sign in with Google",
     provider: "google",
-  },
-  {
-    icons: BsDiscord,
-    content: "Sign in with Discord",
-    provider: "discord",
-    color: "#5865F2",
   },
 ];
 
@@ -62,7 +57,7 @@ const SignIn = () => {
                 className="relative mb-4 flex w-full items-center justify-center border border-gray-600 px-4 py-2.5 last:mb-0"
               >
                 <div className="absolute left-4 top-[50%] translate-y-[-50%]">
-                  <item.icons color={item.color} size={25} />
+                  <item.icons size={25} />
                 </div>{" "}
                 <span className="text-[15px]">{item.content}</span>
               </button>
