@@ -52,13 +52,11 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
 
     checkAnimeInList(info?.id)
       .then((data) => {
-        if (data) {
-          setIsInTheList(true);
-        }
+        data ? setIsInTheList(true) : setIsInTheList(false);
       })
       .catch(() => setIsError(true))
       .finally(() => setCheckAnimeLoading(false));
-  }, [session?.user]);
+  }, [session?.user, info?.id]);
 
   const handleClick = () => {
     if (!session?.user) {
@@ -141,9 +139,7 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
             <button
               disabled={isLoading || checkAnimeLoading}
               onClick={handleClick}
-              className={`text-white text-center ${
-                isInTheList ? "bg-green-500" : "bg-gray-500"
-              } px-4 py-2 rounded-full flex items-center space-x-2 ${
+              className={`text-white text-center bg-gray-500 px-4 py-2 rounded-full flex items-center space-x-2 ${
                 (isLoading || checkAnimeLoading) && "opacity-80"
               }`}
             >
@@ -157,7 +153,7 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
               {isLoading || checkAnimeLoading ? (
                 <CircularProgress color="#fff" width={20} height={20} />
               ) : isInTheList ? (
-                <BsCheck2 className="md:text-sm text-lg" />
+                <BsCheck2 className="md:text-sm text-lg text-green-500" />
               ) : (
                 <AiOutlinePlus className="md:text-sm text-lg" />
               )}

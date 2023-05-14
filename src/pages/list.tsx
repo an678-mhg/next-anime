@@ -8,6 +8,7 @@ import prisma from "../lib/prisma";
 import { List } from "@prisma/client";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import AnimeCard from "../components/Anime/AnimeCard";
+import Meta from "../components/Meta";
 
 interface ListProps {
   list: List[];
@@ -16,8 +17,17 @@ interface ListProps {
 const List: React.FC<ListProps> = ({ list }) => {
   return (
     <MainLayout>
-      <div className="max-h-screen mt-[56px] p-4">
+      <Meta
+        title="Next Anime"
+        image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
+        description="Next Anime is a free anime watch website built using Consumet API"
+      />
+      <div className="min-h-screen mt-[56px] p-4">
         <h4 className="md:text-4xl text-2xl font-semibold">My List</h4>
+
+        {list?.length === 0 && (
+          <h6 className="font-semibold mt-5 text-center">List is empty</h6>
+        )}
 
         <AnimeGridLayout className="mt-5">
           {list?.map((item) => (

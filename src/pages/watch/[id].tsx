@@ -31,13 +31,16 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
   const [episode, setEpisode] = useState<Episode>(info?.episodes?.[0]);
   const router = useRouter();
 
-  const { data, isError, isFetching } = useQuery([episode], () => {
-    if (!episode) return null;
-    return getAnimeEpisodeStreaming(
-      episode?.id,
-      (router?.query?.provider as string) || "gogoanime"
-    );
-  });
+  const { data, isError, isFetching } = useQuery(
+    [`watch-${JSON.stringify(episode)}`],
+    () => {
+      if (!episode) return null;
+      return getAnimeEpisodeStreaming(
+        episode?.id,
+        (router?.query?.provider as string) || "gogoanime"
+      );
+    }
+  );
 
   const handleSelectEpisode = (episode: Episode) => {
     setEpisode(episode);

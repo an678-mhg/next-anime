@@ -13,7 +13,13 @@ interface AnimeCardProps {
   color: string;
 }
 
-const AnimeCard: React.FC<AnimeCardProps> = ({ image, title, id, color }) => {
+const AnimeCard: React.FC<AnimeCardProps> = ({
+  image,
+  title,
+  id,
+  color,
+  type,
+}) => {
   return (
     <Link href={path.anime(id)}>
       <div>
@@ -23,7 +29,7 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ image, title, id, color }) => {
           effect="blur"
           className="aspect-[124/185] rounded-sm"
         />
-        <h3 style={{ color: color }} className="font-semibold line-clamp-2">
+        <h3 style={{ color: color }} className="font-semibold line-clamp-1">
           {title}
         </h3>
       </div>

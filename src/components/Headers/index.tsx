@@ -72,6 +72,7 @@ const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
               <Menu
                 email={data?.user?.email as string}
                 name={data?.user?.name as string}
+                avatar={data?.user?.image as string}
               />
             )}
           </div>

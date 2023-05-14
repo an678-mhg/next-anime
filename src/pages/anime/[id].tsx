@@ -92,8 +92,6 @@ export const getStaticProps: GetStaticProps = async (
 
     const info = await getAnimeInfo(id);
 
-    console.log(info.id);
-
     return {
       props: {
         info,
