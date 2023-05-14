@@ -2,6 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
 import prisma from "@/src/lib/prisma";
+import { LITS_TYPE } from "@prisma/client";
 
 const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
@@ -10,7 +11,8 @@ const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json("User not login");
   }
 
-  const { animeId, animeImage, animeTitle, animeType, animeColor } = req.body;
+  const { animeId, animeImage, animeTitle, animeType, animeColor, type } =
+    req.body;
 
   const existList = await prisma.list.findFirst({
     where: {
@@ -33,6 +35,7 @@ const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
         animeTitle,
         animeType,
         userId: session?.user?.id,
+        type: type,
       },
     });
   }
@@ -48,6 +51,7 @@ const checkAnimeInList = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const animeId = req.query?.animeId as string;
+  const type = req.query?.type as LITS_TYPE;
 
   if (!animeId) {
     return res.status(400).json("Animeid is required");
@@ -57,6 +61,7 @@ const checkAnimeInList = async (req: NextApiRequest, res: NextApiResponse) => {
     where: {
       animeId,
       userId: session?.user?.id,
+      type: type,
     },
   });
 

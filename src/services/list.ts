@@ -1,4 +1,5 @@
 import axios from "axios";
+import { LITS_TYPE } from "@prisma/client";
 
 export interface List {
   animeId: string;
@@ -6,6 +7,7 @@ export interface List {
   animeType: string;
   animeColor: string;
   animeTitle: string;
+  type: LITS_TYPE;
 }
 
 export const createList = async (list: List) => {
@@ -13,10 +15,11 @@ export const createList = async (list: List) => {
   return response.data;
 };
 
-export const checkAnimeInList = async (animeId: string) => {
+export const checkAnimeInList = async (animeId: string, type: LITS_TYPE) => {
   const response = await axios.get("/api/list", {
     params: {
       animeId,
+      type,
     },
   });
 
