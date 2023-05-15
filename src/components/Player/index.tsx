@@ -84,7 +84,7 @@ const Player: React.FC<PlayerProps> = ({
   const [settingsType, setSettingsType] = useState<
     "main" | "playspeed" | "quality" | "subtitle"
   >("main");
-  const [currentSubtitle, setCurrentSubtitle] = useState(0);
+  const [currentSubtitle, setCurrentSubtitle] = useState<number | null>(0);
   const [volume, setVolume] = useState(100);
   const [seeking, setSeeking] = useState(false);
 
@@ -190,6 +190,13 @@ const Player: React.FC<PlayerProps> = ({
 
   const handleChangeSource = (index: number) => {
     setCurrentSource(index);
+
+    const existTrack = playerRef?.current?.querySelector("track");
+
+    if (existTrack) {
+      existTrack.remove();
+    }
+
     const tmpCurrentTime = currentTime;
     setLoading(true);
 
@@ -222,6 +229,16 @@ const Player: React.FC<PlayerProps> = ({
 
   const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
     setVolume(Number(e.target.value));
+  };
+
+  const handleTurnOffSubtitle = () => {
+    setCurrentSubtitle(null);
+    const track = playerRef?.current?.querySelector("track");
+    if (track) {
+      track.remove();
+    }
+    setShowSettings(false);
+    setSettingsType("main");
   };
 
   useEffect(() => {
@@ -321,6 +338,10 @@ const Player: React.FC<PlayerProps> = ({
 
   useEffect(() => {
     if (subtitle.length > 0) {
+      if (currentSubtitle === null) {
+        return;
+      }
+
       const oldTrack = playerRef?.current?.querySelector("track");
 
       if (oldTrack) {
@@ -394,7 +415,11 @@ const Player: React.FC<PlayerProps> = ({
                   currentQuality={source?.[currentSource]?.label}
                   currentSpeed={playSpeedOptions?.[currentPlaySpeed]?.label}
                   setSettingsType={setSettingsType}
-                  currentSubtitle={subtitle?.[currentSubtitle]?.lang}
+                  currentSubtitle={
+                    typeof currentSubtitle === "number"
+                      ? subtitle?.[currentSubtitle]?.lang
+                      : "Off"
+                  }
                   haveSubtitle={subtitle?.length > 0}
                   haveQuality={source?.length > 0}
                 />
@@ -417,6 +442,7 @@ const Player: React.FC<PlayerProps> = ({
                   setSettingsType={setSettingsType}
                   handleChangeSubtitle={handleChangeSubtitle}
                   subtitle={subtitle}
+                  handleTurnOffSubtitle={handleTurnOffSubtitle}
                 />
               )}
             </div>

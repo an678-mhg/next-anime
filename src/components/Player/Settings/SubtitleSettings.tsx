@@ -8,8 +8,9 @@ interface SubtitleSettingsProps {
     React.SetStateAction<"main" | "playspeed" | "quality" | "subtitle">
   >;
   subtitle: Subtitle[];
-  currentSubtitle: number;
+  currentSubtitle: number | null;
   handleChangeSubtitle: (index: number) => void;
+  handleTurnOffSubtitle: () => void;
 }
 
 const SubtitleSettings: React.FC<SubtitleSettingsProps> = ({
@@ -17,6 +18,7 @@ const SubtitleSettings: React.FC<SubtitleSettingsProps> = ({
   handleChangeSubtitle,
   setSettingsType,
   subtitle,
+  handleTurnOffSubtitle,
 }) => {
   return (
     <div className="w-full overflow-y-auto">
@@ -28,6 +30,15 @@ const SubtitleSettings: React.FC<SubtitleSettingsProps> = ({
         <p className="text-sm font-semibold">Subtitle</p>
       </div>
       <div>
+        <div
+          onClick={handleTurnOffSubtitle}
+          className="p-2 text-sm font-semibold space-x-3 flex items-center cursor-pointer"
+        >
+          <div className="w-[20px] h-[20px]">
+            {currentSubtitle === null && <BsCheckLg size={20} />}
+          </div>
+          <p>Off</p>
+        </div>
         {subtitle?.map((item, index) => (
           <div
             onClick={() => handleChangeSubtitle(index)}

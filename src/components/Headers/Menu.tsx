@@ -40,15 +40,20 @@ const Menu: React.FC<MenuProps> = ({ email, name, avatar }) => {
         <li>
           <Link
             className="hover:bg-gray-500 transition-colors rounded-md p-2 flex items-center space-x-3 cursor-pointer"
-            href={path.list}
+            href={path.list("list")}
           >
             <AiOutlineOrderedList />
             <span className="text-sm font-semibold">List</span>
           </Link>
         </li>
-        <li className="hover:bg-gray-500 transition-colors rounded-md p-2 flex items-center space-x-3 cursor-pointer">
-          <AiOutlineHistory />
-          <span className="text-sm font-semibold">History</span>
+        <li>
+          <Link
+            className="hover:bg-gray-500 transition-colors rounded-md p-2 flex items-center space-x-3 cursor-pointer"
+            href={path.list("history")}
+          >
+            <AiOutlineHistory />
+            <span className="text-sm font-semibold">History</span>
+          </Link>
         </li>
         <div className="bg-gray-600 w-full h-[1px]" />
         <li

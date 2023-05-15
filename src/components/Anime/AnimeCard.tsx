@@ -1,5 +1,3 @@
-import { Title } from "@/src/types/utils";
-import { getAnimeTitle } from "@/src/utils/contants";
 import path from "@/src/utils/path";
 import Link from "next/link";
 import React from "react";
@@ -13,13 +11,7 @@ interface AnimeCardProps {
   color: string;
 }
 
-const AnimeCard: React.FC<AnimeCardProps> = ({
-  image,
-  title,
-  id,
-  color,
-  type,
-}) => {
+const AnimeCard: React.FC<AnimeCardProps> = ({ image, title, id, color }) => {
   return (
     <Link href={path.anime(id)}>
       <div>
