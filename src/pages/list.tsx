@@ -29,7 +29,9 @@ const List: React.FC<ListProps> = ({ list, type }) => {
         </h4>
 
         {list?.length === 0 && (
-          <h6 className="font-semibold mt-5 text-center">{type} is empty</h6>
+          <h6 className="font-semibold mt-5 text-center capitalize">
+            {type} is empty
+          </h6>
         )}
 
         <AnimeGridLayout className="mt-5">
