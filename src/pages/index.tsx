@@ -1,22 +1,14 @@
 import BoxShowCase from "@/src/components/Home/BoxShowCase";
 import ShareNextAnime from "@/src/components/ShareNextAnime";
 import MainLayout from "@/src/layouts/MainLayout";
-import {
-  getMostPopular,
-  getRandomAnime,
-  getRecentAnime,
-  getTopAiring,
-  getTrendingAnime,
-  searchAdvanced,
-} from "@/src/services/anime";
-import { Anime, AnimeInfo, RecentAnime } from "@/src/types/anime";
-import { convertQueryArrayParams, getAnimeTitle } from "@/src/utils/contants";
-import { GetStaticProps } from "next";
+import { getHomePage } from "@/src/services/anime";
+import { Anime, RecentAnime } from "@/src/types/anime";
+import { getAnimeTitle } from "@/src/utils/contants";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import AnimeCard from "../components/Anime/AnimeCard";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import Meta from "../components/Meta";
-import RandomAnime from "../components/Anime/RandomAnime";
 
 interface HomeProps {
   recentAnime: RecentAnime[];
@@ -25,7 +17,6 @@ interface HomeProps {
   mostPopularAnime: Anime[];
   favouritesAnime: Anime[];
   completedAnime: Anime[];
-  randomAnime: AnimeInfo;
 }
 
 const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
@@ -44,7 +35,6 @@ const Home: React.FC<HomeProps> = ({
   completedAnime,
   favouritesAnime,
   mostPopularAnime,
-  randomAnime,
 }) => {
   return (
     <MainLayout>
@@ -67,7 +57,6 @@ const Home: React.FC<HomeProps> = ({
         ))}
       </AnimeGridLayout>
       <ShareNextAnime />
-      <RandomAnime anime={randomAnime} />
       <NewestComment />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 p-4">
         <BoxShowCase title="Top Airing" anime={topAiringAnime} />
@@ -79,7 +68,7 @@ const Home: React.FC<HomeProps> = ({
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const [
       recentAnime,
@@ -88,25 +77,7 @@ export const getStaticProps: GetStaticProps = async () => {
       mostPopularAnime,
       favouritesAnime,
       completedAnime,
-      randomAnime,
-    ] = await Promise.all([
-      getRecentAnime(8),
-      getTrendingAnime(20),
-      getTopAiring(5),
-      getMostPopular(5),
-      searchAdvanced({
-        sort: convertQueryArrayParams(["FAVOURITES_DESC"]),
-        type: "ANIME",
-        perPage: 5,
-      }),
-      searchAdvanced({
-        type: "ANIME",
-        status: "FINISHED",
-        perPage: 5,
-        sort: convertQueryArrayParams(["SCORE_DESC"]),
-      }),
-      getRandomAnime(),
-    ]);
+    ] = await getHomePage();
 
     return {
       props: {
@@ -116,9 +87,7 @@ export const getStaticProps: GetStaticProps = async () => {
         mostPopularAnime,
         favouritesAnime: favouritesAnime.results,
         completedAnime: completedAnime.results,
-        randomAnime,
       },
-      revalidate: 10,
     };
   } catch (error) {
     return {

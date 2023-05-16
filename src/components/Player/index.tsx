@@ -11,7 +11,7 @@ import { CircularProgress } from "react-cssfx-loading";
 import MainSettings from "./Settings/MainSettings";
 import PlaySpeedSettings from "./Settings/PlaySpeedSettings";
 import QualitySettings from "./Settings/QualitySettings";
-import { Subtitle } from "@/src/types/utils";
+import { Intro, Subtitle } from "@/src/types/utils";
 import SubtitleSettings from "./Settings/SubtitleSettings";
 
 export interface Source {
@@ -26,6 +26,7 @@ interface PlayerProps {
   color: string;
   subtitle?: Subtitle[];
   handleNext?: () => boolean;
+  intro: Intro | null;
 }
 
 export const playSpeedOptions = [
@@ -66,6 +67,7 @@ const Player: React.FC<PlayerProps> = ({
   color,
   subtitle = [],
   handleNext,
+  intro,
 }) => {
   const playerRef = useRef<HTMLVideoElement | null>(null);
   const seekRef = useRef<HTMLDivElement | null>(null);
@@ -87,6 +89,7 @@ const Player: React.FC<PlayerProps> = ({
   const [currentSubtitle, setCurrentSubtitle] = useState<number | null>(0);
   const [volume, setVolume] = useState(100);
   const [seeking, setSeeking] = useState(false);
+  const [showButtonSkipIntro, setShowButtonSkipIntro] = useState(false);
 
   const handlePlayPause = () => {
     const player = playerRef.current;
@@ -119,7 +122,29 @@ const Player: React.FC<PlayerProps> = ({
     const player = playerRef.current;
     if (!player) return;
 
+    if (intro) {
+      if (player?.currentTime < intro.start) {
+        setShowButtonSkipIntro(false);
+      }
+
+      if (player?.currentTime >= intro.start) {
+        setShowButtonSkipIntro(true);
+      }
+
+      if (player.currentTime >= intro.end) {
+        setShowButtonSkipIntro(false);
+      }
+    }
+
     setCurrentTime(player?.currentTime);
+  };
+
+  const handleSkipIntro = () => {
+    if (!intro) return;
+
+    if (playerRef !== null && playerRef?.current !== null) {
+      playerRef.current.currentTime = intro.end;
+    }
   };
 
   const handleSeekTime = (e: any) => {
@@ -389,6 +414,16 @@ const Player: React.FC<PlayerProps> = ({
         onWaiting={() => setLoading(true)}
         onLoad={() => setLoading(true)}
       />
+      {/* Button skip intro */}
+      {showButtonSkipIntro && (
+        <button
+          onClick={handleSkipIntro}
+          style={{ backgroundColor: color }}
+          className="text-sm font-semibold absolute bottom-[60px] z-[100] mx-4 right-0 rounded-md px-4 py-2 mb-5 opacity-animation"
+        >
+          Skip intro
+        </button>
+      )}
       {/* Loading */}
       {loading && (
         <div className="absolute z-[100] top-[50%] translate-x-[-50%] left-[50%] translate-y-[-50%]">

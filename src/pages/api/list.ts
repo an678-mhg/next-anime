@@ -18,6 +18,7 @@ const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
     where: {
       animeId,
       userId: session?.user?.id,
+      type,
     },
   });
 

@@ -117,3 +117,8 @@ export interface Filter {
   label: string;
   value: string;
 }
+
+export interface Intro {
+  start: number;
+  end: number;
+}

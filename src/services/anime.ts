@@ -6,6 +6,7 @@ import {
 } from "@/src/types/anime";
 import { AnimeResponse, SearchAdvancedQuery } from "@/src/types/utils";
 import client from "@/src/utils/client";
+import { convertQueryArrayParams } from "../utils/contants";
 
 export const default_provider = "gogoanime";
 
@@ -109,4 +110,26 @@ export const searchAnime = async (query: string, page: number = 1) => {
 export const getRandomAnime = async () => {
   const response = await client.get<AnimeInfo>("/random-anime");
   return response.data;
+};
+
+export const getHomePage = async () => {
+  const data = await Promise.all([
+    getRecentAnime(8),
+    getTrendingAnime(20),
+    getTopAiring(5),
+    getMostPopular(5),
+    searchAdvanced({
+      sort: convertQueryArrayParams(["FAVOURITES_DESC"]),
+      type: "ANIME",
+      perPage: 5,
+    }),
+    searchAdvanced({
+      type: "ANIME",
+      status: "FINISHED",
+      perPage: 5,
+      sort: convertQueryArrayParams(["SCORE_DESC"]),
+    }),
+  ]);
+
+  return data;
 };
