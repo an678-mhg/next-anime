@@ -20,7 +20,6 @@ You can refer to [https://github.com/consumet/api.consumet.org](https://github.c
 - MongoDB
 - Swiper (slider)
 - Next-Auth
-- react-infinite-scroll-component (Infinite loading)
 
 ## Features
 
