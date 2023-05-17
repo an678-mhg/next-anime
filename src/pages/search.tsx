@@ -11,7 +11,6 @@ import { CircularProgress } from "react-cssfx-loading";
 import { convertQueryArrayParams, getAnimeTitle } from "../utils/contants";
 import AnimeCardSkeleton from "../components/Skeleton/AnimeCardSkeleton";
 import Meta from "../components/Meta";
-import useStateQueriesParams from "../hooks/useStateQueriesParams";
 
 export interface Queries {
   query: string;
@@ -31,9 +30,6 @@ const Search = () => {
     sort: "",
     genres: [],
   });
-
-  // // @ts-ignore
-  // useStateQueriesParams(queries);
 
   const { format, genres, query, season, sort, status } = queries;
 
