@@ -5,17 +5,16 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import path from "../utils/path";
 import prisma from "../lib/prisma";
-import { LITS_TYPE, List } from "@prisma/client";
+import { List } from "@prisma/client";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import AnimeCard from "../components/Anime/AnimeCard";
 import Meta from "../components/Meta";
 
 interface ListProps {
   list: List[];
-  type: LITS_TYPE;
 }
 
-const List: React.FC<ListProps> = ({ list, type }) => {
+const List: React.FC<ListProps> = ({ list }) => {
   return (
     <MainLayout>
       <Meta
@@ -25,13 +24,11 @@ const List: React.FC<ListProps> = ({ list, type }) => {
       />
       <div className="min-h-screen mt-[56px] p-4">
         <h4 className="md:text-4xl text-2xl font-semibold capitalize">
-          My {type}
+          My List
         </h4>
 
         {list?.length === 0 && (
-          <h6 className="font-semibold mt-5 text-center capitalize">
-            {type} is empty
-          </h6>
+          <h6 className="font-semibold mt-5 text-center">List is empty</h6>
         )}
 
         <AnimeGridLayout className="mt-5">
@@ -55,7 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const session = await getServerSession(context.req, context.res, authOptions);
-  const type = context.query?.type as LITS_TYPE;
 
   if (!session) {
     return {
@@ -69,14 +65,12 @@ export const getServerSideProps: GetServerSideProps = async (
   const list = await prisma.list.findMany({
     where: {
       userId: session?.user?.id,
-      type,
     },
   });
 
   return {
     props: {
       list,
-      type,
     },
   };
 };

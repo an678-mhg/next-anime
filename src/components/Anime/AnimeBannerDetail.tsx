@@ -50,7 +50,7 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
 
     setCheckAnimeLoading(true);
 
-    checkAnimeInList(info?.id, "list")
+    checkAnimeInList(info?.id)
       .then((data) => {
         data ? setIsInTheList(true) : setIsInTheList(false);
       })
@@ -81,7 +81,6 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
       animeImage: info?.image,
       animeTitle: getAnimeTitle(info?.title),
       animeType: info?.type,
-      type: "list",
     });
   };
 

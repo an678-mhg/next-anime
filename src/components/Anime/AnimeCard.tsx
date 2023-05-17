@@ -21,7 +21,10 @@ const AnimeCard: React.FC<AnimeCardProps> = ({ image, title, id, color }) => {
           effect="blur"
           className="aspect-[124/185] rounded-sm"
         />
-        <h3 style={{ color: color }} className="font-semibold line-clamp-1">
+        <h3
+          style={{ color: color }}
+          className="font-semibold line-clamp-2 text-sm"
+        >
           {title}
         </h3>
       </div>

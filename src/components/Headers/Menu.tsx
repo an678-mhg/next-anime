@@ -1,11 +1,9 @@
 import React from "react";
 import {
-  AiOutlineHistory,
   AiOutlineLogout,
   AiOutlineMail,
   AiOutlineOrderedList,
 } from "react-icons/ai";
-import { MdOutlineAccountCircle } from "react-icons/md";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import path from "@/src/utils/path";
@@ -40,19 +38,10 @@ const Menu: React.FC<MenuProps> = ({ email, name, avatar }) => {
         <li>
           <Link
             className="hover:bg-gray-500 transition-colors rounded-md p-2 flex items-center space-x-3 cursor-pointer"
-            href={path.list("list")}
+            href={path.list}
           >
             <AiOutlineOrderedList />
             <span className="text-sm font-semibold">List</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            className="hover:bg-gray-500 transition-colors rounded-md p-2 flex items-center space-x-3 cursor-pointer"
-            href={path.list("history")}
-          >
-            <AiOutlineHistory />
-            <span className="text-sm font-semibold">History</span>
           </Link>
         </li>
         <div className="bg-gray-600 w-full h-[1px]" />

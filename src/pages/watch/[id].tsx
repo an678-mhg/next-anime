@@ -18,10 +18,9 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useSession } from "next-auth/react";
-import { checkAnimeInList, createList } from "@/src/services/list";
 import SelectIframe from "@/src/components/Watch/SelectIframe";
 import Note from "@/src/components/Watch/Note";
+import CommentList from "@/src/components/Comment/CommentList";
 
 interface WatchProps {
   info: AnimeInfo;
@@ -35,8 +34,6 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
   const [episode, setEpisode] = useState<Episode>(info?.episodes?.[0]);
   const [isWatchIframe, setIsWatchIframe] = useState(false);
   const router = useRouter();
-
-  const { data: session } = useSession();
 
   const { data, isError, isFetching } = useQuery(
     [`watch-${JSON.stringify(episode)}`],
@@ -69,27 +66,6 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
   useEffect(() => {
     setEpisode(info?.episodes?.[0]);
   }, [router?.query?.provider]);
-
-  useEffect(() => {
-    (async () => {
-      if (!session) return;
-
-      checkAnimeInList(info?.id, "history").then((data) => {
-        if (data) {
-          return;
-        }
-
-        createList({
-          animeColor: info?.color,
-          animeId: info?.id,
-          animeImage: info?.image,
-          animeTitle: getAnimeTitle(info?.title),
-          animeType: info?.type,
-          type: "history",
-        });
-      });
-    })();
-  }, [session]);
 
   return (
     <div>
@@ -173,6 +149,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
                 type={info?.type}
                 nextAiringEpisode={info?.nextAiringEpisode}
               />
+              {/* <CommentList /> */}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import ShareSocial from "./ShareSocial";
 
 const ShareNextAnime = () => {
   return (
-    <div className="bg-[#121315] px-4 md:py-0 py-4 flex items-center md:justify-start justify-between md:space-x-5">
+    <div className="bg-[#121315] px-4 mt-5 md:py-0 py-4 flex items-center md:justify-start justify-between md:space-x-5">
       <div className="md:block hidden">
         <LazyLoadImage
           width={100}
