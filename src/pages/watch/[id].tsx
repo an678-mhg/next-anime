@@ -108,25 +108,24 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
                     allowFullScreen
                   />
                 ) : (
-                  <></>
-                  // <Player
-                  //   source={data?.sources?.map((item) => ({
-                  //     label: item?.quality,
-                  //     url: getStreamAnimeWithProxy(item?.url),
-                  //   }))}
-                  //   className="w-full h-full"
-                  //   poster={episode?.image as string}
-                  //   color="#FF0000"
-                  //   subtitle={data?.subtitles?.map((item) => ({
-                  //     lang: item.lang,
-                  //     url: `/api/subtitles?url=${encodeURIComponent(
-                  //       item?.url
-                  //     )}`,
-                  //   }))}
-                  //   handleNext={handleNextEpisode}
-                  //   intro={data?.intro || null}
-                  //   playerRef={playerRef}
-                  // />
+                  <Player
+                    source={data?.sources?.map((item) => ({
+                      label: item?.quality,
+                      url: getStreamAnimeWithProxy(item?.url),
+                    }))}
+                    className="w-full h-full"
+                    poster={episode?.image as string}
+                    color="#FF0000"
+                    subtitle={data?.subtitles?.map((item) => ({
+                      lang: item.lang,
+                      url: `/api/subtitles?url=${encodeURIComponent(
+                        item?.url
+                      )}`,
+                    }))}
+                    handleNext={handleNextEpisode}
+                    intro={data?.intro || null}
+                    playerRef={playerRef}
+                  />
                 )}
               </div>
             )}
