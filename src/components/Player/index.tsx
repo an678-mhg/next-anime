@@ -24,7 +24,7 @@ interface PlayerProps {
   className: string;
   poster: string;
   color: string;
-  subtitle?: Subtitle[];
+  subtitle?: Subtitle[] | undefined;
   handleNext?: () => boolean;
   intro: Intro | null;
   playerRef: React.MutableRefObject<HTMLVideoElement | null>;
@@ -66,7 +66,7 @@ const Player: React.FC<PlayerProps> = ({
   source,
   poster,
   color,
-  subtitle = [],
+  subtitle,
   handleNext,
   intro,
   playerRef,
@@ -357,7 +357,7 @@ const Player: React.FC<PlayerProps> = ({
   }, []);
 
   useEffect(() => {
-    if (subtitle.length > 0) {
+    if (subtitle && subtitle.length > 0) {
       if (currentSubtitle === null) {
         return;
       }
@@ -450,7 +450,7 @@ const Player: React.FC<PlayerProps> = ({
                       ? subtitle?.[currentSubtitle]?.lang
                       : "Off"
                   }
-                  haveSubtitle={subtitle?.length > 0}
+                  haveSubtitle={Boolean(subtitle)}
                   haveQuality={source?.length > 0}
                 />
               ) : settingsType === "playspeed" ? (
@@ -471,7 +471,7 @@ const Player: React.FC<PlayerProps> = ({
                   currentSubtitle={currentSubtitle}
                   setSettingsType={setSettingsType}
                   handleChangeSubtitle={handleChangeSubtitle}
-                  subtitle={subtitle}
+                  subtitle={subtitle!}
                   handleTurnOffSubtitle={handleTurnOffSubtitle}
                 />
               )}

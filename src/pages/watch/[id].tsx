@@ -26,12 +26,6 @@ interface WatchProps {
   info: AnimeInfo;
 }
 
-interface WatchHistory {
-  time: number;
-  episodeId: string;
-  animeId: string;
-}
-
 const Player = dynamic(() => import("../../components/Player"), {
   ssr: false,
 });
@@ -39,6 +33,7 @@ const Player = dynamic(() => import("../../components/Player"), {
 const Watch: React.FC<WatchProps> = ({ info }) => {
   const [episode, setEpisode] = useState<Episode>(info?.episodes?.[0]);
   const [isWatchIframe, setIsWatchIframe] = useState(false);
+  const [iframeLink, setIframeLink] = useState<string | null>();
 
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
@@ -85,7 +80,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
       />
       <div className="lg:flex">
         <div className="pb-5 md:w-[calc(100%-500px)] w-full">
-          <div className="bg-[#111] w-full lg:aspect-[16/9] z-[9999] aspect-video flex items-center justify-center">
+          <div className="bg-[#111] w-full z-[9999] aspect-video flex items-center justify-center">
             {!episode && (
               <h5 className="text-sm font-semibold">
                 Please select the episode
@@ -99,12 +94,12 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
             {isFetching && (
               <h5 className="text-sm font-semibold">Loading episode data</h5>
             )}
-            {!isFetching && episode && data && (
+            {!isError && !isFetching && episode && data && (
               <div className="w-full h-full">
                 {isWatchIframe ? (
                   <iframe
-                    src={data?.headers?.Referer}
-                    className="w-full h-full"
+                    src={iframeLink!}
+                    className="w-full aspect-video"
                     allowFullScreen
                   />
                 ) : (
@@ -132,13 +127,22 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
           </div>
           <div className="md:flex w-full">
             <div className="w-full p-4 md:mt-0 mt-5">
-              <SelectSource idAnime={info?.id} />
-              {data?.headers?.Referer && (
-                <SelectIframe
-                  isWatchIframe={isWatchIframe}
-                  setIsWatchIframe={setIsWatchIframe}
-                />
-              )}
+              <div className="flex items-center space-x-4 justify-end">
+                <button
+                  onClick={() => setIsWatchIframe((prev) => !prev)}
+                  className="bg-[#222] py-2 px-4 rounded-md font-semibold text-white text-sm"
+                >
+                  {!isWatchIframe ? "Enable" : "Disable"} iframe to watch
+                </button>
+                <SelectSource idAnime={info?.id} />
+                {isWatchIframe && data?.iframe && (
+                  <SelectIframe
+                    iframe={iframeLink}
+                    listIframe={data?.iframe}
+                    setIframe={setIframeLink}
+                  />
+                )}
+              </div>
               <EpisodeList
                 animeId={info?.id}
                 episodeId={episode?.id as string}

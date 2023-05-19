@@ -1,6 +1,6 @@
 import path from "@/src/utils/path";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 
 const provider = [
   { value: "gogoanime", label: "Gogo" },
@@ -22,7 +22,7 @@ const SelectSource: React.FC<SelectSourceProps> = ({ idAnime }) => {
           router?.push(path?.watch(idAnime, e.target?.value));
         }}
         value={router?.query?.provider}
-        className="bg-[#333] outline-none font-semibold text-white p-2 text-sm w-[200px] rounded-md"
+        className="bg-[#333] outline-none font-semibold text-white py-2 pl-2 pr-10 text-sm rounded-md"
       >
         {provider?.map((item) => (
           <option

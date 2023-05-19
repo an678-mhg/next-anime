@@ -98,8 +98,15 @@ export interface Episode {
   airDate: string;
 }
 
-export interface Headers {
-  Referer: string;
+interface Plyr {
+  main: string;
+  backup: string;
+}
+
+export interface Iframe {
+  iframe: string;
+  plyr: string;
+  nspl: string;
 }
 
 export interface Source {

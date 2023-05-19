@@ -9,7 +9,7 @@ interface MainSettingsProps {
   >;
   currentSpeed: string;
   currentQuality: string;
-  currentSubtitle: string;
+  currentSubtitle: string | undefined;
   haveSubtitle: boolean;
   haveQuality: boolean;
 }

@@ -7,6 +7,8 @@ import {
 import { AnimeResponse, SearchAdvancedQuery } from "@/src/types/utils";
 import client from "@/src/utils/client";
 import { convertQueryArrayParams } from "../utils/contants";
+import axios from "axios";
+import { Plyr, Streaming } from "../types/amvstr";
 
 export const default_provider = "gogoanime";
 
@@ -87,17 +89,36 @@ export const getAnimeInfo = async (
 
 export const getAnimeEpisodeStreaming = async (
   episodeId: string,
-  provider: string = "gogoanime"
-) => {
-  const response = await client.get<AnimeEpisodeStreaming>(
-    `/watch/${episodeId}`,
-    {
+  provider: string = "zoro"
+): Promise<AnimeEpisodeStreaming> => {
+  let response;
+
+  if (provider === "zoro") {
+    response = await client.get<AnimeEpisodeStreaming>(`/watch/${episodeId}`, {
       params: {
         provider,
       },
-    }
-  );
-  return response.data;
+    });
+    return response.data;
+  } else {
+    response = await axios.get<Streaming>(
+      `${process.env.NEXT_PUBLIC_AVM_STREAM_URL}${episodeId}`
+    );
+
+    const data = response.data;
+
+    return {
+      iframe: {
+        iframe: data?.data?.iframe?.default,
+        nspl: data?.data?.nspl.main,
+        plyr: data?.data?.plyr.main,
+      },
+      sources: [
+        data?.data?.stream?.multi?.backup,
+        data?.data?.stream?.multi?.main,
+      ],
+    };
+  }
 };
 
 export const searchAnime = async (query: string, page: number = 1) => {

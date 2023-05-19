@@ -1,23 +1,37 @@
+import { Iframe } from "@/src/types/utils";
 import React from "react";
 
 interface SelectIframeProps {
-  isWatchIframe: boolean;
-  setIsWatchIframe: React.Dispatch<React.SetStateAction<boolean>>;
+  listIframe: Iframe;
+  setIframe: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  iframe: string | null | undefined;
 }
 
 const SelectIframe: React.FC<SelectIframeProps> = ({
-  setIsWatchIframe,
-  isWatchIframe,
+  iframe,
+  listIframe,
+  setIframe,
 }) => {
   return (
-    <div className="flex items-center space-x-3 justify-end mt-3">
+    <div className="flex items-center space-x-3 justify-end">
       <h4 className="text-sm font-semibold">Iframe:</h4>
-      <button
-        onClick={() => setIsWatchIframe((prev) => !prev)}
-        className="bg-[#333] outline-none font-semibold text-white p-2 text-sm w-[200px] rounded-md"
+      <select
+        onChange={(e) => setIframe(e.target.value)}
+        value={iframe! || ""}
+        className="bg-[#333] outline-none font-semibold text-white py-2 pl-2 pr-10 text-sm rounded-md"
       >
-        {!isWatchIframe ? "Use iframe to watch" : "Turn off iframe"}
-      </button>
+        {Object.keys(listIframe)?.map((item, index) => (
+          <option
+            className="text-sm font-semibold bg-[#333]"
+            // @ts-ignore
+            key={listIframe[item]}
+            // @ts-ignore
+            value={listIframe[item]}
+          >
+            {index}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };

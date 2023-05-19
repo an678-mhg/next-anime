@@ -69,7 +69,7 @@ export const formatVideoTime = (seconds: number) => {
 };
 
 export const getStreamAnimeWithProxy = (url: string) => {
-  return `${process.env.NEXT_PUBLIC_PROXY_CORS_URL}/${url}`;
+  return `${process.env.NEXT_PUBLIC_PROXY_CORS_URL}${url}`;
 };
 
 export const BASE_URL = process.env.NEXT_PUBLIC_NEXT_ANIME_URL;

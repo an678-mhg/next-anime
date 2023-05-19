@@ -2,7 +2,7 @@ import {
   Character,
   EndDate,
   Episode,
-  Headers,
+  Iframe,
   Intro,
   Mappings,
   NextAiringEpisode,
@@ -106,7 +106,7 @@ export interface Relation {
 }
 
 export interface AnimeEpisodeStreaming {
-  headers?: Headers;
+  iframe?: Iframe;
   sources: Source[];
   download?: string;
   subtitles?: Subtitle[];
