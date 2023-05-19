@@ -1,5 +1,5 @@
 const path = {
-  watch: (id: string, provider: string = "gogoanime") => {
+  watch: (id: string, provider: string = "zoro") => {
     return `/watch/${id}?provider=${provider}`;
   },
   anime: (id: string) => {

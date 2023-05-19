@@ -1,12 +1,7 @@
 import React from "react";
-import TitlePrimary from "../TitlePrimary";
 
 const CommentList = () => {
-  return (
-    <div className="mt-5">
-      <TitlePrimary title="Comments" />
-    </div>
-  );
+  return <div>CommentList</div>;
 };
 
 export default CommentList;

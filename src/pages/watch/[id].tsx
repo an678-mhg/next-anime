@@ -16,14 +16,20 @@ import { getAnimeTitle, getStreamAnimeWithProxy } from "@/src/utils/contants";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import SelectIframe from "@/src/components/Watch/SelectIframe";
 import Note from "@/src/components/Watch/Note";
-import CommentList from "@/src/components/Comment/CommentList";
+import Comment from "@/src/components/Watch/Comment";
 
 interface WatchProps {
   info: AnimeInfo;
+}
+
+interface WatchHistory {
+  time: number;
+  episodeId: string;
+  animeId: string;
 }
 
 const Player = dynamic(() => import("../../components/Player"), {
@@ -33,6 +39,9 @@ const Player = dynamic(() => import("../../components/Player"), {
 const Watch: React.FC<WatchProps> = ({ info }) => {
   const [episode, setEpisode] = useState<Episode>(info?.episodes?.[0]);
   const [isWatchIframe, setIsWatchIframe] = useState(false);
+
+  const playerRef = useRef<HTMLVideoElement | null>(null);
+
   const router = useRouter();
 
   const { data, isError, isFetching } = useQuery(
@@ -88,7 +97,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
               </h5>
             )}
             {isFetching && (
-              <h5 className="text-sm font-semibold">Loading episode data...</h5>
+              <h5 className="text-sm font-semibold">Loading episode data</h5>
             )}
             {!isFetching && episode && data && (
               <div className="w-full h-full">
@@ -99,26 +108,25 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
                     allowFullScreen
                   />
                 ) : (
-                  <Player
-                    source={data?.sources?.map((item) => ({
-                      label: item?.quality,
-                      url:
-                        router?.query?.provider === "gogoanime"
-                          ? item?.url
-                          : getStreamAnimeWithProxy(item?.url),
-                    }))}
-                    className="w-full h-full"
-                    poster={episode?.image as string}
-                    color="#FF0000"
-                    subtitle={data?.subtitles?.map((item) => ({
-                      lang: item.lang,
-                      url: `/api/subtitles?url=${encodeURIComponent(
-                        item?.url
-                      )}`,
-                    }))}
-                    handleNext={handleNextEpisode}
-                    intro={data?.intro || null}
-                  />
+                  <></>
+                  // <Player
+                  //   source={data?.sources?.map((item) => ({
+                  //     label: item?.quality,
+                  //     url: getStreamAnimeWithProxy(item?.url),
+                  //   }))}
+                  //   className="w-full h-full"
+                  //   poster={episode?.image as string}
+                  //   color="#FF0000"
+                  //   subtitle={data?.subtitles?.map((item) => ({
+                  //     lang: item.lang,
+                  //     url: `/api/subtitles?url=${encodeURIComponent(
+                  //       item?.url
+                  //     )}`,
+                  //   }))}
+                  //   handleNext={handleNextEpisode}
+                  //   intro={data?.intro || null}
+                  //   playerRef={playerRef}
+                  // />
                 )}
               </div>
             )}
@@ -149,7 +157,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
                 type={info?.type}
                 nextAiringEpisode={info?.nextAiringEpisode}
               />
-              {/* <CommentList /> */}
+              <Comment />
             </div>
           </div>
         </div>

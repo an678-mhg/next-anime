@@ -27,6 +27,7 @@ interface PlayerProps {
   subtitle?: Subtitle[];
   handleNext?: () => boolean;
   intro: Intro | null;
+  playerRef: React.MutableRefObject<HTMLVideoElement | null>;
 }
 
 export const playSpeedOptions = [
@@ -68,8 +69,8 @@ const Player: React.FC<PlayerProps> = ({
   subtitle = [],
   handleNext,
   intro,
+  playerRef,
 }) => {
-  const playerRef = useRef<HTMLVideoElement | null>(null);
   const seekRef = useRef<HTMLDivElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
   const timeoutSeekRef = useRef<any>(null);
@@ -287,12 +288,6 @@ const Player: React.FC<PlayerProps> = ({
       timeout && clearTimeout(timeout);
     };
   }, [showControl, play, showSettings, seeking]);
-
-  useEffect(() => {
-    if (loading) {
-      setShowControl(true);
-    }
-  }, [loading]);
 
   // handle seek time in pc with mouse event
   useEffect(() => {
