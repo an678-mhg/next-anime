@@ -151,7 +151,7 @@ export const getHomePage = async () => {
       perPage: 5,
       sort: convertQueryArrayParams(["SCORE_DESC"]),
     }),
-    prisma.comment.findMany({
+    prisma!.comment.findMany({
       orderBy: {
         createdAt: "desc",
       },

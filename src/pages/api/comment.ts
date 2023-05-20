@@ -3,7 +3,7 @@ import prisma from "../../lib/prisma";
 import { CreateCommentBody } from "@/src/types/comment";
 
 const createComment = async (comment: CreateCommentBody) => {
-  const newComment = await prisma.comment.create({
+  const newComment = await prisma!.comment.create({
     data: comment,
   });
 

@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (
     };
   }
 
-  const list = await prisma.list.findMany({
+  const list = await prisma!.list.findMany({
     where: {
       userId: session?.user?.id,
     },

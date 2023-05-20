@@ -12,7 +12,7 @@ const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { animeId, animeImage, animeTitle, animeType, animeColor } = req.body;
 
-  const existList = await prisma.list.findFirst({
+  const existList = await prisma!.list.findFirst({
     where: {
       animeId,
       userId: session?.user?.id,
@@ -22,10 +22,10 @@ const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
   let status = "Add";
 
   if (existList) {
-    await prisma.list.delete({ where: { id: existList.id } });
+    await prisma!.list.delete({ where: { id: existList.id } });
     status = "Delete";
   } else {
-    await prisma.list.create({
+    await prisma!.list.create({
       data: {
         animeColor,
         animeId,
@@ -53,7 +53,7 @@ const checkAnimeInList = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json("Animeid is required");
   }
 
-  const check = await prisma.list.findFirst({
+  const check = await prisma!.list.findFirst({
     where: {
       animeId,
       userId: session?.user?.id,
