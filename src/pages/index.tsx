@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 import AnimeCard from "../components/Anime/AnimeCard";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import Meta from "../components/Meta";
+import { Comment } from "../types/comment";
 
 interface HomeProps {
   recentAnime: RecentAnime[];
@@ -17,6 +18,7 @@ interface HomeProps {
   mostPopularAnime: Anime[];
   favouritesAnime: Anime[];
   completedAnime: Anime[];
+  comments: Comment[];
 }
 
 const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
@@ -35,6 +37,7 @@ const Home: React.FC<HomeProps> = ({
   completedAnime,
   favouritesAnime,
   mostPopularAnime,
+  comments,
 }) => {
   return (
     <MainLayout>
@@ -57,7 +60,7 @@ const Home: React.FC<HomeProps> = ({
         ))}
       </AnimeGridLayout>
       <ShareNextAnime />
-      <NewestComment />
+      <NewestComment comments={comments} />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 p-4">
         <BoxShowCase title="Top Airing" anime={topAiringAnime} />
         <BoxShowCase title="Most Popular" anime={mostPopularAnime} />
@@ -77,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       mostPopularAnime,
       favouritesAnime,
       completedAnime,
+      comments,
     ] = await getHomePage();
 
     return {
@@ -87,6 +91,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         mostPopularAnime,
         favouritesAnime: favouritesAnime.results,
         completedAnime: completedAnime.results,
+        comments: JSON.parse(JSON.stringify(comments)),
       },
     };
   } catch (error) {

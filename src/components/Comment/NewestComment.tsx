@@ -3,8 +3,13 @@ import NewestCommentItem from "./NewestCommentItem";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useInnerWidth from "@/src/hooks/useInnerWidth";
 import TitlePrimary from "../TitlePrimary";
+import { Comment } from "@/src/types/comment";
 
-const NewestComment = () => {
+interface NewestCommentProps {
+  comments: Comment[];
+}
+
+const NewestComment: React.FC<NewestCommentProps> = ({ comments }) => {
   const width = useInnerWidth();
 
   const slidesPerView = useMemo(() => {
@@ -20,9 +25,9 @@ const NewestComment = () => {
 
         <div className="mt-5">
           <Swiper spaceBetween={20} slidesPerView={slidesPerView}>
-            {Array.from(Array(20).keys()).map((item) => (
-              <SwiperSlide key={item}>
-                <NewestCommentItem />
+            {comments.map((item) => (
+              <SwiperSlide key={item.id}>
+                <NewestCommentItem comment={item} />
               </SwiperSlide>
             ))}
           </Swiper>

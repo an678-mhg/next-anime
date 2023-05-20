@@ -8,7 +8,8 @@ import { AnimeResponse, SearchAdvancedQuery } from "@/src/types/utils";
 import client from "@/src/utils/client";
 import { convertQueryArrayParams } from "../utils/contants";
 import axios from "axios";
-import { Plyr, Streaming } from "../types/amvstr";
+import { Streaming } from "../types/amvstr";
+import prisma from "../lib/prisma";
 
 export const default_provider = "gogoanime";
 
@@ -149,6 +150,15 @@ export const getHomePage = async () => {
       status: "FINISHED",
       perPage: 5,
       sort: convertQueryArrayParams(["SCORE_DESC"]),
+    }),
+    prisma.comment.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 20,
+      include: {
+        user: true,
+      },
     }),
   ]);
 
