@@ -21,19 +21,23 @@ import { useQuery } from "react-query";
 import SelectIframe from "@/src/components/Watch/SelectIframe";
 import Note from "@/src/components/Watch/Note";
 import Comment from "@/src/components/Watch/Comment";
+import prisma from "@/src/lib/prisma";
+import { Comment as CommentType } from "@/src/types/comment";
 
 interface WatchProps {
   info: AnimeInfo;
+  comments: CommentType[];
 }
 
 const Player = dynamic(() => import("../../components/Player"), {
   ssr: false,
 });
 
-const Watch: React.FC<WatchProps> = ({ info }) => {
+const Watch: React.FC<WatchProps> = ({ info, comments }) => {
   const [episode, setEpisode] = useState<Episode>(info?.episodes?.[0]);
   const [isWatchIframe, setIsWatchIframe] = useState(false);
   const [iframeLink, setIframeLink] = useState<string | null>();
+  const [commentsState, setCommentsState] = useState(comments);
 
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
@@ -71,6 +75,10 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
     setEpisode(info?.episodes?.[0]);
   }, [router?.query?.provider]);
 
+  useEffect(() => {
+    setCommentsState(comments);
+  }, []);
+
   return (
     <div>
       <Meta
@@ -79,7 +87,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
         description="Next Anime is a free anime watch website built using Consumet API"
       />
       <div className="lg:flex">
-        <div className="pb-5 md:w-[calc(100%-500px)] w-full">
+        <div className="lg:pb-5 lg:w-[calc(100%-500px)] w-full">
           <div className="bg-[#111] w-full z-[9999] aspect-video flex items-center justify-center">
             {!episode && (
               <h5 className="text-sm font-semibold">
@@ -127,13 +135,15 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
           </div>
           <div className="md:flex w-full">
             <div className="w-full p-4 md:mt-0 mt-5">
-              <div className="flex items-center space-x-4 justify-end">
-                <button
-                  onClick={() => setIsWatchIframe((prev) => !prev)}
-                  className="bg-[#222] py-2 px-4 rounded-md font-semibold text-white text-sm"
-                >
-                  {!isWatchIframe ? "Enable" : "Disable"} iframe to watch
-                </button>
+              <div className="flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center md:space-x-4 justify-end">
+                {data?.iframe && (
+                  <button
+                    onClick={() => setIsWatchIframe((prev) => !prev)}
+                    className="bg-[#222] py-2 px-4 inline-block rounded-md font-semibold text-white text-sm"
+                  >
+                    {!isWatchIframe ? "Enable" : "Disable"} iframe
+                  </button>
+                )}
                 <SelectSource idAnime={info?.id} />
                 {isWatchIframe && data?.iframe && (
                   <SelectIframe
@@ -160,7 +170,10 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
                 type={info?.type}
                 nextAiringEpisode={info?.nextAiringEpisode}
               />
-              <Comment />
+              <Comment
+                comments={commentsState}
+                setCommentStates={setCommentsState}
+              />
             </div>
           </div>
         </div>
@@ -188,14 +201,26 @@ export const getServerSideProps: GetServerSideProps = async (
       };
     }
 
-    const info = await getAnimeInfo(id, provider);
+    const [info, comments] = await Promise.all([
+      getAnimeInfo(id, provider),
+      prisma?.comment?.findMany({
+        where: {
+          animeId: id,
+        },
+        include: {
+          user: true,
+        },
+      }),
+    ]);
 
     return {
       props: {
         info,
+        comments: JSON.parse(JSON.stringify(comments)),
       },
     };
   } catch (error) {
+    console.log(error);
     return {
       notFound: true,
     };

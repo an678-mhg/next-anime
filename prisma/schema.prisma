@@ -46,6 +46,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   List          List[]
+  Comment       Comment[]
 }
 
 model VerificationToken {
@@ -66,4 +67,13 @@ model List {
   animeType  String
   animeColor String
   animeTitle String
+}
+
+model Comment {
+  id        String   @id @default(cuid()) @map("_id")
+  animeId   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  text      String
+  createdAt DateTime @default(now())
 }

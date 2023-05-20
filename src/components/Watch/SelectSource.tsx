@@ -22,7 +22,7 @@ const SelectSource: React.FC<SelectSourceProps> = ({ idAnime }) => {
           router?.push(path?.watch(idAnime, e.target?.value));
         }}
         value={router?.query?.provider}
-        className="bg-[#333] outline-none font-semibold text-white py-2 pl-2 pr-10 text-sm rounded-md"
+        className="bg-[#333] md:flex-auto flex-1 outline-none font-semibold text-white py-2 pl-2 pr-10 text-sm rounded-md"
       >
         {provider?.map((item) => (
           <option

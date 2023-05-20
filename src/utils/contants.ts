@@ -73,3 +73,25 @@ export const getStreamAnimeWithProxy = (url: string) => {
 };
 
 export const BASE_URL = process.env.NEXT_PUBLIC_NEXT_ANIME_URL;
+
+export const calculateCreatedTime = (timeCreated: any) => {
+  const periods: any = {
+    year: 365 * 30 * 24 * 60 * 60 * 1000,
+    month: 30 * 24 * 60 * 60 * 1000,
+    week: 7 * 24 * 60 * 60 * 1000,
+    day: 24 * 60 * 60 * 1000,
+    hour: 60 * 60 * 1000,
+    minute: 60 * 1000,
+  };
+
+  const diff = Date.now() - +new Date(`${timeCreated}`);
+
+  for (const key in periods) {
+    if (diff >= Number(periods[key])) {
+      const result = Math.floor(diff / Number(periods[key]));
+      return `${result} ${result === 1 ? key : key + "s"} ago`;
+    }
+  }
+
+  return "Just now";
+};

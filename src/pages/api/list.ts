@@ -68,12 +68,16 @@ const checkAnimeInList = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const handler: NextApiHandler = async (req, res) => {
-  if (req.method === "GET") {
-    return checkAnimeInList(req, res);
-  }
+  try {
+    if (req.method === "GET") {
+      return checkAnimeInList(req, res);
+    }
 
-  if (req.method === "POST") {
-    return handleAddList(req, res);
+    if (req.method === "POST") {
+      return handleAddList(req, res);
+    }
+  } catch (error) {
+    res.status(500).send("Server not found!");
   }
 };
 

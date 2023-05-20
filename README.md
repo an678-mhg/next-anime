@@ -20,10 +20,18 @@ You can refer to [https://github.com/consumet/api.consumet.org](https://github.c
 - MongoDB
 - Swiper (slider)
 - Next-Auth
+- React Query
 
 ## Features
 
-- Updating...
+- Watch anime by episode support iframe and custom player
+- Advanced anime search by keyword, season, format, status, genre,...
+- Sign in via google or github using next auth
+- Customize video player adjust playback speed, video quality, subtitles
+- Save anime to your lists
+- Infinity page scrolling using react-intersection-observer
+- Support ssr, seo friendly by nextjs
+- Comment on anime while watching
 
 ## Screenshots, Preview
 
