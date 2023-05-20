@@ -7,11 +7,9 @@ import { getAnimeTitle } from "@/src/utils/contants";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import AnimeCard from "../components/Anime/AnimeCard";
-import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import Meta from "../components/Meta";
 import { Comment } from "../types/comment";
 import TitlePrimary from "../components/TitlePrimary";
-import SwiperContainer from "../components/SwiperContainer";
 import { SwiperSlide } from "swiper/react";
 
 interface HomeProps {
@@ -32,6 +30,10 @@ const NewestComment = dynamic(
   () => import("../components/Comment/NewestComment"),
   { ssr: false }
 );
+
+const SwiperContainer = dynamic(() => import("../components/SwiperContainer"), {
+  ssr: false,
+});
 
 const Home: React.FC<HomeProps> = ({
   recentAnime,
