@@ -13,7 +13,7 @@ import prisma from "../lib/prisma";
 
 export const default_provider = "gogoanime";
 
-export const getRecentAnime = async (limit: number = 5, page: number = 1) => {
+export const getRecentAnime = async (limit: number = 20, page: number = 1) => {
   const response = await client.get<AnimeResponse<RecentAnime>>(
     "/recent-episodes",
     {
@@ -136,7 +136,7 @@ export const getRandomAnime = async () => {
 
 export const getHomePage = async () => {
   const data = await Promise.all([
-    getRecentAnime(8),
+    getRecentAnime(),
     getTrendingAnime(20),
     getTopAiring(5),
     getMostPopular(5),

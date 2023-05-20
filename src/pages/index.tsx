@@ -10,6 +10,9 @@ import AnimeCard from "../components/Anime/AnimeCard";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import Meta from "../components/Meta";
 import { Comment } from "../types/comment";
+import TitlePrimary from "../components/TitlePrimary";
+import SwiperContainer from "../components/SwiperContainer";
+import { SwiperSlide } from "swiper/react";
 
 interface HomeProps {
   recentAnime: RecentAnime[];
@@ -47,18 +50,29 @@ const Home: React.FC<HomeProps> = ({
         description="Next Anime is a free anime watch website built using Consumet API"
       />
       <SlideBanner tredingAnime={tredingAnime} />
-      <AnimeGridLayout title="Recent Anime Episodes" className="p-4">
-        {recentAnime?.map((item) => (
-          <AnimeCard
-            color={item?.color}
-            key={item?.id}
-            id={item?.id.toString()}
-            image={item?.image}
-            title={getAnimeTitle(item?.title)}
-            type={item?.type}
-          />
-        ))}
-      </AnimeGridLayout>
+      <div className="mt-5 p-4">
+        <TitlePrimary title="Recent Anime Episodes" />
+        <SwiperContainer
+          className="mt-5"
+          xl={8.3}
+          lg={6.3}
+          md={4.3}
+          sm={2.3}
+          spaceBetween={20}
+        >
+          {recentAnime?.map((item) => (
+            <SwiperSlide key={item?.id}>
+              <AnimeCard
+                color={item?.color}
+                id={item?.id.toString()}
+                image={item?.image}
+                title={getAnimeTitle(item?.title)}
+                type={item?.type}
+              />
+            </SwiperSlide>
+          ))}
+        </SwiperContainer>
+      </div>
       <ShareNextAnime />
       <NewestComment comments={comments} />
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 p-4">

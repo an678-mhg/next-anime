@@ -108,7 +108,7 @@ const Watch: React.FC<WatchProps> = ({ info, comments }) => {
                 {isWatchIframe ? (
                   <iframe
                     src={iframeLink!}
-                    className="w-full aspect-video"
+                    className="w-full h-full"
                     allowFullScreen
                   />
                 ) : (
