@@ -164,3 +164,19 @@ export const getHomePage = async () => {
 
   return data;
 };
+
+export const getWatchPage = async (id: string, provider: string) => {
+  const data = await Promise.all([
+    getAnimeInfo(id, provider),
+    prisma?.comment?.findMany({
+      where: {
+        animeId: id,
+      },
+      include: {
+        user: true,
+      },
+    }),
+  ]);
+
+  return data;
+};

@@ -9,6 +9,7 @@ import {
   default_provider,
   getAnimeEpisodeStreaming,
   getAnimeInfo,
+  getWatchPage,
 } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
 import { Episode } from "@/src/types/utils";
@@ -201,17 +202,7 @@ export const getServerSideProps: GetServerSideProps = async (
       };
     }
 
-    const [info, comments] = await Promise.all([
-      getAnimeInfo(id, provider),
-      prisma?.comment?.findMany({
-        where: {
-          animeId: id,
-        },
-        include: {
-          user: true,
-        },
-      }),
-    ]);
+    const [info, comments] = await getWatchPage(id, provider);
 
     return {
       props: {
