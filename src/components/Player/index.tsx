@@ -381,10 +381,6 @@ const Player: React.FC<PlayerProps> = ({
     <div
       ref={videoContainerRef}
       onMouseMove={() => {
-        if (fullScreen) {
-          return;
-        }
-
         setShowControl(true);
       }}
       onMouseLeave={() => {

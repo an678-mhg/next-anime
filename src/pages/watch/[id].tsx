@@ -74,11 +74,20 @@ const Watch: React.FC<WatchProps> = ({ info, comments }) => {
 
   useEffect(() => {
     setEpisode(info?.episodes?.[0]);
+    setIsWatchIframe(false);
   }, [router?.query?.provider]);
 
   useEffect(() => {
     setCommentsState(comments);
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (document.pictureInPictureElement) {
+        document.exitPictureInPicture();
+      }
+    };
+  }, [episode]);
 
   return (
     <div>

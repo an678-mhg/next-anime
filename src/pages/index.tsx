@@ -1,26 +1,16 @@
 import BoxShowCase from "@/src/components/Home/BoxShowCase";
 import ShareNextAnime from "@/src/components/ShareNextAnime";
 import MainLayout from "@/src/layouts/MainLayout";
-import { getHomePage } from "@/src/services/anime";
-import { Anime, RecentAnime } from "@/src/types/anime";
 import { getAnimeTitle } from "@/src/utils/contants";
-import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import AnimeCard from "../components/Anime/AnimeCard";
 import Meta from "../components/Meta";
-import { Comment } from "../types/comment";
 import TitlePrimary from "../components/TitlePrimary";
 import { SwiperSlide } from "swiper/react";
-
-interface HomeProps {
-  recentAnime: RecentAnime[];
-  tredingAnime: Anime[];
-  topAiringAnime: Anime[];
-  mostPopularAnime: Anime[];
-  favouritesAnime: Anime[];
-  completedAnime: Anime[];
-  comments: Comment[];
-}
+import { useQuery } from "react-query";
+import { getHomePage } from "../services/anime";
+import { CircularProgress } from "react-cssfx-loading";
+import NotFound from "../components/404NotFound";
 
 const SlideBanner = dynamic(() => import("../components/Home/SlideBanner"), {
   ssr: false,
@@ -35,15 +25,31 @@ const SwiperContainer = dynamic(() => import("../components/SwiperContainer"), {
   ssr: false,
 });
 
-const Home: React.FC<HomeProps> = ({
-  recentAnime,
-  tredingAnime,
-  topAiringAnime,
-  completedAnime,
-  favouritesAnime,
-  mostPopularAnime,
-  comments,
-}) => {
+const Home = () => {
+  const { data, isLoading, isError } = useQuery("home", getHomePage);
+
+  if (!data || isLoading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-black">
+        <CircularProgress color="#FF0000" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <NotFound />;
+  }
+
+  const [
+    recentAnime,
+    tredingAnime,
+    topAiringAnime,
+    mostPopularAnime,
+    favouritesAnime,
+    completedAnime,
+    comments,
+  ] = data;
+
   return (
     <MainLayout>
       <Meta
@@ -80,41 +86,11 @@ const Home: React.FC<HomeProps> = ({
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 p-4">
         <BoxShowCase title="Top Airing" anime={topAiringAnime} />
         <BoxShowCase title="Most Popular" anime={mostPopularAnime} />
-        <BoxShowCase title="Most Favorite" anime={favouritesAnime} />
-        <BoxShowCase title="Completed" anime={completedAnime} />
+        <BoxShowCase title="Most Favorite" anime={favouritesAnime?.results} />
+        <BoxShowCase title="Completed" anime={completedAnime?.results} />
       </div>
     </MainLayout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const [
-      recentAnime,
-      tredingAnime,
-      topAiringAnime,
-      mostPopularAnime,
-      favouritesAnime,
-      completedAnime,
-      comments,
-    ] = await getHomePage();
-
-    return {
-      props: {
-        recentAnime,
-        tredingAnime,
-        topAiringAnime,
-        mostPopularAnime,
-        favouritesAnime: favouritesAnime.results,
-        completedAnime: completedAnime.results,
-        comments: JSON.parse(JSON.stringify(comments)),
-      },
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
 };
 
 export default Home;

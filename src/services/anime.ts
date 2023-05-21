@@ -10,6 +10,7 @@ import { convertQueryArrayParams } from "../utils/contants";
 import axios from "axios";
 import { Streaming } from "../types/amvstr";
 import prisma from "../lib/prisma";
+import { getNewestComment } from "./comment";
 
 export const default_provider = "gogoanime";
 
@@ -151,15 +152,7 @@ export const getHomePage = async () => {
       perPage: 5,
       sort: convertQueryArrayParams(["SCORE_DESC"]),
     }),
-    prisma!.comment.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: 20,
-      include: {
-        user: true,
-      },
-    }),
+    getNewestComment(),
   ]);
 
   return data;
