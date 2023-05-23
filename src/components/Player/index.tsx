@@ -267,6 +267,10 @@ const Player: React.FC<PlayerProps> = ({
     setSettingsType("main");
   };
 
+  const handleError = () => {
+    console.log("error");
+  };
+
   useEffect(() => {
     if (playerRef !== null && playerRef?.current !== null) {
       playerRef.current.volume = volume / 100;

@@ -22,7 +22,6 @@ import { useQuery } from "react-query";
 import SelectIframe from "@/src/components/Watch/SelectIframe";
 import Note from "@/src/components/Watch/Note";
 import Comment from "@/src/components/Watch/Comment";
-import prisma from "@/src/lib/prisma";
 import { Comment as CommentType } from "@/src/types/comment";
 
 interface WatchProps {
