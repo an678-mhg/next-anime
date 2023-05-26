@@ -9,7 +9,6 @@ import {
   default_provider,
   getAnimeEpisodeStreaming,
   getAnimeInfo,
-  getWatchPage,
 } from "@/src/services/anime";
 import { AnimeInfo } from "@/src/types/anime";
 import { Episode } from "@/src/types/utils";
@@ -22,22 +21,20 @@ import { useQuery } from "react-query";
 import SelectIframe from "@/src/components/Watch/SelectIframe";
 import Note from "@/src/components/Watch/Note";
 import Comment from "@/src/components/Watch/Comment";
-import { Comment as CommentType } from "@/src/types/comment";
+import MainLayout from "@/src/layouts/MainLayout";
 
 interface WatchProps {
   info: AnimeInfo;
-  comments: CommentType[];
 }
 
-const Player = dynamic(() => import("../../components/Player"), {
+const Player = dynamic(() => import("../../../components/Player"), {
   ssr: false,
 });
 
-const Watch: React.FC<WatchProps> = ({ info, comments }) => {
+const Watch: React.FC<WatchProps> = ({ info }) => {
   const [episode, setEpisode] = useState<Episode>(info?.episodes?.[0]);
   const [isWatchIframe, setIsWatchIframe] = useState(false);
   const [iframeLink, setIframeLink] = useState<string | null>();
-  const [commentsState, setCommentsState] = useState(comments);
 
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
@@ -77,10 +74,6 @@ const Watch: React.FC<WatchProps> = ({ info, comments }) => {
   }, [router?.query?.provider]);
 
   useEffect(() => {
-    setCommentsState(comments);
-  }, []);
-
-  useEffect(() => {
     return () => {
       if (document.pictureInPictureElement) {
         document.exitPictureInPicture();
@@ -89,14 +82,14 @@ const Watch: React.FC<WatchProps> = ({ info, comments }) => {
   }, [episode]);
 
   return (
-    <div>
+    <MainLayout>
       <Meta
         title={`Next Anime - ${getAnimeTitle(info?.title)} - Watch`}
         image={info?.cover}
         description="Next Anime is a free anime watch website built using Consumet API"
       />
-      <div className="lg:flex">
-        <div className="lg:pb-5 lg:w-[calc(100%-500px)] w-full">
+      <div className="lg:flex container mt-[56px] px-4 p-4 pb-8">
+        <div className="lg:pb-5 lg:w-[calc(100%-300px)]">
           <div className="bg-[#111] w-full z-[9999] aspect-video flex items-center justify-center">
             {!episode && (
               <h5 className="text-sm font-semibold">
@@ -142,8 +135,8 @@ const Watch: React.FC<WatchProps> = ({ info, comments }) => {
               </div>
             )}
           </div>
-          <div className="md:flex w-full">
-            <div className="w-full p-4 md:mt-0 mt-5">
+          <div className="md:flex w-full mt-4">
+            <div className="w-full md:mt-0">
               <div className="flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center md:space-x-4 justify-end">
                 {data?.iframe && (
                   <button
@@ -179,10 +172,7 @@ const Watch: React.FC<WatchProps> = ({ info, comments }) => {
                 type={info?.type}
                 nextAiringEpisode={info?.nextAiringEpisode}
               />
-              <Comment
-                comments={commentsState}
-                setCommentStates={setCommentsState}
-              />
+              <Comment animeId={info?.id} episodeId={episode?.id} />
             </div>
           </div>
         </div>
@@ -192,8 +182,7 @@ const Watch: React.FC<WatchProps> = ({ info, comments }) => {
           relations={info?.relations}
         />
       </div>
-      <Footer />
-    </div>
+    </MainLayout>
   );
 };
 
@@ -210,16 +199,14 @@ export const getServerSideProps: GetServerSideProps = async (
       };
     }
 
-    const [info, comments] = await getWatchPage(id, provider);
+    const info = await getAnimeInfo(id, provider);
 
     return {
       props: {
         info,
-        comments: JSON.parse(JSON.stringify(comments)),
       },
     };
   } catch (error) {
-    console.log(error);
     return {
       notFound: true,
     };

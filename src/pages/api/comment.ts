@@ -24,6 +24,20 @@ const getNewestComment = async () => {
   return comments;
 };
 
+const getCommentByEpisodeId = async (episodeId: string, animeId: string) => {
+  const comments = await prisma!.comment.findMany({
+    where: {
+      animeId,
+      episodeId,
+    },
+    include: {
+      user: true,
+    },
+  });
+
+  return comments;
+};
+
 const handler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -36,8 +50,13 @@ const handler: NextApiHandler = async (
     } else if (req.method === "GET") {
       const comments = await getNewestComment();
       return res.json(comments);
+    } else if (req.method === "PUT") {
+      const { animeId, episodeId } = req.body;
+      const comments = await getCommentByEpisodeId(episodeId, animeId);
+      return res.json(comments);
     }
   } catch (error) {
+    console.log(error);
     res.status(500).send("Server not found!");
   }
 };

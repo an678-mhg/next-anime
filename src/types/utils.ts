@@ -103,12 +103,6 @@ interface Plyr {
   backup: string;
 }
 
-export interface Iframe {
-  iframe: string;
-  plyr: string;
-  nspl: string;
-}
-
 export interface Source {
   url: string;
   isM3U8: boolean;

@@ -1,6 +1,7 @@
 import { Comment } from "@/src/types/comment";
 import { calculateCreatedTime } from "@/src/utils/contants";
 import React from "react";
+import { BiLike, BiTrashAlt } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -10,23 +11,34 @@ interface CommentItemProps {
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
   return (
-    <div className="flex space-x-4">
-      <LazyLoadImage
-        effect="blur"
-        src={comment.user?.image!}
-        className="w-10 h-10 rounded-full mt-1"
-      />
-      <div className="flex-1">
-        <div className="flex items-end">
-          <h4 className="font-semibold">{comment?.user?.name}</h4>
-          <BsDot className="text-gray-600" size={20} />
-          <p className="text-gray-400 text-sm">User</p>
-          <BsDot className="text-gray-600" size={20} />
-          <p className="text-sm text-gray-400">
-            {calculateCreatedTime(comment.createdAt)}
-          </p>
+    <div>
+      <div className="flex space-x-4">
+        <LazyLoadImage
+          effect="blur"
+          src={comment.user?.image!}
+          className="w-8 h-8 rounded-full"
+        />
+        <div className="flex-1">
+          <div className="flex items-end">
+            <h4 className="font-semibold text-sm">{comment?.user?.name}</h4>
+
+            <BsDot className="text-gray-600" size={20} />
+            <p className="text-[13px] text-gray-400">
+              {calculateCreatedTime(comment.createdAt)}
+            </p>
+          </div>
+          <p className="text-[13px] mt-1">{comment.text}</p>
         </div>
-        <p className="text-sm text-gray-400 mt-1">{comment.text}</p>
+      </div>
+      <div className="ml-[calc(32px+16px)] mt-2 flex items-center space-x-5 text-gray-400">
+        <div className="flex items-center space-x-2 cursor-pointer">
+          <BiLike />
+          <span className="text-xs">100</span>
+        </div>
+        <div className="flex items-center space-x-2 cursor-pointer">
+          <BiTrashAlt />
+          <span className="text-xs">Remove</span>
+        </div>
       </div>
     </div>
   );

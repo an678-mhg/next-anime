@@ -45,8 +45,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  List          List[]
-  Comment       Comment[]
+  list          List[]
+  comment       Comment[]
+  like          Like[]
 }
 
 model VerificationToken {
@@ -76,4 +77,14 @@ model Comment {
   userId    String
   text      String
   createdAt DateTime @default(now())
+  episodeId String
+  like      Like[]
+}
+
+model Like {
+  id        String  @id @default(cuid()) @map("_id")
+  comment   Comment @relation(fields: [commentId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+  commentId String
+  userId    String
 }

@@ -4,6 +4,7 @@ export interface CreateCommentBody {
   animeId: string;
   userId: string;
   text: string;
+  episodeId: string;
 }
 
 export interface Comment {

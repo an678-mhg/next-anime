@@ -8,7 +8,7 @@ interface CommentListProps {
 
 const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   return (
-    <div className="mt-5 space-y-3">
+    <div className="mt-5 space-y-5">
       {comments?.length === 0 && (
         <h5 className="text-sm font-semibold text-center mt-5">
           No comment yet

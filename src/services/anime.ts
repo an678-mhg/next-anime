@@ -110,11 +110,11 @@ export const getAnimeEpisodeStreaming = async (
     const data = response.data;
 
     return {
-      iframe: {
-        iframe: data?.data?.iframe?.default,
-        nspl: data?.data?.nspl.main,
-        plyr: data?.data?.plyr.main,
-      },
+      iframe: [
+        ...Object.values(data?.data?.iframe),
+        ...Object.values(data?.data?.nspl),
+        ...Object.values(data?.data?.plyr),
+      ],
       sources: [
         data?.data?.stream?.multi?.backup,
         data?.data?.stream?.multi?.main,
@@ -153,22 +153,6 @@ export const getHomePage = async () => {
       sort: convertQueryArrayParams(["SCORE_DESC"]),
     }),
     getNewestComment(),
-  ]);
-
-  return data;
-};
-
-export const getWatchPage = async (id: string, provider: string) => {
-  const data = await Promise.all([
-    getAnimeInfo(id, provider),
-    prisma?.comment?.findMany({
-      where: {
-        animeId: id,
-      },
-      include: {
-        user: true,
-      },
-    }),
   ]);
 
   return data;

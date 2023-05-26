@@ -1,8 +1,7 @@
-import { Iframe } from "@/src/types/utils";
 import React, { useEffect } from "react";
 
 interface SelectIframeProps {
-  listIframe: Iframe;
+  listIframe: string[];
   setIframe: React.Dispatch<React.SetStateAction<string | null | undefined>>;
   iframe: string | null | undefined;
 }
@@ -13,8 +12,8 @@ const SelectIframe: React.FC<SelectIframeProps> = ({
   setIframe,
 }) => {
   useEffect(() => {
-    if (listIframe?.iframe) {
-      setIframe(listIframe.iframe);
+    if (listIframe?.[0]) {
+      setIframe(listIframe?.[0]);
     }
   }, []);
 
@@ -26,15 +25,13 @@ const SelectIframe: React.FC<SelectIframeProps> = ({
         value={iframe! || ""}
         className="bg-[#333] md:flex-auto flex-1 outline-none font-semibold text-white py-2 pl-2 pr-10 text-sm rounded-md"
       >
-        {Object.keys(listIframe)?.map((item) => (
+        {listIframe?.map((item, index) => (
           <option
             className="text-sm font-semibold bg-[#333]"
-            // @ts-ignore
-            key={listIframe[item]}
-            // @ts-ignore
-            value={listIframe[item]}
+            key={index}
+            value={item}
           >
-            {item}
+            {index}
           </option>
         ))}
       </select>

@@ -1,20 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TitlePrimary from "../TitlePrimary";
 import Input from "../Comment/Input";
-import { Comment } from "@/src/types/comment";
 import CommentList from "../Comment/CommentList";
+import { useQuery } from "react-query";
+import { getCommentByEpisodeId } from "@/src/services/comment";
+import { useInView } from "react-intersection-observer";
+import { CircularProgress } from "react-cssfx-loading";
 
 interface CommentProps {
-  comments: Comment[];
-  setCommentStates: React.Dispatch<React.SetStateAction<Comment[]>>;
+  episodeId: string;
+  animeId: string;
 }
 
-const Comment: React.FC<CommentProps> = ({ comments, setCommentStates }) => {
+const Comment: React.FC<CommentProps> = ({ episodeId, animeId }) => {
+  const [ref, inView] = useInView();
+
+  const { data: comments, isLoading } = useQuery(
+    [`comment-${episodeId}-${inView}`],
+    () => (inView ? getCommentByEpisodeId(episodeId, animeId) : undefined)
+  );
+
   return (
-    <div className="mt-5">
+    <div ref={ref} className={`mt-5`}>
       <TitlePrimary title="Comments" />
-      <Input setCommentStates={setCommentStates} />
-      <CommentList comments={comments} />
+      {comments && !isLoading ? (
+        <>
+          <Input episodeId={episodeId} animeId={animeId} />
+          <CommentList comments={comments} />
+        </>
+      ) : (
+        <div className="w-full flex justify-center my-5">
+          <CircularProgress color="#FF0000" />
+        </div>
+      )}
     </div>
   );
 };

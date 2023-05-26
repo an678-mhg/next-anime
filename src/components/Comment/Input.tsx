@@ -4,7 +4,7 @@ import React, { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { AiOutlineSend } from "react-icons/ai";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { createComment } from "@/src/services/comment";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
@@ -12,16 +12,17 @@ import { CircularProgress } from "react-cssfx-loading";
 import { CreateCommentBody } from "@/src/types/comment";
 import { Comment } from "@prisma/client";
 import { Comment as CommentType } from "@/src/types/comment";
+import { MdMessage } from "react-icons/md";
 
 interface InputProps {
-  setCommentStates: React.Dispatch<React.SetStateAction<CommentType[]>>;
+  episodeId: string;
+  animeId: string;
 }
 
-const Input: React.FC<InputProps> = ({ setCommentStates }) => {
+const Input: React.FC<InputProps> = ({ episodeId, animeId }) => {
   const { data: session } = useSession();
-  const router = useRouter();
-
   const [text, setText] = useState("");
+  const queryClient = useQueryClient();
 
   const { mutateAsync, isLoading } = useMutation(createComment, {
     onError: () => {
@@ -44,7 +45,12 @@ const Input: React.FC<InputProps> = ({ setCommentStates }) => {
       };
 
       setText("");
-      setCommentStates((prev) => [...prev, comment]);
+      const key = `comment-${episodeId}-${true}`;
+
+      queryClient.setQueriesData(
+        [key],
+        [...(queryClient.getQueryData(key) as Comment[]), comment]
+      );
     },
   });
 
@@ -56,9 +62,10 @@ const Input: React.FC<InputProps> = ({ setCommentStates }) => {
     if (!text.trim()) return;
 
     const newComment: CreateCommentBody = {
-      animeId: router?.query?.id as string,
+      animeId,
       text,
       userId: session?.user?.id,
+      episodeId,
     };
 
     mutateAsync(newComment);
@@ -81,16 +88,12 @@ const Input: React.FC<InputProps> = ({ setCommentStates }) => {
         </div>
       ) : (
         <div className="bg-[#222] px-2 flex items-center space-x-4">
-          <LazyLoadImage
-            className="w-7 h-7 rounded-full"
-            src={session?.user?.image!}
-            effect="blur"
-          />
+          <MdMessage className="cursor-pointer" size={20} />
           <input
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Leave a comment...."
-            className="font-semibold bg-transparent flex-1 outline-none py-2"
+            className="font-semibold text-sm bg-transparent flex-1 outline-none py-2"
           />
           <button disabled={isLoading}>
             {!isLoading ? (

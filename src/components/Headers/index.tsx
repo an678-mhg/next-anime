@@ -7,11 +7,7 @@ import { useSession } from "next-auth/react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Menu from "./Menu";
 
-interface HeadersProps {
-  backgroundColor?: string;
-}
-
-const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
+const Headers = () => {
   const headerRef = useRef<HTMLDivElement | null>(null);
   const { data } = useSession();
   const [showMenu, setShowMenu] = useState(false);
@@ -43,47 +39,43 @@ const Headers: React.FC<HeadersProps> = ({ backgroundColor }) => {
   }, []);
 
   return (
-    <div
-      style={{
-        backgroundColor: backgroundColor && "transparent",
-      }}
-      ref={headerRef}
-      className={`px-4 py-2 flex items-center transition-all justify-between fixed top-0 w-full z-[999]`}
-    >
-      <Logo />
-      <div className="flex items-center space-x-4">
-        <Link href={path.search}>
-          <CiSearch size={30} className="cursor-pointer" />
-        </Link>
-        {data?.user ? (
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowMenu((prev) => !prev);
-            }}
-            className="flex items-center justify-center relative"
-          >
-            <LazyLoadImage
-              className="w-7 h-7 rounded-full cursor-pointer"
-              src={data?.user?.image!}
-              effect="blur"
-            />
-            {showMenu && (
-              <Menu
-                email={data?.user?.email as string}
-                name={data?.user?.name as string}
-                avatar={data?.user?.image as string}
-              />
-            )}
-          </div>
-        ) : (
-          <Link
-            className="block px-4 py-1.5 text-sm rounded-md bg-primary font-semibold"
-            href={path.signIn}
-          >
-            Sign In
+    <div ref={headerRef} className={`fixed top-0 w-full z-[999]`}>
+      <div className="flex px-4 py-2 items-center transition-all justify-between container">
+        <Logo />
+        <div className="flex items-center space-x-4">
+          <Link href={path.search}>
+            <CiSearch size={30} className="cursor-pointer" />
           </Link>
-        )}
+          {data?.user ? (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowMenu((prev) => !prev);
+              }}
+              className="flex items-center justify-center relative"
+            >
+              <LazyLoadImage
+                className="w-7 h-7 rounded-full cursor-pointer"
+                src={data?.user?.image!}
+                effect="blur"
+              />
+              {showMenu && (
+                <Menu
+                  email={data?.user?.email as string}
+                  name={data?.user?.name as string}
+                  avatar={data?.user?.image as string}
+                />
+              )}
+            </div>
+          ) : (
+            <Link
+              className="block px-4 py-1.5 text-sm rounded-md bg-primary font-semibold"
+              href={path.signIn}
+            >
+              Sign In
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

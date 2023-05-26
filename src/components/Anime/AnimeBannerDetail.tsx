@@ -86,12 +86,12 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
 
   return (
     <div className="absolute inset-0 z-[99] flex md:flex-row flex-col">
-      <div className="flex lg:flex-row flex-col flex-1 lg:p-[70px] p-4 mt-[56px]">
-        <div className="md:block flex md:justify-start justify-center">
+      <div className="flex lg:flex-row flex-col flex-1 py-[70px] p-4 mt-[56px]">
+        <div className="md:block flex">
           <LazyLoadImage
             effect="blur"
             src={info?.image}
-            className="md:w-[180px] w-[150px] rounded-md"
+            className="md:w-[250px] w-[200px] rounded-md"
           />
         </div>
         <div className="lg:ml-[60px] flex-1 lg:mt-0 mt-5">

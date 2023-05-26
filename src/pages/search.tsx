@@ -87,7 +87,7 @@ const Search = () => {
         image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
         description="Next Anime is a free anime watch website built using Consumet API"
       />
-      <div className="p-4 mt-[56px] min-h-screen">
+      <div className="px-4 mt-[56px] min-h-screen container">
         <h4 className="md:text-4xl text-2xl font-semibold">Search Anime</h4>
         <SelectFilter queries={queries} setQueries={setQueries} />
         {isError && (

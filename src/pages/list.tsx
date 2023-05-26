@@ -22,7 +22,7 @@ const List: React.FC<ListProps> = ({ list }) => {
         image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
         description="Next Anime is a free anime watch website built using Consumet API"
       />
-      <div className="min-h-screen mt-[56px] p-4">
+      <div className="min-h-screen mt-[56px] px-4 container">
         <h4 className="md:text-4xl text-2xl font-semibold capitalize">
           My List
         </h4>
