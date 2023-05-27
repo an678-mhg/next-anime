@@ -54,6 +54,14 @@ const handler: NextApiHandler = async (
       const { animeId, episodeId } = req.body;
       const comments = await getCommentByEpisodeId(episodeId, animeId);
       return res.json(comments);
+    } else {
+      await prisma?.comment.delete({
+        where: {
+          id: req.query.id as string,
+        },
+      });
+
+      return res.json("Delete comment success!");
     }
   } catch (error) {
     console.log(error);

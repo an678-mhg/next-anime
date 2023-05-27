@@ -10,7 +10,14 @@ const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json("User not login");
   }
 
-  const { animeId, animeImage, animeTitle, animeType, animeColor } = req.body;
+  const {
+    animeId,
+    animeImage,
+    animeTitle,
+    animeType,
+    animeColor,
+    nextEpisodeTime,
+  } = req.body;
 
   const existList = await prisma!.list.findFirst({
     where: {
@@ -33,6 +40,7 @@ const handleAddList = async (req: NextApiRequest, res: NextApiResponse) => {
         animeTitle,
         animeType,
         userId: session?.user?.id,
+        nextEpisodeTime,
       },
     });
   }

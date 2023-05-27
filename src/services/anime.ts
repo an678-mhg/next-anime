@@ -29,7 +29,10 @@ export const getRecentAnime = async (limit: number = 20, page: number = 1) => {
   return response.data.results;
 };
 
-export const getTrendingAnime = async (limit: number = 5, page: number = 1) => {
+export const getTrendingAnime = async (
+  limit: number = 20,
+  page: number = 1
+) => {
   const response = await client.get<AnimeResponse<Anime>>("/trending", {
     params: {
       page,
@@ -41,7 +44,7 @@ export const getTrendingAnime = async (limit: number = 5, page: number = 1) => {
   return response.data.results;
 };
 
-export const getTopAiring = async (limit: number = 5, page: number = 1) => {
+export const getTopAiring = async (limit: number = 20, page: number = 1) => {
   const response = await client.get<AnimeResponse<Anime>>("/airing-schedule", {
     params: {
       page,
@@ -53,7 +56,7 @@ export const getTopAiring = async (limit: number = 5, page: number = 1) => {
   return response.data.results;
 };
 
-export const getMostPopular = async (limit: number = 5, page: number = 1) => {
+export const getMostPopular = async (limit: number = 20, page: number = 1) => {
   const response = await client.get<AnimeResponse<Anime>>("/popular", {
     params: {
       page,
@@ -138,21 +141,34 @@ export const getRandomAnime = async () => {
 export const getHomePage = async () => {
   const data = await Promise.all([
     getRecentAnime(),
-    getTrendingAnime(20),
-    getTopAiring(5),
-    getMostPopular(5),
+    getTrendingAnime(),
+    getMostPopular(),
     searchAdvanced({
       sort: convertQueryArrayParams(["FAVOURITES_DESC"]),
       type: "ANIME",
-      perPage: 5,
     }),
     searchAdvanced({
       type: "ANIME",
       status: "FINISHED",
-      perPage: 5,
       sort: convertQueryArrayParams(["SCORE_DESC"]),
     }),
     getNewestComment(),
+    searchAdvanced({
+      season: "FALL",
+      perPage: 5,
+    }),
+    searchAdvanced({
+      season: "WINTER",
+      perPage: 5,
+    }),
+    searchAdvanced({
+      season: "SPRING",
+      perPage: 5,
+    }),
+    searchAdvanced({
+      season: "SUMMER",
+      perPage: 5,
+    }),
   ]);
 
   return data;

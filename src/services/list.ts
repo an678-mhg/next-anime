@@ -1,5 +1,4 @@
 import axios from "axios";
-import { StringDecoder } from "string_decoder";
 
 export interface List {
   animeId: string;
@@ -7,6 +6,7 @@ export interface List {
   animeType: string;
   animeColor: string;
   animeTitle: string;
+  nextEpisodeTime: number;
 }
 
 export const createList = async (list: List) => {

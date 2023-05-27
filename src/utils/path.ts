@@ -10,6 +10,7 @@ const path = {
   results: (query: string) => `/results?q=${query}`,
   signIn: "/sign-in",
   list: "/list",
+  genres: (genres: string) => `/anime/genres/${genres}`,
 };
 
 export default path;

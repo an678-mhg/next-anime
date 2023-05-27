@@ -1,15 +1,40 @@
+import { deleteComment } from "@/src/services/comment";
 import { Comment } from "@/src/types/comment";
 import { calculateCreatedTime } from "@/src/utils/contants";
 import React from "react";
+import { CircularProgress } from "react-cssfx-loading";
 import { BiLike, BiTrashAlt } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useMutation, useQueryClient } from "react-query";
 
 interface CommentItemProps {
   comment: Comment;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, isLoading } = useMutation(deleteComment, {
+    onSuccess: () => {
+      const key = `comment-${comment?.episodeId}`;
+      queryClient?.setQueryData(
+        key,
+        (queryClient?.getQueryData(key) as Comment[]).filter(
+          (item) => item.id !== comment.id
+        )
+      );
+    },
+  });
+
+  const handleDelete = () => {
+    if (!window.confirm("Are you sure delete comment!")) {
+      return;
+    }
+
+    mutateAsync(comment?.id);
+  };
+
   return (
     <div>
       <div className="flex space-x-4">
@@ -35,10 +60,18 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
           <BiLike />
           <span className="text-xs">100</span>
         </div>
-        <div className="flex items-center space-x-2 cursor-pointer">
-          <BiTrashAlt />
+        <button
+          disabled={isLoading}
+          onClick={handleDelete}
+          className="flex items-center space-x-2 cursor-pointer"
+        >
+          {!isLoading ? (
+            <BiTrashAlt />
+          ) : (
+            <CircularProgress color="#fff" width={16} height={16} />
+          )}
           <span className="text-xs">Remove</span>
-        </div>
+        </button>
       </div>
     </div>
   );

@@ -13,15 +13,12 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ episodeId, animeId }) => {
-  const [ref, inView] = useInView();
-
-  const { data: comments, isLoading } = useQuery(
-    [`comment-${episodeId}-${inView}`],
-    () => (inView ? getCommentByEpisodeId(episodeId, animeId) : undefined)
+  const { data: comments, isLoading } = useQuery([`comment-${episodeId}`], () =>
+    getCommentByEpisodeId(episodeId, animeId)
   );
 
   return (
-    <div ref={ref} className={`mt-5`}>
+    <div className={`mt-5`}>
       <TitlePrimary title="Comments" />
       {comments && !isLoading ? (
         <>

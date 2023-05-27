@@ -73,14 +73,8 @@ img {
   animation: skeleton 1s linear infinite alternate;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
-  color: #fff !important;
-}
-
-.swiper-button-prev:after,
-.swiper-button-next:after {
-  font-size: 30px !important;
+.swiper-pagination-bullet {
+  background: #fff !important;
 }
 
 @keyframes skeleton {

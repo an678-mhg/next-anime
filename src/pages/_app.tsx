@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import NextNProgress from "nextjs-progressbar";
 import { QueryClient, QueryClientProvider } from "react-query";
 import dynamic from "next/dynamic";
+import ScrollToTop from "../components/ScrollToTop";
 
 const Toast = dynamic(() => import("../components/Toast"), {
   ssr: false,
@@ -25,6 +26,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <NextNProgress color="#FF4500" options={{ showSpinner: false }} />
         <Component {...pageProps} />
         <Toast />
+        <ScrollToTop />
       </SessionProvider>
     </QueryClientProvider>
   );

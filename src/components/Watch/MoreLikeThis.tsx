@@ -15,7 +15,7 @@ const MoreLikeThis: React.FC<MoreLikeThisProps> = ({
   const moreLikeThis = selectType === "related" ? relations : recommendations;
 
   return (
-    <div className="lg:w-[300px] w-full lg:pt-0 pt-5 lg:pl-4 pl-0">
+    <div className="lg:w-[300px] w-full lg:pt-0 p-4 lg:mt-0 mt-5">
       <div className="space-x-4">
         {["recommendations", "related"].map((item) => (
           <button

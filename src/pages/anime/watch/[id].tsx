@@ -1,4 +1,3 @@
-import Footer from "@/src/components/Footer";
 import Meta from "@/src/components/Meta";
 import AnimeInfoComp from "@/src/components/Watch/AnimeInfo";
 import EpisodeInfo from "@/src/components/Watch/EpisodeInfo";
@@ -88,9 +87,9 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
         image={info?.cover}
         description="Next Anime is a free anime watch website built using Consumet API"
       />
-      <div className="lg:flex container mt-[56px] px-4 p-4 pb-8">
+      <div className="lg:flex container mt-[56px] pb-8">
         <div className="lg:pb-5 lg:w-[calc(100%-300px)]">
-          <div className="bg-[#111] w-full z-[9999] aspect-video flex items-center justify-center">
+          <div className="w-full bg-[#111] z-[9999] aspect-video flex items-center justify-center">
             {!episode && (
               <h5 className="text-sm font-semibold">
                 Please select the episode
@@ -135,7 +134,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
               </div>
             )}
           </div>
-          <div className="md:flex w-full mt-4">
+          <div className="md:flex w-full mt-4 px-4">
             <div className="w-full md:mt-0">
               <div className="flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center md:space-x-4 justify-end">
                 {data?.iframe && (

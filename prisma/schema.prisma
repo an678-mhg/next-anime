@@ -60,14 +60,15 @@ model VerificationToken {
 }
 
 model List {
-  id         String @id @default(cuid()) @map("_id")
-  animeId    String
-  user       User   @relation(fields: [userId], references: [id])
-  userId     String
-  animeImage String
-  animeType  String
-  animeColor String
-  animeTitle String
+  id              String @id @default(cuid()) @map("_id")
+  animeId         String
+  user            User   @relation(fields: [userId], references: [id])
+  userId          String
+  animeImage      String
+  animeType       String
+  animeColor      String
+  animeTitle      String
+  nextEpisodeTime BigInt
 }
 
 model Comment {

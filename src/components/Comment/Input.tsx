@@ -42,10 +42,12 @@ const Input: React.FC<InputProps> = ({ episodeId, animeId }) => {
           image: session?.user?.image!,
         },
         userId: response.userId,
+        episodeId,
       };
 
       setText("");
-      const key = `comment-${episodeId}-${true}`;
+
+      const key = `comment-${episodeId}`;
 
       queryClient.setQueriesData(
         [key],

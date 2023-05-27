@@ -21,3 +21,8 @@ export const getCommentByEpisodeId = async (
   });
   return response.data;
 };
+
+export const deleteComment = async (id: string) => {
+  const response = await axios.delete(`/api/comment?id=${id}`);
+  return response.data;
+};

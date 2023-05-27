@@ -1,38 +1,22 @@
-import React, { useState } from "react";
-import MainLayout from "../layouts/MainLayout";
-import SelectFilter from "../components/Search/SelectFilter";
-import { useInfiniteQuery } from "react-query";
-import { searchAdvanced } from "../services/anime";
-import AnimeCard from "../components/Anime/AnimeCard";
-import { Anime } from "../types/anime";
-import AnimeGridLayout from "../layouts/AnimeGridLayout";
-import { InView } from "react-intersection-observer";
+import AnimeCard from "@/src/components/Anime/AnimeCard";
+import Meta from "@/src/components/Meta";
+import AnimeCardSkeleton from "@/src/components/Skeleton/AnimeCardSkeleton";
+import AnimeGridLayout from "@/src/layouts/AnimeGridLayout";
+import MainLayout from "@/src/layouts/MainLayout";
+import { searchAdvanced } from "@/src/services/anime";
+import { Anime } from "@/src/types/anime";
+import { convertQueryArrayParams, getAnimeTitle } from "@/src/utils/contants";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import React from "react";
 import { CircularProgress } from "react-cssfx-loading";
-import { convertQueryArrayParams, getAnimeTitle } from "../utils/contants";
-import AnimeCardSkeleton from "../components/Skeleton/AnimeCardSkeleton";
-import Meta from "../components/Meta";
+import { InView } from "react-intersection-observer";
+import { useInfiniteQuery } from "react-query";
 
-export interface Queries {
-  query: string;
-  season: string;
-  format: string;
-  status: string;
-  sort: string;
-  genres: string[];
+interface GenresProps {
+  genres: string;
 }
 
-const Search = () => {
-  const [queries, setQueries] = useState<Queries>({
-    query: "",
-    season: "",
-    format: "",
-    status: "",
-    sort: "",
-    genres: [],
-  });
-
-  const { format, genres, query, season, sort, status } = queries;
-
+const Genres: React.FC<GenresProps> = ({ genres }) => {
   const {
     data,
     isLoading,
@@ -41,39 +25,12 @@ const Search = () => {
     isFetchingNextPage,
     isError,
   } = useInfiniteQuery(
-    [`search-${JSON.stringify(queries)}`],
-    (page) => {
-      const queries: any = {};
-
-      if (format) {
-        queries.format = format;
-      }
-
-      if (query) {
-        queries.query = query;
-      }
-
-      if (season) {
-        queries.season = season;
-      }
-
-      if (status) {
-        queries.status = status;
-      }
-
-      if (genres.length > 0) {
-        queries.genres = convertQueryArrayParams(genres);
-      }
-
-      if (sort) {
-        queries.sort = convertQueryArrayParams([sort]);
-      }
-
-      return searchAdvanced({
-        page: page.pageParam || 1,
-        ...queries,
-      });
-    },
+    [`genres-${genres}`],
+    (pageParam) =>
+      searchAdvanced({
+        genres: convertQueryArrayParams([genres]),
+        page: pageParam?.pageParam || 1,
+      }),
     {
       getNextPageParam: (lastPage) =>
         lastPage.hasNextPage ? (lastPage.currentPage as number) + 1 : null,
@@ -83,13 +40,15 @@ const Search = () => {
   return (
     <MainLayout>
       <Meta
-        title="Next Anime - Search"
+        title={genres}
         image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
         description="Next Anime is a free anime watch website built using Consumet API"
       />
-      <div className="px-4 pb-4 mt-[56px] min-h-screen container">
-        <h4 className="md:text-4xl text-2xl font-semibold">Search Anime</h4>
-        <SelectFilter queries={queries} setQueries={setQueries} />
+      <div className="min-h-screen mt-[56px] px-4 pb-4 container">
+        <h4 className="md:text-4xl text-2xl font-semibold capitalize">
+          {genres}
+        </h4>
+
         {isError && (
           <h6 className="mt-5 font-semibold text-center">
             Something went wrong
@@ -106,6 +65,7 @@ const Search = () => {
             ))}
           </AnimeGridLayout>
         )}
+
         <AnimeGridLayout className="mt-5">
           {data &&
             data?.pages
@@ -148,4 +108,14 @@ const Search = () => {
   );
 };
 
-export default Search;
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  return {
+    props: {
+      genres: context?.params?.genres,
+    },
+  };
+};
+
+export default Genres;

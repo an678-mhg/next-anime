@@ -22,7 +22,7 @@ const List: React.FC<ListProps> = ({ list }) => {
         image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
         description="Next Anime is a free anime watch website built using Consumet API"
       />
-      <div className="min-h-screen mt-[56px] px-4 container">
+      <div className="min-h-screen mt-[56px] px-4 pb-4 container">
         <h4 className="md:text-4xl text-2xl font-semibold capitalize">
           My List
         </h4>
@@ -66,11 +66,21 @@ export const getServerSideProps: GetServerSideProps = async (
     where: {
       userId: session?.user?.id,
     },
+    select: {
+      nextEpisodeTime: false,
+      animeColor: true,
+      animeId: true,
+      animeImage: true,
+      animeTitle: true,
+      animeType: true,
+      id: true,
+      userId: true,
+    },
   });
 
   return {
     props: {
-      list,
+      list: JSON.parse(JSON.stringify(list)),
     },
   };
 };

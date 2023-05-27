@@ -1,5 +1,4 @@
 import BoxShowCase from "@/src/components/Home/BoxShowCase";
-import ShareNextAnime from "@/src/components/ShareNextAnime";
 import MainLayout from "@/src/layouts/MainLayout";
 import { getAnimeTitle } from "@/src/utils/contants";
 import AnimeCard from "../components/Anime/AnimeCard";
@@ -36,11 +35,14 @@ const Home = () => {
   const [
     recentAnime,
     tredingAnime,
-    topAiringAnime,
     mostPopularAnime,
     favouritesAnime,
     completedAnime,
     comments,
+    fall,
+    winter,
+    spring,
+    summer,
   ] = data;
 
   return (
@@ -52,7 +54,7 @@ const Home = () => {
       />
       <SlideBanner tredingAnime={tredingAnime} />
       <div className="mt-5 p-4 container">
-        <TitlePrimary title="Recent Anime Episodes" />
+        <TitlePrimary title="Recent Anime" />
         <SwiperContainer
           className="mt-5"
           xl={6.3}
@@ -74,19 +76,84 @@ const Home = () => {
           ))}
         </SwiperContainer>
       </div>
-      <ShareNextAnime />
+      <div className="mt-5 p-4 container">
+        <TitlePrimary title="Popular Anime" />
+        <SwiperContainer
+          className="mt-5"
+          xl={6.3}
+          lg={6.3}
+          md={4.3}
+          sm={2.3}
+          spaceBetween={15}
+        >
+          {mostPopularAnime?.map((item) => (
+            <SwiperSlide key={item?.id}>
+              <AnimeCard
+                color={item?.color}
+                id={item?.id.toString()}
+                image={item?.image}
+                title={getAnimeTitle(item?.title)}
+                type={item?.type}
+              />
+            </SwiperSlide>
+          ))}
+        </SwiperContainer>
+      </div>
+      <div className="mt-5 p-4 container">
+        <TitlePrimary title="Favorite Anime" />
+        <SwiperContainer
+          className="mt-5"
+          xl={6.3}
+          lg={6.3}
+          md={4.3}
+          sm={2.3}
+          spaceBetween={15}
+        >
+          {favouritesAnime?.results?.map((item) => (
+            <SwiperSlide key={item?.id}>
+              <AnimeCard
+                color={item?.color}
+                id={item?.id.toString()}
+                image={item?.image}
+                title={getAnimeTitle(item?.title)}
+                type={item?.type}
+              />
+            </SwiperSlide>
+          ))}
+        </SwiperContainer>
+      </div>
+      <div className="mt-5 p-4 container">
+        <TitlePrimary title="Completed Anime" />
+        <SwiperContainer
+          className="mt-5"
+          xl={6.3}
+          lg={6.3}
+          md={4.3}
+          sm={2.3}
+          spaceBetween={15}
+        >
+          {completedAnime?.results?.map((item) => (
+            <SwiperSlide key={item?.id}>
+              <AnimeCard
+                color={item?.color}
+                id={item?.id.toString()}
+                image={item?.image}
+                title={getAnimeTitle(item?.title)}
+                type={item?.type}
+              />
+            </SwiperSlide>
+          ))}
+        </SwiperContainer>
+      </div>
       <div className="px-4 container">
         {comments.length > 0 && <NewestComment comments={comments} />}
-        <div className="py-5">
-          <TitlePrimary title="Show Case Anime" />
+        <div className="py-5 mt-5">
+          <TitlePrimary title="Upcoming Season" />
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3 pt-5">
-            <BoxShowCase title="Top Airing" anime={topAiringAnime} />
-            <BoxShowCase title="Most Popular" anime={mostPopularAnime} />
-            <BoxShowCase
-              title="Most Favorite"
-              anime={favouritesAnime?.results}
-            />
-            <BoxShowCase title="Completed" anime={completedAnime?.results} />
+            <BoxShowCase title="Fall" anime={fall?.results} />
+            <BoxShowCase title="Winter" anime={winter?.results} />
+            <BoxShowCase title="Summer" anime={summer?.results} />
+            <BoxShowCase title="Spring" anime={spring?.results} />
           </div>
         </div>
       </div>

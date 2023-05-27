@@ -81,6 +81,7 @@ const AnimeBannerDetail: React.FC<AnimeBannerDetailProps> = ({ info }) => {
       animeImage: info?.image,
       animeTitle: getAnimeTitle(info?.title),
       animeType: info?.type,
+      nextEpisodeTime: info?.nextAiringEpisode?.airingTime,
     });
   };
 

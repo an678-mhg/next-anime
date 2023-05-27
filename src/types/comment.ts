@@ -14,4 +14,5 @@ export interface Comment {
   text: string;
   user: User;
   userId: string;
+  episodeId: string;
 }
