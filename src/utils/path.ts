@@ -11,6 +11,7 @@ const path = {
   signIn: "/sign-in",
   list: "/list",
   genres: (genres: string) => `/anime/genres/${genres}`,
+  characters: (id: string) => `/characters/${id}`,
 };
 
 export default path;

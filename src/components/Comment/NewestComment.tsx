@@ -11,7 +11,7 @@ interface NewestCommentProps {
 
 const NewestComment: React.FC<NewestCommentProps> = ({ comments }) => {
   return (
-    <div className="w-full flex items-center py-4 mt-5">
+    <div className="w-full flex items-center mt-5">
       <div className="w-full">
         <div className="flex items-center justify-between">
           <TitlePrimary title="Newest Comment" />

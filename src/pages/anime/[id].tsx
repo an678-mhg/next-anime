@@ -99,6 +99,7 @@ export const getStaticProps: GetStaticProps = async (
   } catch (error) {
     return {
       notFound: true,
+      revalidate: 10,
     };
   }
 };

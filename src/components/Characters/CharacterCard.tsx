@@ -1,4 +1,6 @@
 import { Character } from "@/src/types/utils";
+import path from "@/src/utils/path";
+import Link from "next/link";
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -8,7 +10,10 @@ interface CharacterCardProps {
 
 const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
   return (
-    <div className="flex items-center">
+    <Link
+      href={path.characters(character.id.toString())}
+      className="flex items-center"
+    >
       <LazyLoadImage
         src={character?.image}
         className="w-[64px] aspect-[9/16]"
@@ -18,7 +23,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
         <h4 className="font-semibold">{character?.name?.full}</h4>
         <p className="font-normal text-sm">{character?.role}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

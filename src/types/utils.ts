@@ -123,3 +123,19 @@ export interface Intro {
   start: number;
   end: number;
 }
+
+export interface Name {
+  first: string;
+  last?: string | undefined;
+  full: string;
+  native?: string | undefined;
+  userPreferred: string;
+  alternative: any[];
+  alternativeSpoiler: string[];
+}
+
+export interface DateOfBirth {
+  year: any;
+  month: number;
+  day: number;
+}

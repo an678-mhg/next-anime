@@ -11,6 +11,7 @@ import NotFound from "../components/404NotFound";
 import SlideBanner from "../components/Home/SlideBanner";
 import SwiperContainer from "../components/SwiperContainer";
 import NewestComment from "../components/Comment/NewestComment";
+import { CircularProgress } from "react-cssfx-loading";
 
 const Home = () => {
   const { data, isLoading, isError } = useQuery("home", getHomePage);
@@ -22,12 +23,7 @@ const Home = () => {
   if (!data || isLoading) {
     return (
       <div className="w-full h-screen relative flex items-center justify-center bg-black">
-        <Meta
-          title="Next Anime"
-          image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
-          description="Next Anime is a free anime watch website built using Consumet API"
-        />
-        <img src="/logo-svg.svg" className="w-[100px]" />
+        <CircularProgress color="#FF0000" />
       </div>
     );
   }
@@ -53,7 +49,7 @@ const Home = () => {
         description="Next Anime is a free anime watch website built using Consumet API"
       />
       <SlideBanner tredingAnime={tredingAnime} />
-      <div className="mt-5 p-4 container">
+      <div className="mt-5 container px-4">
         <TitlePrimary title="Recent Anime" />
         <SwiperContainer
           className="mt-5"
@@ -76,7 +72,7 @@ const Home = () => {
           ))}
         </SwiperContainer>
       </div>
-      <div className="mt-5 p-4 container">
+      <div className="mt-5 container px-4">
         <TitlePrimary title="Popular Anime" />
         <SwiperContainer
           className="mt-5"
@@ -99,7 +95,7 @@ const Home = () => {
           ))}
         </SwiperContainer>
       </div>
-      <div className="mt-5 p-4 container">
+      <div className="mt-5 container px-4">
         <TitlePrimary title="Favorite Anime" />
         <SwiperContainer
           className="mt-5"
@@ -122,7 +118,7 @@ const Home = () => {
           ))}
         </SwiperContainer>
       </div>
-      <div className="mt-5 p-4 container">
+      <div className="mt-5 container px-4">
         <TitlePrimary title="Completed Anime" />
         <SwiperContainer
           className="mt-5"
@@ -147,7 +143,7 @@ const Home = () => {
       </div>
       <div className="px-4 container">
         {comments.length > 0 && <NewestComment comments={comments} />}
-        <div className="py-5 mt-5">
+        <div className="mt-5 pb-5">
           <TitlePrimary title="Upcoming Season" />
           <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3 pt-5">
             <BoxShowCase title="Fall" anime={fall?.results} />

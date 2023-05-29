@@ -66,6 +66,16 @@ const checkAnimeInList = async (req: NextApiRequest, res: NextApiResponse) => {
       animeId,
       userId: session?.user?.id,
     },
+    select: {
+      animeColor: true,
+      animeId: true,
+      animeImage: true,
+      animeTitle: true,
+      animeType: true,
+      id: true,
+      userId: true,
+      nextEpisodeTime: false,
+    },
   });
 
   if (check) {
