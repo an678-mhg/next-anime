@@ -7,7 +7,6 @@ import { AiOutlineSend } from "react-icons/ai";
 import { useMutation, useQueryClient } from "react-query";
 import { createComment } from "@/src/services/comment";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/router";
 import { CircularProgress } from "react-cssfx-loading";
 import { CreateCommentBody } from "@/src/types/comment";
 import { Comment } from "@prisma/client";
@@ -15,11 +14,11 @@ import { Comment as CommentType } from "@/src/types/comment";
 import { MdMessage } from "react-icons/md";
 
 interface InputProps {
-  episodeId: string;
   animeId: string;
+  animeName: string;
 }
 
-const Input: React.FC<InputProps> = ({ episodeId, animeId }) => {
+const Input: React.FC<InputProps> = ({ animeId, animeName }) => {
   const { data: session } = useSession();
   const [text, setText] = useState("");
   const queryClient = useQueryClient();
@@ -42,12 +41,16 @@ const Input: React.FC<InputProps> = ({ episodeId, animeId }) => {
           image: session?.user?.image!,
         },
         userId: response.userId,
-        episodeId,
+        animeName,
+        _count: {
+          like: 0,
+        },
+        isLiked: false,
       };
 
       setText("");
 
-      const key = `comment-${episodeId}`;
+      const key = `comment-${animeId}`;
 
       queryClient.setQueriesData(
         [key],
@@ -67,7 +70,7 @@ const Input: React.FC<InputProps> = ({ episodeId, animeId }) => {
       animeId,
       text,
       userId: session?.user?.id,
-      episodeId,
+      animeName,
     };
 
     mutateAsync(newComment);

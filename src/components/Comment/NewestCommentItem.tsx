@@ -1,10 +1,10 @@
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { FcDocument } from "react-icons/fc";
 import { Comment } from "@/src/types/comment";
 import { calculateCreatedTime } from "@/src/utils/contants";
 import Link from "next/link";
 import path from "@/src/utils/path";
+import { HiOutlineDocumentText } from "react-icons/hi";
 
 interface NewestCommentItemProps {
   comment: Comment;
@@ -33,8 +33,8 @@ const NewestCommentItem: React.FC<NewestCommentItemProps> = ({ comment }) => {
         href={path.watch(comment.animeId)}
         className="text-xs flex items-center font-semibold text-primary space-x-2"
       >
-        <FcDocument />
-        <span>Watch now</span>
+        <HiOutlineDocumentText size={20} />
+        <span className="line-clamp-1">{comment.animeName}</span>
       </Link>
     </div>
   );

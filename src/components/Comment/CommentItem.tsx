@@ -3,10 +3,12 @@ import { Comment } from "@/src/types/comment";
 import { calculateCreatedTime } from "@/src/utils/contants";
 import React from "react";
 import { CircularProgress } from "react-cssfx-loading";
-import { BiLike, BiTrashAlt } from "react-icons/bi";
+import { BiTrashAlt } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useMutation, useQueryClient } from "react-query";
+import { useSession } from "next-auth/react";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 
 interface CommentItemProps {
   comment: Comment;
@@ -14,10 +16,11 @@ interface CommentItemProps {
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
   const queryClient = useQueryClient();
+  const { data } = useSession();
 
   const { mutateAsync, isLoading } = useMutation(deleteComment, {
     onSuccess: () => {
-      const key = `comment-${comment?.episodeId}`;
+      const key = `comment-${comment?.animeId}`;
       queryClient?.setQueryData(
         key,
         (queryClient?.getQueryData(key) as Comment[]).filter(
@@ -57,21 +60,23 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
       </div>
       <div className="ml-[calc(32px+16px)] mt-2 flex items-center space-x-5 text-gray-400">
         <div className="flex items-center space-x-2 cursor-pointer">
-          <BiLike />
-          <span className="text-xs">100</span>
+          {!comment?.isLiked ? <AiOutlineLike /> : <AiFillLike />}
+          <span className="text-xs">{comment?._count?.like}</span>
         </div>
-        <button
-          disabled={isLoading}
-          onClick={handleDelete}
-          className="flex items-center space-x-2 cursor-pointer"
-        >
-          {!isLoading ? (
-            <BiTrashAlt />
-          ) : (
-            <CircularProgress color="#fff" width={16} height={16} />
-          )}
-          <span className="text-xs">Remove</span>
-        </button>
+        {data?.user?.id === comment.userId && (
+          <button
+            disabled={isLoading}
+            onClick={handleDelete}
+            className="flex items-center space-x-2 cursor-pointer"
+          >
+            {!isLoading ? (
+              <BiTrashAlt />
+            ) : (
+              <CircularProgress color="#fff" width={16} height={16} />
+            )}
+            <span className="text-xs">Remove</span>
+          </button>
+        )}
       </div>
     </div>
   );

@@ -16,6 +16,14 @@ import { CircularProgress } from "react-cssfx-loading";
 const Home = () => {
   const { data, isLoading, isError } = useQuery("home", getHomePage);
 
+  const MetaElement = () => (
+    <Meta
+      title="Next Anime"
+      image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
+      description="Next Anime is a free anime watch website built using Consumet API"
+    />
+  );
+
   if (isError) {
     return <NotFound />;
   }
@@ -23,6 +31,7 @@ const Home = () => {
   if (!data || isLoading) {
     return (
       <div className="w-full h-screen relative flex items-center justify-center bg-black">
+        <MetaElement />
         <CircularProgress color="#FF0000" />
       </div>
     );
@@ -43,11 +52,7 @@ const Home = () => {
 
   return (
     <MainLayout>
-      <Meta
-        title="Next Anime"
-        image="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png"
-        description="Next Anime is a free anime watch website built using Consumet API"
-      />
+      <MetaElement />
       <SlideBanner tredingAnime={tredingAnime} />
       <div className="mt-5 container px-4">
         <TitlePrimary title="Recent Anime" />

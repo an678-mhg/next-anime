@@ -78,8 +78,8 @@ model Comment {
   userId    String
   text      String
   createdAt DateTime @default(now())
-  episodeId String
   like      Like[]
+  animeName String
 }
 
 model Like {

@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TitlePrimary from "../TitlePrimary";
 import Input from "../Comment/Input";
 import CommentList from "../Comment/CommentList";
 import { useQuery } from "react-query";
 import { getCommentByEpisodeId } from "@/src/services/comment";
-import { useInView } from "react-intersection-observer";
 import { CircularProgress } from "react-cssfx-loading";
 
 interface CommentProps {
-  episodeId: string;
+  animeName: string;
   animeId: string;
 }
 
-const Comment: React.FC<CommentProps> = ({ episodeId, animeId }) => {
-  const { data: comments, isLoading } = useQuery([`comment-${episodeId}`], () =>
-    getCommentByEpisodeId(episodeId, animeId)
+const Comment: React.FC<CommentProps> = ({ animeName, animeId }) => {
+  const { data: comments, isLoading } = useQuery([`comment-${animeId}`], () =>
+    getCommentByEpisodeId(animeId)
   );
 
   return (
@@ -22,7 +21,7 @@ const Comment: React.FC<CommentProps> = ({ episodeId, animeId }) => {
       <TitlePrimary title="Comments" />
       {comments && !isLoading ? (
         <>
-          <Input episodeId={episodeId} animeId={animeId} />
+          <Input animeName={animeName} animeId={animeId} />
           <CommentList comments={comments} />
         </>
       ) : (

@@ -11,12 +11,8 @@ export const getNewestComment = async () => {
   return response.data;
 };
 
-export const getCommentByEpisodeId = async (
-  episodeId: string,
-  animeId: string
-) => {
+export const getCommentByEpisodeId = async (animeId: string) => {
   const response = await axios.put<Comment[]>("/api/comment", {
-    episodeId,
     animeId,
   });
   return response.data;

@@ -7,13 +7,21 @@ import NextNProgress from "nextjs-progressbar";
 import { QueryClient, QueryClientProvider } from "react-query";
 import dynamic from "next/dynamic";
 import ScrollToTop from "../components/ScrollToTop";
+import { toast } from "react-hot-toast";
 
 const Toast = dynamic(() => import("../components/Toast"), {
   ssr: false,
 });
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { refetchOnWindowFocus: false } },
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false },
+    mutations: {
+      onError: () => {
+        toast.error("Something went wrong!");
+      },
+    },
+  },
 });
 
 const MyApp: AppType<{ session: Session | null }> = ({

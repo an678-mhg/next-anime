@@ -1,8 +1,19 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
 import { CreateCommentBody } from "@/src/types/comment";
+import { getServerSession, Session } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
+import { Like } from "@prisma/client";
 
-const createComment = async (comment: CreateCommentBody) => {
+const createComment = async (
+  comment: CreateCommentBody,
+  session: Session | null,
+  res: NextApiResponse
+) => {
+  if (!session?.user) {
+    return res.status(400).json("User not login");
+  }
+
   const newComment = await prisma!.comment.create({
     data: comment,
   });
@@ -24,18 +35,69 @@ const getNewestComment = async () => {
   return comments;
 };
 
-const getCommentByEpisodeId = async (episodeId: string, animeId: string) => {
+const getCommentByEpisodeId = async (
+  animeId: string,
+  session: Session | null
+) => {
+  let likes: Like[] | undefined = [];
+
   const comments = await prisma!.comment.findMany({
     where: {
       animeId,
-      episodeId,
     },
     include: {
       user: true,
+      _count: {
+        select: {
+          like: true,
+        },
+      },
     },
   });
 
-  return comments;
+  if (session?.user) {
+    likes = await prisma?.like?.findMany({
+      where: {
+        commentId: {
+          in: comments?.map((item) => item.id),
+        },
+        userId: session?.user?.id,
+      },
+    });
+  }
+
+  return comments?.map((item) => ({
+    ...item,
+    isLiked: likes?.some((p) => p.commentId === item.id),
+  }));
+};
+
+const deleteComment = async (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  session: Session | null
+) => {
+  if (!session?.user) {
+    return res.status(400).json("User not login");
+  }
+
+  const comment = await prisma?.comment?.findFirst({
+    where: { id: req.query.id as string },
+  });
+
+  if (!comment) {
+    return res.status(404).json("Comment not found");
+  }
+
+  if (comment.userId !== session?.user?.id) {
+    return res.status(404).json("Something went wrong");
+  }
+
+  await prisma?.comment?.delete({
+    where: { id: req.query.id as string },
+  });
+
+  res.json("Delete comment success");
 };
 
 const handler: NextApiHandler = async (
@@ -43,25 +105,21 @@ const handler: NextApiHandler = async (
   res: NextApiResponse
 ) => {
   try {
+    const session = await getServerSession(req, res, authOptions);
+
     if (req.method === "POST") {
       const commentBody = req.body as CreateCommentBody;
-      const newComment = await createComment(commentBody);
+      const newComment = await createComment(commentBody, session, res);
       return res.json(newComment);
     } else if (req.method === "GET") {
       const comments = await getNewestComment();
       return res.json(comments);
     } else if (req.method === "PUT") {
-      const { animeId, episodeId } = req.body;
-      const comments = await getCommentByEpisodeId(episodeId, animeId);
+      const { animeId } = req.body;
+      const comments = await getCommentByEpisodeId(animeId, session);
       return res.json(comments);
     } else {
-      await prisma?.comment.delete({
-        where: {
-          id: req.query.id as string,
-        },
-      });
-
-      return res.json("Delete comment success!");
+      deleteComment(req, res, session);
     }
   } catch (error) {
     console.log(error);

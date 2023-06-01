@@ -171,7 +171,10 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
                 type={info?.type}
                 nextAiringEpisode={info?.nextAiringEpisode}
               />
-              <Comment animeId={info?.id} episodeId={episode?.id} />
+              <Comment
+                animeId={info?.id}
+                animeName={getAnimeTitle(info?.title)}
+              />
             </div>
           </div>
         </div>

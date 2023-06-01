@@ -4,7 +4,7 @@ export interface CreateCommentBody {
   animeId: string;
   userId: string;
   text: string;
-  episodeId: string;
+  animeName: string;
 }
 
 export interface Comment {
@@ -14,5 +14,9 @@ export interface Comment {
   text: string;
   user: User;
   userId: string;
-  episodeId: string;
+  animeName: string;
+  _count: {
+    like: number;
+  };
+  isLiked: boolean;
 }
