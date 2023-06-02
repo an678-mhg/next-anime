@@ -1,5 +1,5 @@
 import React from "react";
-import TitlePrimary from "../TitlePrimary";
+import TitlePrimary from "../Shared/TitlePrimary";
 
 const Note = () => {
   return (

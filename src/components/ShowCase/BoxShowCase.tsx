@@ -1,6 +1,6 @@
 import { Anime } from "@/src/types/anime";
 import React from "react";
-import ShowCaseItem from "../ShowCaseItem";
+import ShowCaseItem from "./ShowCaseItem";
 
 interface BoxShowCaseProps {
   title: string;

@@ -4,7 +4,7 @@ import { BsFillPlayCircleFill, BsFillCalendarDateFill } from "react-icons/bs";
 import { AiFillClockCircle, AiOutlineRight } from "react-icons/ai";
 import { GrStatusDisabledSmall } from "react-icons/gr";
 import Link from "next/link";
-import GenresItem from "../GenresItem";
+import GenresItem from "../Shared/GenresItem";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import path from "@/src/utils/path";
 import { getAnimeTitle, setBackgroundImage } from "@/src/utils/contants";

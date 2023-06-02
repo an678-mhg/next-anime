@@ -1,8 +1,8 @@
 import React from "react";
-import { getAnimeTitle } from "../utils/contants";
+import { getAnimeTitle } from "../../utils/contants";
 import { BsFillCalendarDateFill, BsFillPlayCircleFill } from "react-icons/bs";
-import path from "../utils/path";
-import { Title } from "../types/utils";
+import path from "../../utils/path";
+import { Title } from "../../types/utils";
 import { AiFillClockCircle } from "react-icons/ai";
 import Link from "next/link";
 import { LazyLoadImage } from "react-lazy-load-image-component";

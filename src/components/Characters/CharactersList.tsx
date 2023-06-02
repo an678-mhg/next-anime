@@ -1,5 +1,5 @@
 import React from "react";
-import TitlePrimary from "../TitlePrimary";
+import TitlePrimary from "../Shared/TitlePrimary";
 import { Character } from "../../types/utils";
 import CharacterCard from "./CharacterCard";
 

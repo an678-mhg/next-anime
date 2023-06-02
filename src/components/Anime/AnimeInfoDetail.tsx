@@ -1,5 +1,5 @@
 import React from "react";
-import GenresItem from "../GenresItem";
+import GenresItem from "../Shared/GenresItem";
 import dayjs from "dayjs";
 import { AnimeInfo } from "@/src/types/anime";
 

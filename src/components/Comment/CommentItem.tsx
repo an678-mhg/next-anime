@@ -9,6 +9,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useMutation, useQueryClient } from "react-query";
 import { useSession } from "next-auth/react";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
+import { toast } from "react-hot-toast";
 
 interface CommentItemProps {
   comment: Comment;

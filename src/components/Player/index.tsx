@@ -5,7 +5,7 @@ import { HiVolumeUp } from "react-icons/hi";
 import { AiFillSetting } from "react-icons/ai";
 import { CgMiniPlayer } from "react-icons/cg";
 import { BiFullscreen, BiExitFullscreen } from "react-icons/bi";
-import { formatVideoTime } from "@/src/utils/contants";
+import { formatVideoTime, playSpeedOptions } from "@/src/utils/contants";
 import { FaVolumeMute } from "react-icons/fa";
 import { CircularProgress } from "react-cssfx-loading";
 import MainSettings from "./Settings/MainSettings";
@@ -29,37 +29,6 @@ interface PlayerProps {
   intro: Intro | null;
   playerRef: React.MutableRefObject<HTMLVideoElement | null>;
 }
-
-export const playSpeedOptions = [
-  {
-    label: "0.25x",
-    value: 0.25,
-  },
-  {
-    label: "0.5x",
-    value: 0.5,
-  },
-  {
-    label: "0.75x",
-    value: 0.75,
-  },
-  {
-    label: "1x",
-    value: 1,
-  },
-  {
-    label: "1.25x",
-    value: 1.25,
-  },
-  {
-    label: "1.5x",
-    value: 1.5,
-  },
-  {
-    label: "2x",
-    value: 2,
-  },
-];
 
 const Player: React.FC<PlayerProps> = ({
   className,
@@ -265,10 +234,6 @@ const Player: React.FC<PlayerProps> = ({
     }
     setShowSettings(false);
     setSettingsType("main");
-  };
-
-  const handleError = () => {
-    console.log("error");
   };
 
   useEffect(() => {

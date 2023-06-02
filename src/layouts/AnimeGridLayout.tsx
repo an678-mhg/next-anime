@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "../types/utils";
-import TitlePrimary from "../components/TitlePrimary";
+import TitlePrimary from "../components/Shared/TitlePrimary";
 
 interface AnimeGridLayoutProps extends Layout {
   title?: string;

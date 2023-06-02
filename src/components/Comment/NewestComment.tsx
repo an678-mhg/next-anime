@@ -1,9 +1,9 @@
 import React from "react";
 import NewestCommentItem from "./NewestCommentItem";
 import { SwiperSlide } from "swiper/react";
-import TitlePrimary from "../TitlePrimary";
+import TitlePrimary from "../Shared/TitlePrimary";
 import { Comment } from "@/src/types/comment";
-import SwiperContainer from "../SwiperContainer";
+import SwiperContainer from "../Shared/SwiperContainer";
 
 interface NewestCommentProps {
   comments: Comment[];

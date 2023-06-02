@@ -6,10 +6,10 @@ import { SessionProvider } from "next-auth/react";
 import NextNProgress from "nextjs-progressbar";
 import { QueryClient, QueryClientProvider } from "react-query";
 import dynamic from "next/dynamic";
-import ScrollToTop from "../components/ScrollToTop";
+import ScrollToTop from "../components/Shared/ScrollToTop";
 import { toast } from "react-hot-toast";
 
-const Toast = dynamic(() => import("../components/Toast"), {
+const Toast = dynamic(() => import("../components/Shared/Toast"), {
   ssr: false,
 });
 

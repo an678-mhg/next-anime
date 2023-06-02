@@ -1,15 +1,15 @@
-import BoxShowCase from "@/src/components/Home/BoxShowCase";
+import BoxShowCase from "@/src/components/ShowCase/BoxShowCase";
 import MainLayout from "@/src/layouts/MainLayout";
 import { getAnimeTitle } from "@/src/utils/contants";
 import AnimeCard from "../components/Anime/AnimeCard";
-import Meta from "../components/Meta";
-import TitlePrimary from "../components/TitlePrimary";
+import Meta from "../components/Shared/Meta";
+import TitlePrimary from "../components/Shared/TitlePrimary";
 import { SwiperSlide } from "swiper/react";
 import { useQuery } from "react-query";
 import { getHomePage } from "../services/anime";
-import NotFound from "../components/404NotFound";
-import SlideBanner from "../components/Home/SlideBanner";
-import SwiperContainer from "../components/SwiperContainer";
+import NotFound from "../components/Shared/404NotFound";
+import SlideBanner from "../components/Anime/SlideBanner";
+import SwiperContainer from "../components/Shared/SwiperContainer";
 import NewestComment from "../components/Comment/NewestComment";
 import { CircularProgress } from "react-cssfx-loading";
 

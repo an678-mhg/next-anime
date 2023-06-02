@@ -8,7 +8,7 @@ import { AnimeInfo } from "@/src/types/anime";
 import { getAnimeTitle, setBackgroundImage } from "@/src/utils/contants";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import React from "react";
-import Meta from "@/src/components/Meta";
+import Meta from "@/src/components/Shared/Meta";
 import CharactersList from "@/src/components/Characters/CharactersList";
 
 interface AnimeProps {

@@ -1,5 +1,5 @@
 import React from "react";
-import TitlePrimary from "../TitlePrimary";
+import TitlePrimary from "../Shared/TitlePrimary";
 import Input from "../Comment/Input";
 import CommentList from "../Comment/CommentList";
 import { useQuery } from "react-query";

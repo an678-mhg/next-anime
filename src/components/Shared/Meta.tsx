@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { BASE_URL } from "../utils/contants";
+import { BASE_URL } from "../../utils/contants";
 
 interface MetaProps {
   title: string;

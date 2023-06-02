@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Swiper } from "swiper/react";
-import { Layout } from "../types/utils";
-import useInnerWidth from "../hooks/useInnerWidth";
+import { Layout } from "../../types/utils";
+import useInnerWidth from "../../hooks/useInnerWidth";
 
 interface SwiperContainerProps extends Layout {
   xl: number;

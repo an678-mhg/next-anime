@@ -10,7 +10,7 @@ import { InView } from "react-intersection-observer";
 import { CircularProgress } from "react-cssfx-loading";
 import { convertQueryArrayParams, getAnimeTitle } from "../utils/contants";
 import AnimeCardSkeleton from "../components/Skeleton/AnimeCardSkeleton";
-import Meta from "../components/Meta";
+import Meta from "../components/Shared/Meta";
 
 export interface Queries {
   query: string;

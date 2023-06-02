@@ -1,5 +1,5 @@
 import AnimeCard from "@/src/components/Anime/AnimeCard";
-import Meta from "@/src/components/Meta";
+import Meta from "@/src/components/Shared/Meta";
 import AnimeCardSkeleton from "@/src/components/Skeleton/AnimeCardSkeleton";
 import AnimeGridLayout from "@/src/layouts/AnimeGridLayout";
 import MainLayout from "@/src/layouts/MainLayout";

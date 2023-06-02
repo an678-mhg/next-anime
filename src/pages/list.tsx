@@ -8,7 +8,7 @@ import prisma from "../lib/prisma";
 import { List } from "@prisma/client";
 import AnimeGridLayout from "../layouts/AnimeGridLayout";
 import AnimeCard from "../components/Anime/AnimeCard";
-import Meta from "../components/Meta";
+import Meta from "../components/Shared/Meta";
 
 interface ListProps {
   list: List[];

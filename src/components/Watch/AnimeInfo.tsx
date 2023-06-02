@@ -1,5 +1,5 @@
 import React from "react";
-import TitlePrimary from "../TitlePrimary";
+import TitlePrimary from "../Shared/TitlePrimary";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getAnimeTitle } from "@/src/utils/contants";
 import { NextAiringEpisode, Title } from "@/src/types/utils";

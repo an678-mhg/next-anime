@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
-import Meta from "../components/Meta";
+import Meta from "../components/Shared/Meta";
 import { toast } from "react-hot-toast";
 
 const signInMethods = [

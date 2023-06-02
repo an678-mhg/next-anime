@@ -1,6 +1,6 @@
 import { Recommendation, Relation } from "@/src/types/anime";
 import React, { useState } from "react";
-import ShowCaseItem from "../ShowCaseItem";
+import ShowCaseItem from "../ShowCase/ShowCaseItem";
 
 interface MoreLikeThisProps {
   relations: Relation[];

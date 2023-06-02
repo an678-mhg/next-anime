@@ -10,7 +10,7 @@ import {
   BsFillPlayCircleFill,
 } from "react-icons/bs";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import ShareSocial from "../ShareSocial";
+import ShareSocial from "../Shared/ShareSocial";
 import { AnimeInfo } from "@/src/types/anime";
 import AnimeInfoDetail from "./AnimeInfoDetail";
 import { checkAnimeInList, createList } from "@/src/services/list";

@@ -1,4 +1,4 @@
-import Footer from "@/src/components/Footer";
+import Footer from "@/src/components/Shared/Footer";
 import Headers from "@/src/components/Headers";
 import { Layout } from "@/src/types/utils";
 import React from "react";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import path from "../utils/path";
+import path from "../../utils/path";
 
 interface GenresItemProps {
   genres: string;

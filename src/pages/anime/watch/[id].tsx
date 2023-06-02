@@ -1,4 +1,4 @@
-import Meta from "@/src/components/Meta";
+import Meta from "@/src/components/Shared/Meta";
 import AnimeInfoComp from "@/src/components/Watch/AnimeInfo";
 import EpisodeInfo from "@/src/components/Watch/EpisodeInfo";
 import EpisodeList from "@/src/components/Watch/EpisodeList";

@@ -1,7 +1,7 @@
+import { playSpeedOptions } from "@/src/utils/contants";
 import React from "react";
 import { AiOutlineLeft } from "react-icons/ai";
 import { BsCheckLg } from "react-icons/bs";
-import { playSpeedOptions } from "../index";
 
 interface PlaySpeedSettingsProps {
   setSettingsType: React.Dispatch<

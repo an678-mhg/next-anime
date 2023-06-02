@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "./Headers/Logo";
+import Logo from "../Headers/Logo";
 import ShareSocial from "./ShareSocial";
 
 const Footer = () => {

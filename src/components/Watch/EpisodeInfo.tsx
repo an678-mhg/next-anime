@@ -1,6 +1,6 @@
 import { Episode } from "@/src/types/utils";
 import React from "react";
-import TitlePrimary from "../TitlePrimary";
+import TitlePrimary from "../Shared/TitlePrimary";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface EpisodeInfoProps {
