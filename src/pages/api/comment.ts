@@ -93,9 +93,16 @@ const deleteComment = async (
     return res.status(404).json("Something went wrong");
   }
 
-  await prisma?.comment?.delete({
-    where: { id: req.query.id as string },
-  });
+  await Promise.all([
+    prisma?.comment?.delete({
+      where: { id: req.query.id as string },
+    }),
+    prisma?.like?.deleteMany({
+      where: {
+        id: comment?.id,
+      },
+    }),
+  ]);
 
   res.json("Delete comment success");
 };

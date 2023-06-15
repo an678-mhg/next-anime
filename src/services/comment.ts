@@ -22,3 +22,14 @@ export const deleteComment = async (id: string) => {
   const response = await axios.delete(`/api/comment?id=${id}`);
   return response.data;
 };
+
+export const likeComment = async ({
+  commentId,
+  userId,
+}: {
+  commentId: string;
+  userId: string;
+}) => {
+  const response = await axios.post("/api/like-comment", { commentId, userId });
+  return response.data;
+};

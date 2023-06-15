@@ -2,7 +2,6 @@ import path from "@/src/utils/path";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import { AiOutlineSend } from "react-icons/ai";
 import { useMutation, useQueryClient } from "react-query";
 import { createComment } from "@/src/services/comment";
