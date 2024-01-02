@@ -13,20 +13,20 @@ import { getNewestComment } from "./comment";
 
 export const default_provider = "gogoanime";
 
-export const getRecentAnime = async (limit: number = 20, page: number = 1) => {
-  const response = await axios.get<AnimeResponse<RecentAnime>>(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}anime/gogoanime/recent-episodes`,
-    {
-      params: {
-        page: page,
-        perPage: limit,
-        provider: default_provider,
-      },
-    }
-  );
+// export const getRecentAnime = async (limit: number = 20, page: number = 1) => {
+//   const response = await axios.get<AnimeResponse<RecentAnime>>(
+//     `${process.env.NEXT_PUBLIC_BACKEND_URL}anime/gogoanime/recent-episodes`,
+//     {
+//       params: {
+//         page: page,
+//         perPage: limit,
+//         provider: default_provider,
+//       },
+//     }
+//   );
 
-  return response.data.results;
-};
+//   return response.data.results;
+// };
 
 export const getTrendingAnime = async (
   limit: number = 20,
