@@ -9,14 +9,13 @@ import client from "@/src/utils/client";
 import { convertQueryArrayParams } from "../utils/contants";
 import axios from "axios";
 import { Streaming } from "../types/amvstr";
-import prisma from "../lib/prisma";
 import { getNewestComment } from "./comment";
 
 export const default_provider = "gogoanime";
 
 export const getRecentAnime = async (limit: number = 20, page: number = 1) => {
-  const response = await client.get<AnimeResponse<RecentAnime>>(
-    "/recent-episodes",
+  const response = await axios.get<AnimeResponse<RecentAnime>>(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}anime/gogoanime/recent-episodes`,
     {
       params: {
         page: page,
@@ -140,7 +139,6 @@ export const getRandomAnime = async () => {
 
 export const getHomePage = async () => {
   const data = await Promise.all([
-    getRecentAnime(),
     getTrendingAnime(),
     getMostPopular(),
     searchAdvanced({
