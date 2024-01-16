@@ -30,7 +30,7 @@ const Home = () => {
 
   if (!data || isLoading) {
     return (
-      <div className="w-full h-screen relative flex items-center justify-center bg-black">
+      <div className="w-full h-[100dvh] relative flex items-center justify-center bg-black">
         <MetaElement />
         <CircularProgress color="#FF0000" />
       </div>

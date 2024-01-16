@@ -36,7 +36,7 @@ const ShowCaseItem: React.FC<ShowCaseItemProps> = ({
     >
       <LazyLoadImage
         effect="blur"
-        className="rounded-sm w-[50px] aspect-[124/185]"
+        className="rounded-[4px] w-[50px] aspect-[124/185]"
         src={image}
       />
       <div className="text-sm flex-1">

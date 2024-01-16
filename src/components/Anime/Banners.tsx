@@ -17,7 +17,7 @@ const Banners: React.FC<BannersProps> = ({ anime }) => {
   return (
     <div
       style={setBackgroundImage(anime?.cover)}
-      className="lg:aspect-[3/1.4] md:aspect-[3/2] aspect-[1/1] w-full banner"
+      className="lg:aspect-[3/1.4] md:aspect-[3/2] relative aspect-[1/1] w-full banner"
     >
       <div className="z-[999] absolute container top-[50%] translate-y-[-50%] p-4 w-full left-[50%] translate-x-[-50%] flex items-center justify-between space-x-8">
         <div className="flex-1">

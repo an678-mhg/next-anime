@@ -14,8 +14,8 @@ interface SlideProps {
 const SlideBanner: React.FC<SlideProps> = ({ tredingAnime }) => {
   return (
     <Swiper
-      autoplay={{ delay: 5000 }}
-      modules={[Autoplay, Pagination]}
+      // autoplay={{ delay: 5000 }}
+      // modules={[Autoplay, Pagination]}
       pagination
     >
       {tredingAnime?.map((anime) => (
