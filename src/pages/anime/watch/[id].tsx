@@ -3,7 +3,6 @@ import AnimeInfoComp from "@/src/components/Watch/AnimeInfo";
 import EpisodeInfo from "@/src/components/Watch/EpisodeInfo";
 import EpisodeList from "@/src/components/Watch/EpisodeList";
 import MoreLikeThis from "@/src/components/Watch/MoreLikeThis";
-import SelectSource from "@/src/components/Watch/SelectSource";
 import {
   default_provider,
   getAnimeEpisodeStreaming,
@@ -17,23 +16,20 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
-import SelectIframe from "@/src/components/Watch/SelectIframe";
 import Note from "@/src/components/Watch/Note";
 import Comment from "@/src/components/Watch/Comment";
 import MainLayout from "@/src/layouts/MainLayout";
+import Hls from "hls.js";
 
 interface WatchProps {
   info: AnimeInfo;
 }
 
-const Player = dynamic(() => import("../../../components/Player"), {
-  ssr: false,
-});
+const Player = dynamic(() => import('@/src/components/Player'), {ssr: false})
 
 const Watch: React.FC<WatchProps> = ({ info }) => {
   const [episode, setEpisode] = useState<Episode>(info?.episodes?.[0]);
   const [isWatchIframe, setIsWatchIframe] = useState(false);
-  const [iframeLink, setIframeLink] = useState<string | null>();
 
   const playerRef = useRef<HTMLVideoElement | null>(null);
 
@@ -44,28 +40,14 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
     () => {
       if (!episode) return null;
       return getAnimeEpisodeStreaming(
-        episode?.id,
-        (router?.query?.provider as string) || "gogoanime"
+        episode?.id
       );
     }
   );
 
   const handleSelectEpisode = (episode: Episode) => {
     setEpisode(episode);
-  };
-
-  const handleNextEpisode = () => {
-    const currentIndexEpisode = info?.episodes?.findIndex(
-      (item) => item?.id === episode?.id
-    );
-
-    if (currentIndexEpisode < info?.episodes?.length - 1) {
-      setEpisode(info?.episodes?.[currentIndexEpisode + 1]);
-      return true;
-    }
-
-    return false;
-  };
+  }
 
   useEffect(() => {
     setEpisode(info?.episodes?.[0]);
@@ -89,7 +71,7 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
       />
       <div className="lg:flex container mt-[56px] pb-8">
         <div className="lg:pb-5 lg:w-[calc(100%-300px)]">
-          <div className="w-full bg-[#111] z-[9999] aspect-video flex items-center justify-center">
+          <div className="w-full bg-[#222] z-[9999] aspect-video flex items-center justify-center">
             {!episode && (
               <h5 className="text-sm font-semibold">
                 Please select the episode
@@ -107,27 +89,17 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
               <div className="w-full h-full">
                 {isWatchIframe ? (
                   <iframe
-                    src={iframeLink!}
+                    src={data?.headers?.Referer}
                     className="w-full h-full"
                     allowFullScreen
                   />
                 ) : (
                   <Player
-                    source={data?.sources?.map((item) => ({
-                      label: item?.quality,
-                      url: getStreamAnimeWithProxy(item?.url),
-                    }))}
-                    className="w-full h-full"
-                    poster={episode?.image as string}
+                    Hls={Hls}
+                    source={data?.sources?.map(item => ({label: item?.quality, url: item?.url}))}
                     color="#FF0000"
-                    subtitle={data?.subtitles?.map((item) => ({
-                      lang: item.lang,
-                      url: `/api/subtitles?url=${encodeURIComponent(
-                        item?.url
-                      )}`,
-                    }))}
-                    handleNext={handleNextEpisode}
-                    intro={data?.intro || null}
+                    poster={episode?.image}
+                    className="w-full h-full"
                     playerRef={playerRef}
                   />
                 )}
@@ -137,21 +109,13 @@ const Watch: React.FC<WatchProps> = ({ info }) => {
           <div className="md:flex w-full mt-4 px-4">
             <div className="w-full md:mt-0">
               <div className="flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center md:space-x-4 justify-end">
-                {data?.iframe && (
+                {data?.headers?.Referer && (
                   <button
                     onClick={() => setIsWatchIframe((prev) => !prev)}
                     className="bg-[#222] py-2 px-4 inline-block rounded-md font-semibold text-white text-sm"
                   >
                     {!isWatchIframe ? "Enable" : "Disable"} iframe
                   </button>
-                )}
-                <SelectSource idAnime={info?.id} />
-                {isWatchIframe && data?.iframe && (
-                  <SelectIframe
-                    iframe={iframeLink}
-                    listIframe={data?.iframe}
-                    setIframe={setIframeLink}
-                  />
                 )}
               </div>
               <EpisodeList

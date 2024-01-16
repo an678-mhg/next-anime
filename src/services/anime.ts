@@ -13,20 +13,20 @@ import { getNewestComment } from "./comment";
 
 export const default_provider = "gogoanime";
 
-// export const getRecentAnime = async (limit: number = 20, page: number = 1) => {
-//   const response = await axios.get<AnimeResponse<RecentAnime>>(
-//     `${process.env.NEXT_PUBLIC_BACKEND_URL}anime/gogoanime/recent-episodes`,
-//     {
-//       params: {
-//         page: page,
-//         perPage: limit,
-//         provider: default_provider,
-//       },
-//     }
-//   );
+export const getRecentAnime = async (limit: number = 20, page: number = 1) => {
+  const response = await client.get<AnimeResponse<RecentAnime>>(
+    "/recent-episodes",
+    {
+      params: {
+        page: page,
+        perPage: limit,
+        provider: default_provider,
+      },
+    }
+  );
 
-//   return response.data.results;
-// };
+  return response.data.results;
+};
 
 export const getTrendingAnime = async (
   limit: number = 20,
@@ -82,47 +82,16 @@ export const getAnimeInfo = async (
   id: string,
   provider: string = default_provider
 ) => {
-  const response = await client.get<AnimeInfo>(`/info/${id}`, {
-    params: {
-      provider,
-    },
-  });
+  const response = await client.get<AnimeInfo>(`/info/${id}`);
 
   return response.data;
 };
 
 export const getAnimeEpisodeStreaming = async (
-  episodeId: string,
-  provider: string = "zoro"
+  episodeId: string
 ): Promise<AnimeEpisodeStreaming> => {
-  let response;
-
-  if (provider === "zoro") {
-    response = await client.get<AnimeEpisodeStreaming>(`/watch/${episodeId}`, {
-      params: {
-        provider,
-      },
-    });
-    return response.data;
-  } else {
-    response = await axios.get<Streaming>(
-      `${process.env.NEXT_PUBLIC_AVM_STREAM_URL}${episodeId}`
-    );
-
-    const data = response.data;
-
-    return {
-      iframe: [
-        ...Object.values(data?.data?.iframe),
-        ...Object.values(data?.data?.nspl),
-        ...Object.values(data?.data?.plyr),
-      ],
-      sources: [
-        data?.data?.stream?.multi?.backup,
-        data?.data?.stream?.multi?.main,
-      ],
-    };
-  }
+  const response = await client.get(`/watch/${episodeId}`)
+  return response?.data
 };
 
 export const searchAnime = async (query: string, page: number = 1) => {
@@ -139,6 +108,7 @@ export const getRandomAnime = async () => {
 
 export const getHomePage = async () => {
   const data = await Promise.all([
+    getRecentAnime(),
     getTrendingAnime(),
     getMostPopular(),
     searchAdvanced({

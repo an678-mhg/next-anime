@@ -105,9 +105,9 @@ export interface Relation {
 }
 
 export interface AnimeEpisodeStreaming {
-  iframe?: string[];
-  sources: Source[];
-  download?: string;
-  subtitles?: Subtitle[];
-  intro?: Intro;
+  headers: {
+    Referer: string
+  }
+  sources: Source[]
+  download: string
 }

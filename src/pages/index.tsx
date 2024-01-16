@@ -38,6 +38,7 @@ const Home = () => {
   }
 
   const [
+    recentAnime,
     tredingAnime,
     mostPopularAnime,
     favouritesAnime,
@@ -53,6 +54,29 @@ const Home = () => {
     <MainLayout>
       <MetaElement />
       <SlideBanner tredingAnime={tredingAnime} />
+      <div className="mt-5 container px-4">
+        <TitlePrimary title="Recent Anime" />
+        <SwiperContainer
+          className="mt-5"
+          xl={6.3}
+          lg={6.3}
+          md={4.3}
+          sm={2.3}
+          spaceBetween={15}
+        >
+          {recentAnime?.map((item) => (
+            <SwiperSlide key={item?.id}>
+              <AnimeCard
+                color={item?.color}
+                id={item?.id.toString()}
+                image={item?.image}
+                title={getAnimeTitle(item?.title)}
+                type={item?.type}
+              />
+            </SwiperSlide>
+          ))}
+        </SwiperContainer>
+      </div>
       <div className="mt-5 container px-4">
         <TitlePrimary title="Popular Anime" />
         <SwiperContainer
