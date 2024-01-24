@@ -36,7 +36,7 @@
     "swiper": "^9.2.4",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
-    "vnetwork-player": "^1.1.15"
+    "vnetwork-player": "^1.1.20"
   },
   "devDependencies": {
     "@types/qs": "^6.9.7",
