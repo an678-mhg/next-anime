@@ -4,6 +4,10 @@
 
 <p align="center"><strong>Next Anime is a free anime watch website built using Consumet API</strong></p>
 
+## Video Demo
+
+![Next Anime Video Demo](http://img.youtube.com/vi/mJNpHoj0dkg/0.jpg)](http://www.youtube.com/watch?v=mJNpHoj0dkg)
+
 ## Live demo
 
 Official website: [https://next-anime-app.vercel.app/](https://next-anime-app.vercel.app/)
