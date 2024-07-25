@@ -10,7 +10,7 @@
 
 ## Live demo
 
-Official website: [https://next-anime-app.vercel.app/](https://next-anime-app.vercel.app/)
+Official website: [https://next-anime-dusky.vercel.app/](https://next-anime-dusky.vercel.app/)
 
 ## Anime sources
 
