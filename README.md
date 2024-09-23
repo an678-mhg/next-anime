@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png" />
+    <img width="100%" src="https://res.cloudinary.com/annnn/image/upload/v1683898263/logo_id1pyr.png" />
 </div>
 
 <p align="center"><strong>Next Anime is a free anime watch website built using Consumet API</strong></p>
