@@ -45,7 +45,13 @@ You can refer to [https://github.com/consumet/api.consumet.org](https://github.c
 
 ## Star History
 
-<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=#an678-mhg/next-anime&Date" frameBorder="0"></iframe>
+<a href="https://star-history.com/#an678-mhg/next-anime&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=an678-mhg/next-anime&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=an678-mhg/next-anime&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=an678-mhg/next-anime&type=Date" />
+ </picture>
+</a>
 
 ## Summary
 
