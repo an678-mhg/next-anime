@@ -25,6 +25,7 @@ You can refer to [https://github.com/consumet/api.consumet.org](https://github.c
 - Swiper (slider)
 - Next-Auth
 - React Query
+- [Player](https://www.npmjs.com/package/vnetwork-player)
 
 ## Features
 
@@ -41,6 +42,10 @@ You can refer to [https://github.com/consumet/api.consumet.org](https://github.c
 
 ![Screenshot 1](https://res.cloudinary.com/annnn/image/upload/v1683903029/localhost_3000__2_sxk4pr.png)
 ![Screenshot 2](https://res.cloudinary.com/annnn/image/upload/v1683903024/localhost_3000__4_uea2iw.png)
+
+## Star History
+
+<iframe style="width:100%;height:auto;min-width:600px;min-height:400px;" src="https://star-history.com/embed?secret=#an678-mhg/next-anime&Date" frameBorder="0"></iframe>
 
 ## Summary
 
