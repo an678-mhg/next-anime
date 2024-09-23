@@ -6,9 +6,7 @@
 
 ## Video Demo
 
-<div align="center">
-[![Next Anime Video Demo](http://img.youtube.com/vi/mJNpHoj0dkg/0.jpg)](http://www.youtube.com/watch?v=mJNpHoj0dkg)
-</div>
+Video link: [Click Here](http://www.youtube.com/watch?v=mJNpHoj0dkg)
 
 ## Live demo
 
